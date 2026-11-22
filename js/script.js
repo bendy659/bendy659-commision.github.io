@@ -8,6 +8,7 @@ const portfolioLightbox = document.querySelector("#render-lightbox");
 const portfolioLightboxCaption = portfolioLightbox.querySelector("figcaption");
 const portfolioLightboxClose = portfolioLightbox.querySelector(".lightbox-close");
 const portfolioLightboxImage = portfolioLightbox.querySelector("img");
+const portfolioLightboxVideo = portfolioLightbox.querySelector("video");
 const gallerySections = Array.from(document.querySelectorAll("[data-gallery]"));
 const portfolioSections = Array.from(document.querySelectorAll(".portfolio-section"));
 const visitorTimeFormatter = new Intl.DateTimeFormat("ru-RU", {
@@ -200,9 +201,20 @@ function createPortfolioGallery(section) {
 
     function openLightbox(card, index) {
         const image = card.querySelector("img");
+        const isVideo = card.dataset.mediaType === "video";
+        const mediaSource = card.dataset.fullSrc || image.currentSrc || image.src;
 
-        portfolioLightboxImage.src = image.currentSrc || image.src;
-        portfolioLightboxImage.alt = image.alt;
+        portfolioLightboxImage.hidden = isVideo;
+        portfolioLightboxVideo.hidden = !isVideo;
+
+        if (isVideo) {
+            portfolioLightboxVideo.src = mediaSource;
+            portfolioLightboxVideo.play().catch(() => {});
+        } else {
+            portfolioLightboxImage.src = mediaSource;
+            portfolioLightboxImage.alt = image.alt;
+        }
+
         portfolioLightboxCaption.textContent = `${itemLabel} ${index + 1} из ${cards.length}`;
         portfolioLightbox.showModal();
     }
@@ -240,6 +252,14 @@ function closePortfolioLightbox(event) {
     portfolioLightbox.close();
 }
 
+function resetPortfolioLightbox() {
+    portfolioLightboxVideo.pause();
+    portfolioLightboxVideo.removeAttribute("src");
+    portfolioLightboxVideo.load();
+    portfolioLightboxImage.removeAttribute("src");
+    portfolioLightboxImage.alt = "";
+}
+
 const galleryControllers = gallerySections.map(createPortfolioGallery);
 const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -256,6 +276,7 @@ reducedMotion.addEventListener("change", requestBackgroundUpdate);
 priceCalculator.addEventListener("input", updatePriceCalculator);
 priceCalculator.addEventListener("change", updatePriceCalculator);
 portfolioLightbox.addEventListener("click", closePortfolioLightbox);
+portfolioLightbox.addEventListener("close", resetPortfolioLightbox);
 portfolioLightboxClose.addEventListener("click", () => portfolioLightbox.close());
 window.addEventListener("pointerup", () => {
     galleryControllers.forEach((gallery) => gallery.endInteraction());

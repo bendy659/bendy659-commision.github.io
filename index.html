@@ -22,10 +22,12 @@
                 <img src="assets/images/branding/header.png" alt="">
             </a>
 
-            <nav class="category-nav" aria-label="Категории портфолио">
+            <nav class="category-nav" aria-label="Основная навигация">
                 <a href="#renders">Рендеры</a>
                 <a href="#models">Модели</a>
                 <a href="#animations">Анимации</a>
+                <a href="#contact">Связь</a>
+                <a href="#price-calculator">Калькулятор</a>
             </nav>
         </div>
     </header>
@@ -36,7 +38,7 @@
             <div class="media-frame">
                 <img
                     class="media-placeholder"
-                    src="assets/images/hero/hello.gif"
+                    src="assets/images/hero/hello.webp"
                     alt="Приветственная анимация"
                 >
             </div>
@@ -146,7 +148,7 @@
                     <div class="render-track" data-render-track>
                     <button class="render-card" type="button" aria-label="Открыть рендер 1 из 7">
                         <img
-                            src="assets/images/portfolio/renders/image_0.png"
+                            src="assets/images/portfolio/renders/optimized/image_0.webp"
                             alt="Рендер 1"
                             width="1536"
                             height="1536"
@@ -156,7 +158,7 @@
                     </button>
                     <button class="render-card" type="button" aria-label="Открыть рендер 2 из 7">
                         <img
-                            src="assets/images/portfolio/renders/image_1.png"
+                            src="assets/images/portfolio/renders/optimized/image_1.webp"
                             alt="Рендер 2"
                             width="1920"
                             height="1080"
@@ -166,17 +168,17 @@
                     </button>
                     <button class="render-card" type="button" aria-label="Открыть рендер 3 из 7">
                         <img
-                            src="assets/images/portfolio/renders/image_2.png"
+                            src="assets/images/portfolio/renders/optimized/image_2.webp"
                             alt="Рендер 3"
-                            width="4096"
-                            height="2160"
+                            width="1920"
+                            height="1012"
                             loading="lazy"
                             decoding="async"
                         >
                     </button>
                     <button class="render-card" type="button" aria-label="Открыть рендер 4 из 7">
                         <img
-                            src="assets/images/portfolio/renders/image_3.png"
+                            src="assets/images/portfolio/renders/optimized/image_3.webp"
                             alt="Рендер 4"
                             width="1080"
                             height="1080"
@@ -186,7 +188,7 @@
                     </button>
                     <button class="render-card" type="button" aria-label="Открыть рендер 5 из 7">
                         <img
-                            src="assets/images/portfolio/renders/image_4.png"
+                            src="assets/images/portfolio/renders/optimized/image_4.webp"
                             alt="Рендер 5"
                             width="1920"
                             height="1080"
@@ -196,7 +198,7 @@
                     </button>
                     <button class="render-card" type="button" aria-label="Открыть рендер 6 из 7">
                         <img
-                            src="assets/images/portfolio/renders/image_5.png"
+                            src="assets/images/portfolio/renders/optimized/image_5.webp"
                             alt="Рендер 6"
                             width="1920"
                             height="1080"
@@ -206,7 +208,7 @@
                     </button>
                     <button class="render-card" type="button" aria-label="Открыть рендер 7 из 7">
                         <img
-                            src="assets/images/portfolio/renders/image_6.png"
+                            src="assets/images/portfolio/renders/optimized/image_6.webp"
                             alt="Рендер 7"
                             width="1920"
                             height="1080"
@@ -272,9 +274,15 @@
                     aria-label="Горизонтальная галерея моделей"
                 >
                     <div class="render-track">
-                    <button class="render-card" type="button" aria-label="Открыть модель 1 из 6">
+                    <button
+                        class="render-card"
+                        type="button"
+                        aria-label="Открыть модель 1 из 6"
+                        data-full-src="assets/media/portfolio/models/image_0.mp4"
+                        data-media-type="video"
+                    >
                         <img
-                            src="assets/images/portfolio/models/image_0.gif"
+                            src="assets/images/portfolio/models/posters/image_0.webp"
                             alt="Модель для Minecraft 1"
                             width="512"
                             height="512"
@@ -282,9 +290,15 @@
                             decoding="async"
                         >
                     </button>
-                    <button class="render-card" type="button" aria-label="Открыть модель 2 из 6">
+                    <button
+                        class="render-card"
+                        type="button"
+                        aria-label="Открыть модель 2 из 6"
+                        data-full-src="assets/media/portfolio/models/image_1.mp4"
+                        data-media-type="video"
+                    >
                         <img
-                            src="assets/images/portfolio/models/image_1.gif"
+                            src="assets/images/portfolio/models/posters/image_1.webp"
                             alt="Модель для Minecraft 2"
                             width="512"
                             height="512"
@@ -292,9 +306,15 @@
                             decoding="async"
                         >
                     </button>
-                    <button class="render-card" type="button" aria-label="Открыть модель 3 из 6">
+                    <button
+                        class="render-card"
+                        type="button"
+                        aria-label="Открыть модель 3 из 6"
+                        data-full-src="assets/media/portfolio/models/image_2.mp4"
+                        data-media-type="video"
+                    >
                         <img
-                            src="assets/images/portfolio/models/image_2.gif"
+                            src="assets/images/portfolio/models/posters/image_2.webp"
                             alt="Модель для Minecraft 3"
                             width="512"
                             height="512"
@@ -302,9 +322,15 @@
                             decoding="async"
                         >
                     </button>
-                    <button class="render-card" type="button" aria-label="Открыть модель 4 из 6">
+                    <button
+                        class="render-card"
+                        type="button"
+                        aria-label="Открыть модель 4 из 6"
+                        data-full-src="assets/media/portfolio/models/image_3.mp4"
+                        data-media-type="video"
+                    >
                         <img
-                            src="assets/images/portfolio/models/image_3.gif"
+                            src="assets/images/portfolio/models/posters/image_3.webp"
                             alt="Модель для Minecraft 4"
                             width="512"
                             height="512"
@@ -312,9 +338,15 @@
                             decoding="async"
                         >
                     </button>
-                    <button class="render-card" type="button" aria-label="Открыть модель 5 из 6">
+                    <button
+                        class="render-card"
+                        type="button"
+                        aria-label="Открыть модель 5 из 6"
+                        data-full-src="assets/media/portfolio/models/image_4.mp4"
+                        data-media-type="video"
+                    >
                         <img
-                            src="assets/images/portfolio/models/image_4.gif"
+                            src="assets/images/portfolio/models/posters/image_4.webp"
                             alt="Модель для Minecraft 5"
                             width="512"
                             height="512"
@@ -322,9 +354,15 @@
                             decoding="async"
                         >
                     </button>
-                    <button class="render-card" type="button" aria-label="Открыть модель 6 из 6">
+                    <button
+                        class="render-card"
+                        type="button"
+                        aria-label="Открыть модель 6 из 6"
+                        data-full-src="assets/media/portfolio/models/image_5.mp4"
+                        data-media-type="video"
+                    >
                         <img
-                            src="assets/images/portfolio/models/image_5.gif"
+                            src="assets/images/portfolio/models/posters/image_5.webp"
                             alt="Модель для Minecraft 6"
                             width="512"
                             height="512"
@@ -516,7 +554,8 @@
     <dialog class="render-lightbox" id="render-lightbox" aria-labelledby="render-lightbox-caption">
         <button class="lightbox-close" type="button" aria-label="Закрыть просмотр">×</button>
         <figure>
-            <img src="" alt="">
+            <img alt="">
+            <video controls loop playsinline hidden></video>
             <figcaption id="render-lightbox-caption"></figcaption>
         </figure>
     </dialog>

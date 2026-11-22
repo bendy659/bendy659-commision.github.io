@@ -786,11 +786,16 @@ body::after {
     margin: 0;
 }
 
-.render-lightbox img {
+.render-lightbox img,
+.render-lightbox video {
     display: block;
     max-width: 100%;
     max-height: calc(100svh - 7rem);
     object-fit: contain;
+}
+
+.render-lightbox [hidden] {
+    display: none;
 }
 
 .render-lightbox figcaption {
