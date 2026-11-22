@@ -87,10 +87,11 @@ function updatePriceCalculator() {
     }
 
     if (animationEnabled) {
+        const count = Math.max(Number(priceCalculator.elements.namedItem("animation-count").value), 1);
         const duration = Math.max(Number(priceCalculator.elements.namedItem("animation-duration").value), 1);
         const detail = Number(priceCalculator.elements.namedItem("animation-detail").value);
 
-        total += 500 + (duration * 100) + detail;
+        total += count * (500 + (duration * 100) + detail);
         selectedServices += 1;
     }
 
@@ -200,9 +201,9 @@ function createPortfolioGallery(section) {
     }
 
     function openLightbox(card, index) {
-        const image = card.querySelector("img");
+        const preview = card.querySelector("img, video");
         const isVideo = card.dataset.mediaType === "video";
-        const mediaSource = card.dataset.fullSrc || image.currentSrc || image.src;
+        const mediaSource = card.dataset.fullSrc || preview.currentSrc || preview.src;
 
         portfolioLightboxImage.hidden = isVideo;
         portfolioLightboxVideo.hidden = !isVideo;
@@ -212,7 +213,7 @@ function createPortfolioGallery(section) {
             portfolioLightboxVideo.play().catch(() => {});
         } else {
             portfolioLightboxImage.src = mediaSource;
-            portfolioLightboxImage.alt = image.alt;
+            portfolioLightboxImage.alt = preview.alt;
         }
 
         portfolioLightboxCaption.textContent = `${itemLabel} ${index + 1} из ${cards.length}`;

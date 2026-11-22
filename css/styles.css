@@ -160,9 +160,9 @@ body::after {
 
 .welcome-card {
     display: grid;
-    grid-template-columns: minmax(16rem, 0.82fr) minmax(22rem, 1.35fr);
+    grid-template-columns: minmax(16rem, 0.62fr) minmax(22rem, 1.5fr);
     gap: clamp(1rem, 2.5vw, 2rem);
-    width: min(100%, 76rem);
+    width: min(100%, 110rem);
     padding: clamp(1rem, 2.5vw, 2rem);
     border: 1px solid var(--line);
     background: var(--panel-deep);
@@ -260,7 +260,7 @@ body::after {
     margin: 0 0 1rem;
     color: var(--muted);
     font-family: "Courier New", Courier, monospace;
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     font-weight: 700;
     letter-spacing: 0.14em;
 }
@@ -275,7 +275,7 @@ body::after {
 }
 
 .message-copy {
-    max-width: 40rem;
+    max-width: 60rem;
     margin: 1.5rem 0 0;
     font-size: clamp(1rem, 1.8vw, 1.25rem);
     line-height: 1.55;
@@ -307,7 +307,7 @@ body::after {
 }
 
 .order-guide {
-    width: min(calc(100% - 2rem), 90rem);
+    width: min(calc(100% - 2rem), 110rem);
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(4rem, 8vw, 7rem) 1rem;
     border: 1px solid var(--line);
@@ -315,7 +315,7 @@ body::after {
 }
 
 .guide-heading {
-    width: min(100%, 76rem);
+    width: min(100%, 96rem);
     margin: 0 auto clamp(2rem, 4vw, 3rem);
     text-align: center;
 }
@@ -337,7 +337,7 @@ body::after {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
-    width: min(100%, 76rem);
+    width: min(100%, 96rem);
     margin: 0 auto;
 }
 
@@ -365,7 +365,7 @@ body::after {
 }
 
 .portfolio-section {
-    width: min(calc(100% - 2rem), 90rem);
+    width: min(calc(100% - 2rem), 110rem);
     min-height: 100svh;
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(4rem, 9vw, 8rem) 0;
@@ -375,7 +375,7 @@ body::after {
 }
 
 .category-heading {
-    width: min(calc(100% - 2rem), 76rem);
+    width: min(calc(100% - 2rem), 96rem);
     margin: 0 auto clamp(2rem, 5vw, 4rem);
     text-align: center;
 }
@@ -384,7 +384,7 @@ body::after {
     margin: 0 0 0.65rem;
     color: var(--muted);
     font-family: "Courier New", Courier, monospace;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     font-weight: 700;
     letter-spacing: 0.14em;
 }
@@ -443,6 +443,20 @@ body::after {
     height: clamp(16rem, 30vw, 25rem);
     overflow-x: auto;
     overflow-y: hidden;
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+    );
     scrollbar-width: none;
     overscroll-behavior-inline: contain;
 }
@@ -486,7 +500,8 @@ body::after {
     transform: translateY(-0.25rem);
 }
 
-.render-card img {
+.render-card img,
+.render-card video {
     display: block;
     width: auto;
     max-width: min(78vw, 44rem);
@@ -495,7 +510,7 @@ body::after {
 }
 
 .render-pricing {
-    width: min(calc(100% - 2rem), 76rem);
+    width: min(calc(100% - 2rem), 96rem);
     margin: clamp(3rem, 7vw, 6rem) auto 0;
     padding: clamp(1.25rem, 3vw, 2.5rem);
     border: 1px solid var(--line);
@@ -581,7 +596,7 @@ body::after {
 .price-list dd span {
     color: var(--muted);
     font-family: "Manrope", Arial, sans-serif;
-    font-size: 0.8em;
+    font-size: 0.875em;
     font-weight: 500;
 }
 
@@ -763,10 +778,11 @@ body::after {
 }
 
 .render-lightbox {
-    width: min(calc(100% - 2rem), 90rem);
+    width: calc(100vw - 1rem);
+    height: calc(100svh - 1rem);
     max-width: none;
-    max-height: calc(100svh - 2rem);
-    padding: 3.5rem 1rem 1rem;
+    max-height: none;
+    padding: 3.25rem 0.5rem 0.5rem;
     overflow: hidden;
     border: 1px solid var(--line);
     background: #050605;
@@ -780,6 +796,7 @@ body::after {
 
 .render-lightbox figure {
     display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     gap: 0.75rem;
     place-items: center;
     height: 100%;
@@ -789,8 +806,9 @@ body::after {
 .render-lightbox img,
 .render-lightbox video {
     display: block;
-    max-width: 100%;
-    max-height: calc(100svh - 7rem);
+    width: 100%;
+    height: 100%;
+    min-height: 0;
     object-fit: contain;
 }
 
@@ -801,7 +819,7 @@ body::after {
 .render-lightbox figcaption {
     color: var(--muted);
     font-family: "Courier New", Courier, monospace;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 .lightbox-close {
@@ -1007,7 +1025,7 @@ body::after {
 
     .category-nav a {
         padding: 0.85rem 0.75rem 0.65rem;
-        font-size: 0.82rem;
+        font-size: 0.875rem;
     }
 
     .welcome {
@@ -1102,7 +1120,8 @@ body::after {
         height: 15rem;
     }
 
-    .render-card img {
+    .render-card img,
+    .render-card video {
         max-width: 85vw;
     }
 
