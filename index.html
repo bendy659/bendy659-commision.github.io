@@ -3,254 +3,533 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Портфолио аниматора и 3D-художника: анимации, рендеры и простые 3D-модели.">
-    <title>Портфолио аниматора и 3D-художника</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Портфолио аниматора и 3D-художника.">
+    <title>_BENDY659_ — Портфолио</title>
+    <link rel="icon" href="assets/images/branding/favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;family=Unbounded:wght@600;700;800&amp;display=swap"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
-    <a class="skip-link" href="#main">Перейти к содержимому</a>
-
     <header class="site-header">
-        <a class="brand" href="#top" aria-label="На главную">
-            <span class="brand-mark" aria-hidden="true"></span>
-            <span>Портфолио</span>
-        </a>
+        <div class="header-inner">
+            <a class="home-link" href="#welcome" aria-label="Вернуться к приветствию">
+                <img src="assets/images/branding/header.png" alt="">
+            </a>
 
-        <nav class="main-nav" aria-label="Основная навигация">
-            <a href="#works">Работы</a>
-            <a href="#services">Услуги</a>
-            <a href="#price">Прайс</a>
-            <a href="#process">Процесс</a>
-        </nav>
-
-        <a class="header-contact" href="#contact">Связаться</a>
+            <nav class="category-nav" aria-label="Категории портфолио">
+                <a href="#renders">Рендеры</a>
+                <a href="#models">Модели</a>
+                <a href="#blender-animations">Анимации · Blender</a>
+                <a href="#blockbench-animations">Анимации · Blockbench</a>
+            </nav>
+        </div>
     </header>
 
-    <main id="main">
-        <section class="hero" id="top">
-            <div class="hero-copy">
-                <p class="eyebrow">Анимация · Рендеры · 3D-модели</p>
-                <h1>Движение, которое <span>рассказывает историю</span></h1>
-                <p class="hero-description">
-                    Создаю персонажные анимации в Blender и Blockbench,
-                    атмосферные рендеры и простые 3D-модели для ваших проектов.
+    <main>
+        <section class="welcome" id="welcome">
+            <div class="welcome-card" aria-labelledby="welcome-title">
+            <div class="media-frame">
+                <img
+                    class="media-placeholder"
+                    src="assets/images/hero/hello.gif"
+                    alt="Приветственная анимация"
+                >
+            </div>
+
+            <div class="intro">
+                <div class="identity" aria-label="Автор портфолио: BENDY659">
+                    <span class="nickname">_BENDY659_</span>
+                    <span class="wolf" aria-hidden="true">🐺︎</span>
+                </div>
+
+                <div class="message">
+                    <p class="message-label">WELCOME MESSAGE</p>
+                    <h1 id="welcome-title">
+                        Привет! <span class="waving-hand" aria-hidden="true">👋</span>
+                    </h1>
+
+                    <div class="message-copy">
+                        <p>
+                            Я занимаюсь простыми заказами для Minecraft по категориям:
+                            «Рендеры», «Модели» и «Анимации» — в частности,
+                            в Blockbench (GeckoLib) и Blender.
+                        </p>
+                        <p>
+                            Я продолжаю развиваться, поэтому берусь
+                            преимущественно за простые заказы 😄
+                        </p>
+                        <p>
+                            По всем заказам и вопросам пишите мне в
+                            Telegram: <a href="https://t.me/bendy659">@bendy659</a>
+                            или Discord: <code>@bendy659</code>.
+                            Практически всегда онлайн — обычно с 07:00 до 19:00 по МСК.
+                        </p>
+                        <p class="timezone">
+                            Мой часовой пояс: МСК+6
+                            <span class="local-time">
+                                у меня сейчас
+                                <time id="local-clock" datetime="">--:--:--</time>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section
+            class="portfolio-section renders-section"
+            id="renders"
+            aria-labelledby="renders-title"
+            data-gallery
+            data-gallery-item-label="Рендер"
+        >
+            <header class="category-heading">
+                <p class="category-label">PORTFOLIO CATEGORY</p>
+                <h2 class="category-title" id="renders-title">Рендеры</h2>
+                <p>Листайте ленту или нажмите на работу, чтобы рассмотреть её полностью.</p>
+            </header>
+
+            <div class="render-gallery">
+                <div
+                    class="render-strip"
+                    tabindex="0"
+                    aria-label="Горизонтальная галерея рендеров"
+                    data-render-strip
+                >
+                    <div class="render-track" data-render-track>
+                    <button class="render-card" type="button" aria-label="Открыть рендер 1 из 7">
+                        <img
+                            src="assets/images/portfolio/renders/image_0.png"
+                            alt="Рендер 1"
+                            width="1536"
+                            height="1536"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть рендер 2 из 7">
+                        <img
+                            src="assets/images/portfolio/renders/image_1.png"
+                            alt="Рендер 2"
+                            width="1920"
+                            height="1080"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть рендер 3 из 7">
+                        <img
+                            src="assets/images/portfolio/renders/image_2.png"
+                            alt="Рендер 3"
+                            width="4096"
+                            height="2160"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть рендер 4 из 7">
+                        <img
+                            src="assets/images/portfolio/renders/image_3.png"
+                            alt="Рендер 4"
+                            width="1080"
+                            height="1080"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть рендер 5 из 7">
+                        <img
+                            src="assets/images/portfolio/renders/image_4.png"
+                            alt="Рендер 5"
+                            width="1920"
+                            height="1080"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть рендер 6 из 7">
+                        <img
+                            src="assets/images/portfolio/renders/image_5.png"
+                            alt="Рендер 6"
+                            width="1920"
+                            height="1080"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть рендер 7 из 7">
+                        <img
+                            src="assets/images/portfolio/renders/image_6.png"
+                            alt="Рендер 7"
+                            width="1920"
+                            height="1080"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="render-pricing" aria-labelledby="render-pricing-title">
+                <header class="pricing-heading">
+                    <p class="category-label">RENDER PRICING</p>
+                    <h3 id="render-pricing-title">Прайс на рендеры</h3>
+                    <p>Цена согласуется и фиксируется до начала работы.</p>
+                </header>
+
+                <p class="pricing-warning">
+                    Важно: я ленивый, поэтому в работе возможны задержки.
                 </p>
 
-                <div class="hero-actions">
-                    <a class="button button-primary" href="#works">Посмотреть работы</a>
-                    <a class="button button-secondary" href="#price">Узнать стоимость</a>
+                <div class="pricing-grid">
+                    <article class="pricing-cell price-cell">
+                        <h4>Стоимость</h4>
+                        <dl class="price-list">
+                            <div>
+                                <dt>Рендер или превью</dt>
+                                <dd><span>от</span> 1000 ₽</dd>
+                            </div>
+                            <div>
+                                <dt>Срочное выполнение</dt>
+                                <dd>+50%</dd>
+                            </div>
+                            <div>
+                                <dt>Обычная правка</dt>
+                                <dd>100 ₽</dd>
+                            </div>
+                            <div>
+                                <dt>Срочная правка</dt>
+                                <dd>250 ₽</dd>
+                            </div>
+                        </dl>
+                    </article>
+
+                    <article class="pricing-cell requirements-cell">
+                        <h4>Что требуется от вас</h4>
+                        <ul class="requirements-list">
+                            <li>
+                                Как можно точнее опишите, какой результат хотите получить.
+                            </li>
+                            <li>
+                                По возможности приложите референсы и укажите нужный формат
+                                и разрешение готовой работы.
+                            </li>
+                            <li>
+                                Для лучшего понимания задачи я могу задать дополнительные вопросы.
+                            </li>
+                            <li>
+                                По вашему желанию в процессе работы я могу присылать промежуточный
+                                прогресс.
+                            </li>
+                        </ul>
+                    </article>
                 </div>
 
-                <dl class="hero-facts">
+                <div class="render-guarantee">
                     <div>
-                        <dt>Blender</dt>
-                        <dd>Анимация и рендеры</dd>
+                        <p class="guarantee-mark" aria-hidden="true">7</p>
+                        <p>дней гарантии</p>
                     </div>
-                    <div>
-                        <dt>Blockbench</dt>
-                        <dd>Стилизованная анимация</dd>
-                    </div>
-                </dl>
-            </div>
-
-            <div class="hero-art" aria-label="Декоративная композиция из трёхмерных форм">
-                <div class="art-frame">
-                    <span class="art-grid" aria-hidden="true"></span>
-                    <span class="art-orbit art-orbit-large" aria-hidden="true"></span>
-                    <span class="art-orbit art-orbit-small" aria-hidden="true"></span>
-                    <span class="art-cube" aria-hidden="true"></span>
-                    <span class="art-sphere" aria-hidden="true"></span>
-                    <p>Кадр за кадром</p>
+                    <p>
+                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
+                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
+                    </p>
                 </div>
-            </div>
+            </section>
+
         </section>
 
-        <section class="section works" id="works">
-            <div class="section-heading">
-                <div>
-                    <p class="eyebrow">Избранные работы</p>
-                    <h2>Портфолио</h2>
-                </div>
-                <p>Здесь появятся реальные видео, рендеры и модели после добавления материалов.</p>
-            </div>
-
-            <div class="work-grid">
-                <article class="work-card work-card-wide">
-                    <div class="work-preview work-preview-animation" aria-hidden="true">
-                        <span>Место для видео</span>
-                    </div>
-                    <div class="work-meta">
-                        <div>
-                            <p class="work-type">Анимация</p>
-                            <h3>Работа в Blender</h3>
-                        </div>
-                        <span class="work-tool">Blender</span>
-                    </div>
-                </article>
-
-                <article class="work-card">
-                    <div class="work-preview work-preview-render" aria-hidden="true">
-                        <span>Место для рендера</span>
-                    </div>
-                    <div class="work-meta">
-                        <div>
-                            <p class="work-type">Рендер</p>
-                            <h3>Готовая сцена</h3>
-                        </div>
-                        <span class="work-tool">3D</span>
-                    </div>
-                </article>
-
-                <article class="work-card">
-                    <div class="work-preview work-preview-blockbench" aria-hidden="true">
-                        <span>Место для видео</span>
-                    </div>
-                    <div class="work-meta">
-                        <div>
-                            <p class="work-type">Анимация</p>
-                            <h3>Работа в Blockbench</h3>
-                        </div>
-                        <span class="work-tool">Blockbench</span>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="section services" id="services">
-            <div class="section-heading">
-                <div>
-                    <p class="eyebrow">Что можно заказать</p>
-                    <h2>Услуги</h2>
-                </div>
-            </div>
-
-            <div class="service-grid">
-                <article>
-                    <span class="service-icon" aria-hidden="true">01</span>
-                    <h3>Анимация в Blender</h3>
-                    <p>От спокойных idle-анимаций до динамичных сцен с несколькими связанными действиями.</p>
-                </article>
-                <article>
-                    <span class="service-icon" aria-hidden="true">02</span>
-                    <h3>Анимация в Blockbench</h3>
-                    <p>Стилизованные движения персонажей и существ для игровых проектов.</p>
-                </article>
-                <article>
-                    <span class="service-icon" aria-hidden="true">03</span>
-                    <h3>Рендеры</h3>
-                    <p>Постановка сцены, камеры и света для выразительного итогового изображения.</p>
-                </article>
-                <article>
-                    <span class="service-icon" aria-hidden="true">04</span>
-                    <h3>Простые 3D-модели</h3>
-                    <p>Несложные объекты и элементы окружения. Объём работы оценивается отдельно.</p>
-                </article>
-            </div>
-        </section>
-
-        <section class="section pricing" id="price">
-            <div class="pricing-intro">
-                <p class="eyebrow">Предварительный прайс</p>
-                <h2>Понятный расчёт анимации</h2>
+        <section
+            class="portfolio-section models-section"
+            id="models"
+            aria-labelledby="models-title"
+            data-gallery
+            data-gallery-item-label="Модель"
+        >
+            <header class="category-heading">
+                <p class="category-label">PORTFOLIO CATEGORY</p>
+                <h2 class="category-title" id="models-title">Модели</h2>
                 <p>
-                    Итог складывается из базовой стоимости, длительности готовой
-                    анимации и уровня сложности сцены.
+                    Простые модели для Minecraft, созданные в Blockbench.
+                    Листайте ленту или нажмите на работу для просмотра анимации.
+                </p>
+            </header>
+
+            <div class="render-gallery">
+                <div
+                    class="render-strip"
+                    tabindex="0"
+                    aria-label="Горизонтальная галерея моделей"
+                >
+                    <div class="render-track">
+                    <button class="render-card" type="button" aria-label="Открыть модель 1 из 6">
+                        <img
+                            src="assets/images/portfolio/models/image_0.gif"
+                            alt="Модель для Minecraft 1"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть модель 2 из 6">
+                        <img
+                            src="assets/images/portfolio/models/image_1.gif"
+                            alt="Модель для Minecraft 2"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть модель 3 из 6">
+                        <img
+                            src="assets/images/portfolio/models/image_2.gif"
+                            alt="Модель для Minecraft 3"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть модель 4 из 6">
+                        <img
+                            src="assets/images/portfolio/models/image_3.gif"
+                            alt="Модель для Minecraft 4"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть модель 5 из 6">
+                        <img
+                            src="assets/images/portfolio/models/image_4.gif"
+                            alt="Модель для Minecraft 5"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    <button class="render-card" type="button" aria-label="Открыть модель 6 из 6">
+                        <img
+                            src="assets/images/portfolio/models/image_5.gif"
+                            alt="Модель для Minecraft 6"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="render-pricing" aria-labelledby="models-order-title">
+                <header class="pricing-heading">
+                    <p class="category-label">MODEL COMMISSIONS</p>
+                    <h3 id="models-order-title">Заказ моделей</h3>
+                    <p>
+                        Делаю простые модели для Minecraft в Blockbench.
+                        Точная стоимость определяется после оценки задачи.
+                    </p>
+                </header>
+
+                <p class="pricing-warning">
+                    Важно: я ленивый, поэтому в работе возможны задержки.
                 </p>
 
-                <div class="formula" aria-label="Формула стоимости">
-                    <span><strong>500 ₽</strong> база</span>
-                    <b aria-hidden="true">+</b>
-                    <span><strong>100 ₽</strong> за секунду</span>
-                    <b aria-hidden="true">+</b>
-                    <span><strong>сложность</strong></span>
+                <div class="pricing-grid">
+                    <article class="pricing-cell price-cell">
+                        <h4>Что я могу сделать</h4>
+                        <ul class="requirements-list">
+                            <li>Простую модель по референсу или понятному описанию.</li>
+                            <li>Предмет, декор или несложную модель существа.</li>
+                            <li>Простую текстуру в стилистике Minecraft.</li>
+                            <li>Подготовить проект в Blockbench для дальнейшей работы.</li>
+                        </ul>
+                    </article>
+
+                    <article class="pricing-cell requirements-cell">
+                        <h4>Что требуется от вас</h4>
+                        <ul class="requirements-list">
+                            <li>Опишите назначение модели и желаемый результат.</li>
+                            <li>Приложите референсы, рисунок или похожие примеры.</li>
+                            <li>
+                                Укажите нужный формат и технические требования,
+                                если они уже известны.
+                            </li>
+                            <li>
+                                Для лучшего понимания задачи я могу задать дополнительные вопросы
+                                и по желанию присылать промежуточный прогресс.
+                            </li>
+                        </ul>
+                    </article>
                 </div>
 
-                <p class="pricing-note">
-                    Моделирование, создание или исправление рига, дополнительные персонажи
-                    и полная переработка утверждённой сцены рассчитываются отдельно.
+                <div class="render-guarantee">
+                    <div>
+                        <p class="guarantee-mark" aria-hidden="true">7</p>
+                        <p>дней гарантии</p>
+                    </div>
+                    <p>
+                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
+                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
+                    </p>
+                </div>
+            </section>
+        </section>
+
+        <section
+            class="portfolio-section blender-animations-section"
+            id="blender-animations"
+            aria-labelledby="blender-animations-title"
+        >
+            <header class="category-heading">
+                <p class="category-label">PORTFOLIO CATEGORY</p>
+                <h2 class="category-title" id="blender-animations-title">Анимации · Blender</h2>
+                <p>Простые анимации для Minecraft-проектов, созданные в Blender.</p>
+            </header>
+
+            <div class="render-gallery">
+                <div class="portfolio-empty">
+                    <p>Примеры Blender-анимаций появятся здесь после добавления материалов.</p>
+                </div>
+            </div>
+
+            <section class="render-pricing" aria-labelledby="blender-order-title">
+                <header class="pricing-heading">
+                    <p class="category-label">BLENDER ANIMATION</p>
+                    <h3 id="blender-order-title">Заказ анимации</h3>
+                    <p>
+                        Берусь за простые анимации. Точная стоимость определяется
+                        после оценки задачи и готовности исходных материалов.
+                    </p>
+                </header>
+
+                <p class="pricing-warning">
+                    Важно: я ленивый, поэтому в работе возможны задержки.
                 </p>
-            </div>
 
-            <div class="tier-list">
-                <article class="tier-card">
-                    <div class="tier-topline">
-                        <span>Простая</span>
-                        <strong>+0 ₽</strong>
+                <div class="pricing-grid">
+                    <article class="pricing-cell price-cell">
+                        <h4>Что я могу сделать</h4>
+                        <ul class="requirements-list">
+                            <li>Простое движение персонажа или объекта.</li>
+                            <li>Idle-анимацию, жест, поворот или другое спокойное действие.</li>
+                            <li>Несложное перемещение или движение камеры.</li>
+                            <li>Анимацию по референсу и понятному описанию.</li>
+                        </ul>
+                    </article>
+
+                    <article class="pricing-cell requirements-cell">
+                        <h4>Что требуется от вас</h4>
+                        <ul class="requirements-list">
+                            <li>Опишите действие и желаемую длительность анимации.</li>
+                            <li>Приложите модель, риг и текстуры, если они уже готовы.</li>
+                            <li>Добавьте видео, GIF или другой пример нужного движения.</li>
+                            <li>Укажите формат результата и технические требования.</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="render-guarantee">
+                    <div>
+                        <p class="guarantee-mark" aria-hidden="true">7</p>
+                        <p>дней гарантии</p>
                     </div>
-                    <p>Одно спокойное действие: idle, поворот головы или корпуса, простой жест, статичная камера.</p>
-                </article>
-                <article class="tier-card tier-card-accent">
-                    <div class="tier-topline">
-                        <span>Средняя</span>
-                        <strong>+300 ₽</strong>
-                    </div>
-                    <p>Ходьба, бег, прыжок, падение, атака оружием, предмет в сцене или простое движение камеры.</p>
-                </article>
-                <article class="tier-card">
-                    <div class="tier-topline">
-                        <span>Сложная</span>
-                        <strong>+600 ₽</strong>
-                    </div>
-                    <p>Акробатика, сложные позы, несколько персонажей, точные взаимодействия или активная камера.</p>
-                </article>
-            </div>
+                    <p>
+                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
+                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
+                    </p>
+                </div>
+            </section>
         </section>
 
-        <section class="section process" id="process">
-            <div class="section-heading">
-                <div>
-                    <p class="eyebrow">Как проходит работа</p>
-                    <h2>От идеи до готового файла</h2>
+        <section
+            class="portfolio-section blockbench-animations-section"
+            id="blockbench-animations"
+            aria-labelledby="blockbench-animations-title"
+        >
+            <header class="category-heading">
+                <p class="category-label">PORTFOLIO CATEGORY</p>
+                <h2 class="category-title" id="blockbench-animations-title">
+                    Анимации · Blockbench
+                </h2>
+                <p>Простые анимации для Minecraft-моделей, в том числе под GeckoLib.</p>
+            </header>
+
+            <div class="render-gallery">
+                <div class="portfolio-empty">
+                    <p>Примеры Blockbench-анимаций появятся здесь после добавления материалов.</p>
                 </div>
             </div>
 
-            <ol class="process-list">
-                <li>
-                    <span>01</span>
-                    <div>
-                        <h3>Обсуждение</h3>
-                        <p>Уточняем задачу, формат, длительность, референсы и сроки.</p>
-                    </div>
-                </li>
-                <li>
-                    <span>02</span>
-                    <div>
-                        <h3>Оценка</h3>
-                        <p>Определяем сложность, объём работы и итоговую стоимость.</p>
-                    </div>
-                </li>
-                <li>
-                    <span>03</span>
-                    <div>
-                        <h3>Производство</h3>
-                        <p>Создаю сцену и показываю промежуточный результат для согласования.</p>
-                    </div>
-                </li>
-                <li>
-                    <span>04</span>
-                    <div>
-                        <h3>Готовый результат</h3>
-                        <p>Вношу согласованные правки и передаю работу в нужном формате.</p>
-                    </div>
-                </li>
-            </ol>
-        </section>
+            <section class="render-pricing" aria-labelledby="blockbench-order-title">
+                <header class="pricing-heading">
+                    <p class="category-label">BLOCKBENCH ANIMATION</p>
+                    <h3 id="blockbench-order-title">Заказ анимации</h3>
+                    <p>
+                        Берусь за простые анимации в Blockbench. Точная стоимость определяется
+                        после оценки действий, модели и готовности рига.
+                    </p>
+                </header>
 
-        <section class="section contact" id="contact">
-            <p class="eyebrow">Обсудить проект</p>
-            <h2>Расскажите, что хотите создать</h2>
-            <p>Ссылки на Telegram и Discord появятся здесь после подтверждения.</p>
-            <div class="contact-actions" aria-label="Будущие способы связи">
-                <span class="button button-primary button-disabled">Telegram</span>
-                <span class="button button-secondary button-disabled">Discord</span>
-            </div>
+                <p class="pricing-warning">
+                    Важно: я ленивый, поэтому в работе возможны задержки.
+                </p>
+
+                <div class="pricing-grid">
+                    <article class="pricing-cell price-cell">
+                        <h4>Что я могу сделать</h4>
+                        <ul class="requirements-list">
+                            <li>Idle-анимацию, ходьбу, бег или простой жест.</li>
+                            <li>Несложную атаку или взаимодействие с предметом.</li>
+                            <li>Зацикленную анимацию для Minecraft-модели.</li>
+                            <li>Простую анимацию под GeckoLib по референсу.</li>
+                        </ul>
+                    </article>
+
+                    <article class="pricing-cell requirements-cell">
+                        <h4>Что требуется от вас</h4>
+                        <ul class="requirements-list">
+                            <li>Пришлите модель Blockbench с готовым ригом и текстурой.</li>
+                            <li>Опишите нужные действия и их примерную длительность.</li>
+                            <li>Приложите видео, GIF или другой референс движения.</li>
+                            <li>Укажите требования проекта и формат результата.</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="render-guarantee">
+                    <div>
+                        <p class="guarantee-mark" aria-hidden="true">7</p>
+                        <p>дней гарантии</p>
+                    </div>
+                    <p>
+                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
+                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
+                    </p>
+                </div>
+            </section>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <p>Портфолио аниматора и 3D-художника</p>
-        <p>Демо-версия сайта</p>
-    </footer>
+    <dialog class="render-lightbox" id="render-lightbox" aria-labelledby="render-lightbox-caption">
+        <button class="lightbox-close" type="button" aria-label="Закрыть просмотр">×</button>
+        <figure>
+            <img src="" alt="">
+            <figcaption id="render-lightbox-caption"></figcaption>
+        </figure>
+    </dialog>
 </body>
 </html>
