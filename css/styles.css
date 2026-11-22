@@ -24,6 +24,8 @@ html {
 }
 
 body {
+    position: relative;
+    isolation: isolate;
     min-height: 100svh;
     margin: 0;
     background: transparent;
@@ -31,6 +33,34 @@ body {
     font-family: "Onest", Arial, sans-serif;
     font-size: 1rem;
     line-height: 1.5;
+}
+
+body::before,
+body::after {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    content: "";
+}
+
+body::before {
+    top: 0;
+    z-index: -2;
+    height: 118svh;
+    background-image: url("../assets/images/backgrounds/placeholder.webp");
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: translate3d(0, var(--background-parallax), 0);
+    will-change: transform;
+}
+
+body::after {
+    inset-block: 0;
+    z-index: -1;
+    height: 100svh;
+    background: rgba(5, 6, 5, 0.52);
 }
 
 .site-header {
@@ -125,14 +155,7 @@ body {
     place-items: center;
     min-height: calc(100svh - 7rem);
     padding: clamp(1rem, 4vw, 4rem);
-    background-image:
-        linear-gradient(rgba(9, 10, 9, 0.62), rgba(9, 10, 9, 0.78)),
-        url("../assets/images/backgrounds/placeholder.webp");
-    background-position:
-        center,
-        center calc(50% + var(--background-parallax));
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: transparent;
 }
 
 .welcome-card {
@@ -283,10 +306,71 @@ body {
     font-size: 0.92em;
 }
 
+.order-guide {
+    width: min(calc(100% - 2rem), 90rem);
+    margin: clamp(2rem, 5vw, 4rem) auto;
+    padding: clamp(4rem, 8vw, 7rem) 1rem;
+    border: 1px solid var(--line);
+    background: var(--panel-deep);
+}
+
+.guide-heading {
+    width: min(100%, 76rem);
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+    text-align: center;
+}
+
+.guide-heading h2 {
+    margin: 0;
+    font-family: "Unbounded", Arial, sans-serif;
+    font-size: clamp(2.25rem, 6vw, 4.75rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.guide-heading > p:last-child {
+    margin: 1rem 0 0;
+    color: var(--muted);
+}
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    width: min(100%, 76rem);
+    margin: 0 auto;
+}
+
+.guide-card {
+    min-height: 12rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--line);
+    background: var(--panel);
+}
+
+.guide-card h3 {
+    margin: 0;
+    font-family: "Unbounded", Arial, sans-serif;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+}
+
+.guide-card p {
+    margin: 1rem 0 0;
+    color: var(--muted);
+}
+
+.guide-card-accent {
+    border-color: var(--green);
+    background: rgba(32, 241, 53, 0.04);
+}
+
 .portfolio-section {
+    width: min(calc(100% - 2rem), 90rem);
     min-height: 100svh;
+    margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(4rem, 9vw, 8rem) 0;
-    border-top: 1px solid var(--line);
+    overflow: hidden;
+    border: 1px solid var(--line);
     background: #090a09;
 }
 
@@ -436,15 +520,6 @@ body {
     font-size: 1rem;
 }
 
-.pricing-warning {
-    margin: 0 0 1rem;
-    padding: 0.75rem 1rem;
-    border-left: 3px solid var(--red);
-    background: rgba(255, 41, 41, 0.06);
-    color: var(--red);
-    font-weight: 700;
-}
-
 .pricing-grid {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -536,39 +611,155 @@ body {
     transform: rotate(45deg);
 }
 
-.render-guarantee {
+.contact-section {
+    width: min(calc(100% - 2rem), 90rem);
+    margin: clamp(2rem, 5vw, 4rem) auto;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    border: 1px solid var(--line);
+    background: var(--panel-deep);
+}
+
+.contact-grid {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 1rem;
+}
+
+.contact-card,
+.calculator-card {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--line);
+    background: var(--panel);
+}
+
+.contact-card h2,
+.calculator-card h2 {
+    margin: 0;
+    font-family: "Unbounded", Arial, sans-serif;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    letter-spacing: -0.04em;
+}
+
+.contact-card > p:not(.category-label),
+.calculator-intro,
+.calculator-note {
+    color: var(--muted);
+}
+
+.contact-links {
+    display: grid;
+    gap: 0.75rem;
+    margin: 2rem 0;
+}
+
+.contact-links a,
+.contact-links p {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.contact-links a:hover,
+.contact-links a:focus-visible {
+    border-color: var(--green);
+    color: var(--green);
+    outline: none;
+}
+
+.contact-links code {
+    font-family: "Courier New", Courier, monospace;
+}
+
+.contact-availability {
+    margin-bottom: 0;
+    line-height: 1.8;
+}
+
+.calculator-card {
+    margin: 0;
+}
+
+.calculator-service {
+    margin: 1rem 0 0;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    opacity: 0.62;
+    transition:
+        border-color 160ms ease,
+        opacity 160ms ease;
+}
+
+.calculator-service.is-selected {
+    border-color: var(--green);
+    opacity: 1;
+}
+
+.calculator-service legend {
+    padding: 0 0.4rem;
+    font-family: "Unbounded", Arial, sans-serif;
+    font-weight: 700;
+}
+
+.calculator-service label {
+    display: grid;
+    gap: 0.4rem;
+    color: var(--muted);
+}
+
+.calculator-service legend label {
+    display: flex;
     align-items: center;
-    gap: clamp(1.25rem, 4vw, 3rem);
+    gap: 0.6rem;
+    color: var(--ink);
+}
+
+.calculator-fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.calculator-service input,
+.calculator-service select {
+    min-width: 0;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--panel-deep);
+    color: var(--ink);
+    font: inherit;
+}
+
+.calculator-service input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    padding: 0;
+    accent-color: var(--green);
+}
+
+.calculator-service input:focus-visible,
+.calculator-service select:focus-visible {
+    border-color: var(--green);
+    outline: none;
+}
+
+.calculator-result {
+    display: block;
     margin-top: 1rem;
     padding: 1.25rem;
     border: 1px solid var(--green);
     background: rgba(32, 241, 53, 0.04);
-}
-
-.render-guarantee > div {
-    min-width: 8rem;
-    text-align: center;
-}
-
-.render-guarantee p {
-    margin: 0;
-}
-
-.guarantee-mark {
     color: var(--green);
     font-family: "Unbounded", Arial, sans-serif;
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 700;
 }
 
-.guarantee-mark + p {
-    margin-top: 0.25rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-    text-transform: uppercase;
+.calculator-note {
+    margin-bottom: 0;
+    font-size: 0.9rem;
 }
 
 .render-lightbox {
@@ -649,7 +840,8 @@ body {
     white-space: nowrap;
 }
 
-#local-clock {
+#visitor-availability,
+#contact-availability {
     color: var(--green);
     font-family: "Courier New", Courier, monospace;
     font-weight: 700;
@@ -847,6 +1039,15 @@ body {
         grid-template-columns: 1fr;
     }
 
+    .guide-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid,
+    .calculator-fields {
+        grid-template-columns: 1fr;
+    }
+
 }
 
 @media (max-width: 430px) {
@@ -857,6 +1058,12 @@ body {
     .welcome-card {
         gap: 0.75rem;
         padding: 0.75rem;
+    }
+
+    .order-guide,
+    .portfolio-section,
+    .contact-section {
+        width: calc(100% - 1rem);
     }
 
     .identity {
@@ -894,10 +1101,6 @@ body {
         max-width: 85vw;
     }
 
-    .render-guarantee {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {

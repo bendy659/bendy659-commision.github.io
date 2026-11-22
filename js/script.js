@@ -1,27 +1,32 @@
 const root = document.documentElement;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const localClock = document.querySelector("#local-clock");
+const visitorAvailability = document.querySelector("#visitor-availability");
+const contactAvailability = document.querySelector("#contact-availability");
+const priceCalculator = document.querySelector("#price-calculator");
+const calculatorResult = document.querySelector("#calculator-result");
 const portfolioLightbox = document.querySelector("#render-lightbox");
 const portfolioLightboxCaption = portfolioLightbox.querySelector("figcaption");
 const portfolioLightboxClose = portfolioLightbox.querySelector(".lightbox-close");
 const portfolioLightboxImage = portfolioLightbox.querySelector("img");
 const gallerySections = Array.from(document.querySelectorAll("[data-gallery]"));
 const portfolioSections = Array.from(document.querySelectorAll(".portfolio-section"));
-const localTimeFormatter = new Intl.DateTimeFormat("ru-RU", {
-    timeZone: "Asia/Yakutsk",
+const visitorTimeFormatter = new Intl.DateTimeFormat("ru-RU", {
     hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
+    minute: "2-digit"
 });
+const priceFormatter = new Intl.NumberFormat("ru-RU");
 
 let frameRequested = false;
 
 function updateBackgroundPosition() {
-    const offset = reducedMotion.matches
-        ? 0
-        : Math.min(window.scrollY * 0.08, 72);
+    const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollProgress = scrollRange > 0
+        ? Math.min(Math.max(window.scrollY / scrollRange, 0), 1)
+        : 0;
+    const parallaxRange = window.innerHeight * 0.18;
+    const offset = reducedMotion.matches ? 0 : -(parallaxRange * scrollProgress);
 
-    root.style.setProperty("--background-parallax", `${-offset}px`);
+    root.style.setProperty("--background-parallax", `${offset}px`);
     frameRequested = false;
 }
 
@@ -34,11 +39,63 @@ function requestBackgroundUpdate() {
     window.requestAnimationFrame(updateBackgroundPosition);
 }
 
-function updateLocalClock() {
+function updateVisitorAvailability() {
     const now = new Date();
+    const year = now.getUTCFullYear();
+    const month = now.getUTCMonth();
+    const day = now.getUTCDate();
+    const start = new Date(Date.UTC(year, month, day, 4));
+    const end = new Date(Date.UTC(year, month, day, 16));
+    const range = `${visitorTimeFormatter.format(start)}–${visitorTimeFormatter.format(end)}`;
 
-    localClock.dateTime = now.toISOString();
-    localClock.textContent = localTimeFormatter.format(now);
+    visitorAvailability.textContent = range;
+    contactAvailability.textContent = range;
+}
+
+function updatePriceCalculator() {
+    const renderEnabled = priceCalculator.elements.namedItem("render-enabled").checked;
+    const modelEnabled = priceCalculator.elements.namedItem("model-enabled").checked;
+    const animationEnabled = priceCalculator.elements.namedItem("animation-enabled").checked;
+    const services = Array.from(priceCalculator.querySelectorAll(".calculator-service"));
+
+    services.forEach((service) => {
+        const checkbox = service.querySelector('input[type="checkbox"]');
+        const enabled = checkbox.checked;
+
+        service.classList.toggle("is-selected", enabled);
+        service.querySelectorAll('input:not([type="checkbox"]), select').forEach((control) => {
+            control.disabled = !enabled;
+        });
+    });
+
+    let total = 0;
+    let selectedServices = 0;
+
+    if (renderEnabled) {
+        const count = Math.max(Number(priceCalculator.elements.namedItem("render-count").value), 1);
+
+        total += count * 850;
+        selectedServices += 1;
+    }
+
+    if (modelEnabled) {
+        const count = Math.max(Number(priceCalculator.elements.namedItem("model-count").value), 1);
+
+        total += count * 1000;
+        selectedServices += 1;
+    }
+
+    if (animationEnabled) {
+        const duration = Math.max(Number(priceCalculator.elements.namedItem("animation-duration").value), 1);
+        const detail = Number(priceCalculator.elements.namedItem("animation-detail").value);
+
+        total += 500 + (duration * 100) + detail;
+        selectedServices += 1;
+    }
+
+    calculatorResult.textContent = selectedServices > 0
+        ? `Примерно: ${priceFormatter.format(total)} ₽`
+        : "Выберите услуги";
 }
 
 function alignInitialSection() {
@@ -191,10 +248,13 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.45 });
 
 updateBackgroundPosition();
-updateLocalClock();
+updateVisitorAvailability();
+updatePriceCalculator();
 portfolioSections.forEach((section) => sectionObserver.observe(section));
 window.addEventListener("scroll", requestBackgroundUpdate, { passive: true });
 reducedMotion.addEventListener("change", requestBackgroundUpdate);
+priceCalculator.addEventListener("input", updatePriceCalculator);
+priceCalculator.addEventListener("change", updatePriceCalculator);
 portfolioLightbox.addEventListener("click", closePortfolioLightbox);
 portfolioLightboxClose.addEventListener("click", () => portfolioLightbox.close());
 window.addEventListener("pointerup", () => {
@@ -208,6 +268,6 @@ window.addEventListener("load", () => {
     galleryControllers.forEach((gallery) => gallery.updateLoopWidth());
 });
 window.addEventListener("resize", () => {
+    requestBackgroundUpdate();
     galleryControllers.forEach((gallery) => gallery.updateLoopWidth());
 });
-window.setInterval(updateLocalClock, 1000);

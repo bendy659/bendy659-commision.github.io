@@ -25,8 +25,7 @@
             <nav class="category-nav" aria-label="Категории портфолио">
                 <a href="#renders">Рендеры</a>
                 <a href="#models">Модели</a>
-                <a href="#blender-animations">Анимации · Blender</a>
-                <a href="#blockbench-animations">Анимации · Blockbench</a>
+                <a href="#animations">Анимации</a>
             </nav>
         </div>
     </header>
@@ -56,30 +55,71 @@
 
                     <div class="message-copy">
                         <p>
-                            Я занимаюсь простыми заказами для Minecraft по категориям:
+                            Я занимаюсь заказами для Minecraft по категориям:
                             «Рендеры», «Модели» и «Анимации» — в частности,
                             в Blockbench (GeckoLib) и Blender.
                         </p>
                         <p>
-                            Я продолжаю развиваться, поэтому берусь
-                            преимущественно за простые заказы 😄
+                            Я продолжаю развиваться, поэтому берусь за задачи,
+                            которые соответствуют моему опыту и возможностям 😄
                         </p>
                         <p>
                             По всем заказам и вопросам пишите мне в
                             Telegram: <a href="https://t.me/bendy659">@bendy659</a>
                             или Discord: <code>@bendy659</code>.
-                            Практически всегда онлайн — обычно с 07:00 до 19:00 по МСК.
                         </p>
                         <p class="timezone">
-                            Мой часовой пояс: МСК+6
+                            Обычно онлайн по вашему времени:
                             <span class="local-time">
-                                у меня сейчас
-                                <time id="local-clock" datetime="">--:--:--</time>
+                                <span id="visitor-availability">определяю…</span>
                             </span>
                         </p>
                     </div>
                 </div>
             </div>
+            </div>
+        </section>
+
+        <section class="order-guide" aria-labelledby="order-guide-title">
+            <header class="guide-heading">
+                <p class="category-label">BEFORE ORDERING</p>
+                <h2 id="order-guide-title">Перед заказом</h2>
+                <p>Общие условия действуют для рендеров, моделей и анимаций.</p>
+            </header>
+
+            <div class="guide-grid">
+                <article class="guide-card">
+                    <h3>Что требуется от вас</h3>
+                    <p>
+                        Как можно точнее опишите задачу, приложите референсы
+                        и укажите формат, технические требования и важную дату, если она есть.
+                    </p>
+                </article>
+
+                <article class="guide-card">
+                    <h3>Как проходит работа</h3>
+                    <p>
+                        Я могу задать дополнительные вопросы для лучшего понимания задачи.
+                        По вашему желанию буду присылать промежуточный прогресс.
+                    </p>
+                </article>
+
+                <article class="guide-card">
+                    <h3>Правки</h3>
+                    <p>
+                        Небольшие корректировки в рамках согласованной задачи бесплатны.
+                        Крупные изменения уже утверждённой работы оплачиваются отдельно.
+                    </p>
+                </article>
+
+                <article class="guide-card guide-card-accent">
+                    <h3>Сроки и гарантия</h3>
+                    <p>
+                        Я работаю в спокойном темпе и иногда могу затянуть выполнение,
+                        поэтому называю срок с запасом. Свои ошибки бесплатно исправляю
+                        в течение 7 дней после сдачи.
+                    </p>
+                </article>
             </div>
         </section>
 
@@ -185,63 +225,25 @@
                     <p>Цена согласуется и фиксируется до начала работы.</p>
                 </header>
 
-                <p class="pricing-warning">
-                    Важно: я ленивый, поэтому в работе возможны задержки.
-                </p>
-
                 <div class="pricing-grid">
                     <article class="pricing-cell price-cell">
                         <h4>Стоимость</h4>
                         <dl class="price-list">
                             <div>
                                 <dt>Рендер или превью</dt>
-                                <dd><span>от</span> 1000 ₽</dd>
-                            </div>
-                            <div>
-                                <dt>Срочное выполнение</dt>
-                                <dd>+50%</dd>
-                            </div>
-                            <div>
-                                <dt>Обычная правка</dt>
-                                <dd>100 ₽</dd>
-                            </div>
-                            <div>
-                                <dt>Срочная правка</dt>
-                                <dd>250 ₽</dd>
+                                <dd><span>от</span> 850 ₽</dd>
                             </div>
                         </dl>
                     </article>
 
                     <article class="pricing-cell requirements-cell">
-                        <h4>Что требуется от вас</h4>
+                        <h4>Что входит</h4>
                         <ul class="requirements-list">
-                            <li>
-                                Как можно точнее опишите, какой результат хотите получить.
-                            </li>
-                            <li>
-                                По возможности приложите референсы и укажите нужный формат
-                                и разрешение готовой работы.
-                            </li>
-                            <li>
-                                Для лучшего понимания задачи я могу задать дополнительные вопросы.
-                            </li>
-                            <li>
-                                По вашему желанию в процессе работы я могу присылать промежуточный
-                                прогресс.
-                            </li>
+                            <li>Один готовый рендер по согласованной идее.</li>
+                            <li>Подбор композиции, освещения и положения объектов.</li>
+                            <li>Подготовка изображения в согласованном разрешении.</li>
                         </ul>
                     </article>
-                </div>
-
-                <div class="render-guarantee">
-                    <div>
-                        <p class="guarantee-mark" aria-hidden="true">7</p>
-                        <p>дней гарантии</p>
-                    </div>
-                    <p>
-                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
-                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
-                    </p>
                 </div>
             </section>
 
@@ -258,8 +260,8 @@
                 <p class="category-label">PORTFOLIO CATEGORY</p>
                 <h2 class="category-title" id="models-title">Модели</h2>
                 <p>
-                    Простые модели для Minecraft, созданные в Blockbench.
-                    Листайте ленту или нажмите на работу для просмотра анимации.
+                    Модели для Minecraft, созданные в Blockbench. К модели можно отдельно
+                    заказать анимации, в том числе под GeckoLib.
                 </p>
             </header>
 
@@ -339,188 +341,175 @@
                     <p class="category-label">MODEL COMMISSIONS</p>
                     <h3 id="models-order-title">Заказ моделей</h3>
                     <p>
-                        Делаю простые модели для Minecraft в Blockbench.
+                        Делаю модели для Minecraft в Blockbench.
                         Точная стоимость определяется после оценки задачи.
                     </p>
                 </header>
 
-                <p class="pricing-warning">
-                    Важно: я ленивый, поэтому в работе возможны задержки.
-                </p>
-
                 <div class="pricing-grid">
                     <article class="pricing-cell price-cell">
-                        <h4>Что я могу сделать</h4>
-                        <ul class="requirements-list">
-                            <li>Простую модель по референсу или понятному описанию.</li>
-                            <li>Предмет, декор или несложную модель существа.</li>
-                            <li>Простую текстуру в стилистике Minecraft.</li>
-                            <li>Подготовить проект в Blockbench для дальнейшей работы.</li>
-                        </ul>
+                        <h4>Стоимость</h4>
+                        <dl class="price-list">
+                            <div>
+                                <dt>Модель в Blockbench</dt>
+                                <dd>После оценки</dd>
+                            </div>
+                        </dl>
                     </article>
 
                     <article class="pricing-cell requirements-cell">
-                        <h4>Что требуется от вас</h4>
+                        <h4>Можно заказать</h4>
                         <ul class="requirements-list">
-                            <li>Опишите назначение модели и желаемый результат.</li>
-                            <li>Приложите референсы, рисунок или похожие примеры.</li>
-                            <li>
-                                Укажите нужный формат и технические требования,
-                                если они уже известны.
-                            </li>
-                            <li>
-                                Для лучшего понимания задачи я могу задать дополнительные вопросы
-                                и по желанию присылать промежуточный прогресс.
-                            </li>
+                            <li>Предмет, декор или модель существа.</li>
+                            <li>Текстуру в стилистике Minecraft.</li>
+                            <li>Проект Blockbench для дальнейшей работы.</li>
+                            <li>Анимации для модели отдельным заказом.</li>
                         </ul>
                     </article>
-                </div>
-
-                <div class="render-guarantee">
-                    <div>
-                        <p class="guarantee-mark" aria-hidden="true">7</p>
-                        <p>дней гарантии</p>
-                    </div>
-                    <p>
-                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
-                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
-                    </p>
                 </div>
             </section>
         </section>
 
-        <section
-            class="portfolio-section blender-animations-section"
-            id="blender-animations"
-            aria-labelledby="blender-animations-title"
-        >
+        <section class="portfolio-section animations-section" id="animations" aria-labelledby="animations-title">
             <header class="category-heading">
                 <p class="category-label">PORTFOLIO CATEGORY</p>
-                <h2 class="category-title" id="blender-animations-title">Анимации · Blender</h2>
-                <p>Простые анимации для Minecraft-проектов, созданные в Blender.</p>
+                <h2 class="category-title" id="animations-title">Анимации</h2>
+                <p>
+                    Работаю в Blender и Blockbench, включая проекты под GeckoLib.
+                    Конкретная задача и уровень детализации обсуждаются перед заказом.
+                </p>
             </header>
 
             <div class="render-gallery">
                 <div class="portfolio-empty">
-                    <p>Примеры Blender-анимаций появятся здесь после добавления материалов.</p>
+                    <p>Примеры анимаций появятся здесь после добавления материалов.</p>
                 </div>
             </div>
 
-            <section class="render-pricing" aria-labelledby="blender-order-title">
+            <section class="render-pricing" aria-labelledby="animation-pricing-title">
                 <header class="pricing-heading">
-                    <p class="category-label">BLENDER ANIMATION</p>
-                    <h3 id="blender-order-title">Заказ анимации</h3>
+                    <p class="category-label">ANIMATION PRICING</p>
+                    <h3 id="animation-pricing-title">Прайс на анимации</h3>
                     <p>
-                        Берусь за простые анимации. Точная стоимость определяется
-                        после оценки задачи и готовности исходных материалов.
+                        Итоговая цена зависит от длительности и детализации движения.
+                        Blender и Blockbench рассчитываются по одной формуле.
                     </p>
                 </header>
 
-                <p class="pricing-warning">
-                    Важно: я ленивый, поэтому в работе возможны задержки.
-                </p>
-
                 <div class="pricing-grid">
                     <article class="pricing-cell price-cell">
-                        <h4>Что я могу сделать</h4>
-                        <ul class="requirements-list">
-                            <li>Простое движение персонажа или объекта.</li>
-                            <li>Idle-анимацию, жест, поворот или другое спокойное действие.</li>
-                            <li>Несложное перемещение или движение камеры.</li>
-                            <li>Анимацию по референсу и понятному описанию.</li>
-                        </ul>
+                        <h4>Стоимость</h4>
+                        <dl class="price-list">
+                            <div>
+                                <dt>Базовая стоимость</dt>
+                                <dd>500 ₽</dd>
+                            </div>
+                            <div>
+                                <dt>Секунда анимации</dt>
+                                <dd>100 ₽</dd>
+                            </div>
+                            <div>
+                                <dt>Детализация</dt>
+                                <dd>0–600 ₽</dd>
+                            </div>
+                        </dl>
                     </article>
 
                     <article class="pricing-cell requirements-cell">
-                        <h4>Что требуется от вас</h4>
+                        <h4>Варианты заказа</h4>
                         <ul class="requirements-list">
-                            <li>Опишите действие и желаемую длительность анимации.</li>
-                            <li>Приложите модель, риг и текстуры, если они уже готовы.</li>
-                            <li>Добавьте видео, GIF или другой пример нужного движения.</li>
-                            <li>Укажите формат результата и технические требования.</li>
+                            <li>Анимационный ролик или отдельная сцена.</li>
+                            <li>Анимация для игры или Minecraft-проекта.</li>
+                            <li>Анимация для модели под GeckoLib.</li>
+                            <li>Формат результата согласуется перед началом работы.</li>
                         </ul>
                     </article>
-                </div>
-
-                <div class="render-guarantee">
-                    <div>
-                        <p class="guarantee-mark" aria-hidden="true">7</p>
-                        <p>дней гарантии</p>
-                    </div>
-                    <p>
-                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
-                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
-                    </p>
                 </div>
             </section>
         </section>
 
-        <section
-            class="portfolio-section blockbench-animations-section"
-            id="blockbench-animations"
-            aria-labelledby="blockbench-animations-title"
-        >
-            <header class="category-heading">
-                <p class="category-label">PORTFOLIO CATEGORY</p>
-                <h2 class="category-title" id="blockbench-animations-title">
-                    Анимации · Blockbench
-                </h2>
-                <p>Простые анимации для Minecraft-моделей, в том числе под GeckoLib.</p>
-            </header>
-
-            <div class="render-gallery">
-                <div class="portfolio-empty">
-                    <p>Примеры Blockbench-анимаций появятся здесь после добавления материалов.</p>
-                </div>
-            </div>
-
-            <section class="render-pricing" aria-labelledby="blockbench-order-title">
-                <header class="pricing-heading">
-                    <p class="category-label">BLOCKBENCH ANIMATION</p>
-                    <h3 id="blockbench-order-title">Заказ анимации</h3>
+        <section class="contact-section" id="contact" aria-labelledby="contact-title">
+            <div class="contact-grid">
+                <article class="contact-card">
+                    <p class="category-label">CONTACT</p>
+                    <h2 id="contact-title">Связь</h2>
                     <p>
-                        Берусь за простые анимации в Blockbench. Точная стоимость определяется
-                        после оценки действий, модели и готовности рига.
+                        Чтобы обсудить заказ, напишите мне удобным способом.
+                        В сообщении можно сразу приложить описание и референсы.
                     </p>
-                </header>
-
-                <p class="pricing-warning">
-                    Важно: я ленивый, поэтому в работе возможны задержки.
-                </p>
-
-                <div class="pricing-grid">
-                    <article class="pricing-cell price-cell">
-                        <h4>Что я могу сделать</h4>
-                        <ul class="requirements-list">
-                            <li>Idle-анимацию, ходьбу, бег или простой жест.</li>
-                            <li>Несложную атаку или взаимодействие с предметом.</li>
-                            <li>Зацикленную анимацию для Minecraft-модели.</li>
-                            <li>Простую анимацию под GeckoLib по референсу.</li>
-                        </ul>
-                    </article>
-
-                    <article class="pricing-cell requirements-cell">
-                        <h4>Что требуется от вас</h4>
-                        <ul class="requirements-list">
-                            <li>Пришлите модель Blockbench с готовым ригом и текстурой.</li>
-                            <li>Опишите нужные действия и их примерную длительность.</li>
-                            <li>Приложите видео, GIF или другой референс движения.</li>
-                            <li>Укажите требования проекта и формат результата.</li>
-                        </ul>
-                    </article>
-                </div>
-
-                <div class="render-guarantee">
-                    <div>
-                        <p class="guarantee-mark" aria-hidden="true">7</p>
-                        <p>дней гарантии</p>
+                    <div class="contact-links">
+                        <a href="https://t.me/bendy659">Telegram · @bendy659</a>
+                        <p>Discord · <code>@bendy659</code></p>
                     </div>
-                    <p>
-                        Если после сдачи обнаружится мой косяк, я бесплатно его исправлю.
-                        Новые пожелания и изменение согласованного ТЗ в гарантию не входят.
+                    <p class="contact-availability">
+                        Обычно онлайн по вашему времени:
+                        <strong id="contact-availability">определяю…</strong>
                     </p>
-                </div>
-            </section>
+                </article>
+
+                <form class="calculator-card" id="price-calculator">
+                    <p class="category-label">PRICE ESTIMATE</p>
+                    <h2>Примерная стоимость</h2>
+                    <p class="calculator-intro">
+                        Выберите нужные услуги. Расчёт ориентировочный и не учитывает правки.
+                    </p>
+
+                    <fieldset class="calculator-service">
+                        <legend>
+                            <label><input type="checkbox" name="render-enabled"> Рендеры</label>
+                        </legend>
+                        <label>
+                            Количество
+                            <input type="number" name="render-count" min="1" max="20" value="1">
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="calculator-service">
+                        <legend>
+                            <label><input type="checkbox" name="model-enabled"> Модели</label>
+                        </legend>
+                        <label>
+                            Количество
+                            <input type="number" name="model-count" min="1" max="20" value="1">
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="calculator-service">
+                        <legend>
+                            <label><input type="checkbox" name="animation-enabled"> Анимация</label>
+                        </legend>
+                        <div class="calculator-fields">
+                            <label>
+                                Тип анимации
+                                <select name="animation-type">
+                                    <option value="clip">Анимационный ролик</option>
+                                    <option value="game">Игровая анимация</option>
+                                    <option value="geckolib">Анимация для GeckoLib</option>
+                                </select>
+                            </label>
+                            <label>
+                                Длительность, секунд
+                                <input type="number" name="animation-duration" min="1" max="300" value="5">
+                            </label>
+                            <label>
+                                Детализация
+                                <select name="animation-detail">
+                                    <option value="0">Базовая · +0 ₽</option>
+                                    <option value="300">Средняя · +300 ₽</option>
+                                    <option value="600">Высокая · +600 ₽</option>
+                                </select>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <output class="calculator-result" id="calculator-result" for="price-calculator">
+                        Выберите услуги
+                    </output>
+                    <p class="calculator-note">
+                        Окончательная стоимость фиксируется после обсуждения задачи.
+                    </p>
+                </form>
+            </div>
         </section>
     </main>
 
