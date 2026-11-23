@@ -1,5 +1,6 @@
 # Folders
-/.edge-release-qa/
+/.edge*
 
 # Files
 *.gif
+.codex*

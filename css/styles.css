@@ -9,7 +9,15 @@
     --orange: #ff8a00;
     --green: #20f135;
     --line: #303530;
+    --border-gradient: linear-gradient(
+        135deg,
+        rgba(255, 41, 41, 0.7),
+        rgba(255, 138, 0, 0.45) 48%,
+        rgba(32, 241, 53, 0.7)
+    );
+    --border-gradient-strong: linear-gradient(135deg, var(--red), var(--orange), var(--green));
     --background-parallax: 0px;
+    --site-header-height: 7rem;
 }
 
 * {
@@ -21,6 +29,26 @@ html {
     background: var(--background);
     scroll-behavior: smooth;
     scroll-padding-top: 7.5rem;
+    scrollbar-color: var(--green) #050605;
+    scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar {
+    width: 0.85rem;
+}
+
+html::-webkit-scrollbar-track {
+    background: #050605;
+}
+
+html::-webkit-scrollbar-thumb {
+    border: 3px solid #050605;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--red), var(--orange), var(--green));
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ff4d4d, #ff9f2f, #52ff63);
 }
 
 body {
@@ -65,11 +93,18 @@ body::after {
 
 .site-header {
     position: sticky;
-    top: 0;
+    top: 0.5rem;
     z-index: 20;
-    border-bottom: 1px solid var(--line);
-    background: #050605;
-    animation: enter-header 0.45s ease-out both;
+    width: calc(100% - 1rem);
+    margin-inline: auto;
+    overflow: clip;
+    border: 2px solid transparent;
+    border-radius: 1.5rem;
+    background:
+        linear-gradient(#050605, #050605) padding-box,
+        var(--border-gradient-strong) border-box;
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.36);
+    animation: assemble-site-header 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .header-inner {
@@ -93,6 +128,7 @@ body::after {
     transition:
         border-color 160ms ease,
         background-color 160ms ease;
+    animation: reveal-header-control 0.35s 0.62s ease-out both;
 }
 
 .home-link:hover,
@@ -138,6 +174,27 @@ body::after {
     transition:
         border-color 160ms ease,
         color 160ms ease;
+    animation: type-header-link 0.42s steps(12, end) both;
+}
+
+.category-nav a:nth-child(1) {
+    animation-delay: 0.72s;
+}
+
+.category-nav a:nth-child(2) {
+    animation-delay: 0.84s;
+}
+
+.category-nav a:nth-child(3) {
+    animation-delay: 0.96s;
+}
+
+.category-nav a:nth-child(4) {
+    animation-delay: 1.08s;
+}
+
+.category-nav a:nth-child(5) {
+    animation-delay: 1.2s;
 }
 
 .category-nav a:hover,
@@ -159,28 +216,34 @@ body::after {
 }
 
 .welcome-card {
-    display: grid;
-    grid-template-columns: minmax(16rem, 0.62fr) minmax(22rem, 1.5fr);
-    gap: clamp(1rem, 2.5vw, 2rem);
+    --welcome-avatar-size: clamp(11rem, 18vw, 17rem);
+    --welcome-avatar-offset-x: clamp(2.5rem, 4vw, 4rem);
+    --welcome-panel-offset-x: clamp(2.5rem, 4.5vw, 4.25rem);
+    --welcome-panel-offset-y: clamp(3.5rem, 6vw, 5.5rem);
+
+    position: relative;
+    min-width: 0;
     width: min(100%, 110rem);
-    padding: clamp(1rem, 2.5vw, 2rem);
-    border: 1px solid var(--line);
-    background: var(--panel-deep);
-    animation: reveal-card 0.45s ease-out both;
+    padding-top: var(--welcome-panel-offset-y);
+    padding-left: var(--welcome-panel-offset-x);
 }
 
 .media-frame {
-    position: relative;
-    align-self: center;
-    width: 100%;
-    min-height: 0;
+    position: absolute;
+    top: 0;
+    left: var(--welcome-avatar-offset-x);
+    z-index: 3;
+    width: var(--welcome-avatar-size);
     aspect-ratio: 1;
     padding: 0.35rem;
     overflow: hidden;
     border: 4px solid var(--red);
-    background: var(--panel);
+    border-radius: 50%;
+    background: #050605;
     opacity: 0;
-    animation: enter-from-left 0.6s 0.12s ease-out forwards;
+    transform: scale(0);
+    transform-origin: center;
+    animation: reveal-welcome-avatar 1.35s 0.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .media-placeholder {
@@ -188,9 +251,9 @@ body::after {
     width: 100%;
     height: 100%;
     min-height: inherit;
-    object-fit: cover;
+    border-radius: 50%;
+    object-fit: contain;
     object-position: center;
-    filter: saturate(0.82) contrast(1.05);
 }
 
 .intro {
@@ -198,20 +261,27 @@ body::after {
     grid-template-rows: auto 1fr;
     gap: clamp(1rem, 2vw, 1.5rem);
     min-width: 0;
+    min-height: clamp(28rem, 38vw, 34rem);
+    padding: clamp(1.5rem, 3vw, 3rem);
+    overflow: hidden;
+    border: 4px solid var(--green);
+    border-radius: clamp(1.25rem, 2.5vw, 2.25rem);
+    background: var(--panel-deep);
+    opacity: 0;
+    clip-path: inset(0 100% 82% 0 round clamp(1.25rem, 2.5vw, 2.25rem));
+    animation: reveal-welcome-panel 1.25s 1.05s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .identity {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: clamp(0.5rem, 1.6vw, 1rem);
-    min-height: 7.25rem;
-    padding: 1rem 1.4rem;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    background: #050605;
+    min-width: 0;
+    min-height: clamp(5rem, 8vw, 7rem);
+    padding-left: clamp(8rem, 15vw, 14rem);
     opacity: 0;
-    animation: enter-from-top 0.55s 0.22s ease-out forwards;
+    animation: reveal-welcome-content 0.35s 2.16s ease-out forwards;
 }
 
 .nickname,
@@ -247,22 +317,11 @@ body::after {
 .message {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 18rem;
-    padding: clamp(1.4rem, 4vw, 3.5rem);
-    border: 4px solid var(--green);
-    background: var(--panel);
+    padding: clamp(0.25rem, 1vw, 1rem);
     opacity: 0;
-    animation: enter-from-bottom 0.6s 0.32s ease-out forwards;
-}
-
-.message-label {
-    margin: 0 0 1rem;
-    color: var(--muted);
-    font-family: "Courier New", Courier, monospace;
-    font-size: 0.875rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    animation: reveal-welcome-content 0.35s 2.26s ease-out forwards;
 }
 
 .message h1 {
@@ -275,7 +334,8 @@ body::after {
 }
 
 .message-copy {
-    max-width: 60rem;
+    width: 100%;
+    max-width: none;
     margin: 1.5rem 0 0;
     font-size: clamp(1rem, 1.8vw, 1.25rem);
     line-height: 1.55;
@@ -310,8 +370,12 @@ body::after {
     width: min(calc(100% - 2rem), 110rem);
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(4rem, 8vw, 7rem) 1rem;
-    border: 1px solid var(--line);
-    background: var(--panel-deep);
+    overflow: clip;
+    border: 2px solid transparent;
+    border-radius: 2rem;
+    background:
+        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient) border-box;
 }
 
 .guide-heading {
@@ -344,8 +408,11 @@ body::after {
 .guide-card {
     min-height: 12rem;
     padding: clamp(1.25rem, 3vw, 2rem);
-    border: 1px solid var(--line);
-    background: var(--panel);
+    border: 1px solid transparent;
+    border-radius: 1.25rem;
+    background:
+        linear-gradient(var(--panel), var(--panel)) padding-box,
+        var(--border-gradient) border-box;
 }
 
 .guide-card h3 {
@@ -360,8 +427,9 @@ body::after {
 }
 
 .guide-card-accent {
-    border-color: var(--green);
-    background: rgba(32, 241, 53, 0.04);
+    background:
+        linear-gradient(rgba(13, 24, 14, 0.98), rgba(13, 24, 14, 0.98)) padding-box,
+        var(--border-gradient-strong) border-box;
 }
 
 .portfolio-section {
@@ -369,9 +437,12 @@ body::after {
     min-height: 100svh;
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(4rem, 9vw, 8rem) 0;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    background: #090a09;
+    overflow: clip;
+    border: 2px solid transparent;
+    border-radius: 2rem;
+    background:
+        linear-gradient(#090a09, #090a09) padding-box,
+        var(--border-gradient) border-box;
 }
 
 .category-heading {
@@ -380,13 +451,37 @@ body::after {
     text-align: center;
 }
 
-.category-label {
-    margin: 0 0 0.65rem;
-    color: var(--muted);
-    font-family: "Courier New", Courier, monospace;
-    font-size: 0.875rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+.category-sticky-heading {
+    position: sticky;
+    top: var(--site-header-height);
+    z-index: 10;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.5rem);
+    transition:
+        opacity 160ms ease,
+        transform 160ms ease;
+}
+
+.category-sticky-heading span {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--line);
+    background: rgba(9, 10, 9, 0.96);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.24);
+    font-family: "Unbounded", Arial, sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    backdrop-filter: blur(0.5rem);
+}
+
+.portfolio-section.is-heading-stuck .category-sticky-heading {
+    opacity: 1;
+    transform: none;
 }
 
 .category-title {
@@ -483,8 +578,11 @@ body::after {
     height: 100%;
     padding: 0;
     overflow: hidden;
-    border: 1px solid var(--line);
-    background: var(--panel-deep);
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    background:
+        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient) border-box;
     cursor: zoom-in;
     transition:
         border-color 180ms ease,
@@ -494,7 +592,9 @@ body::after {
 
 .render-card:hover,
 .render-card:focus-visible {
-    border-color: var(--green);
+    background:
+        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient-strong) border-box;
     filter: brightness(1.08);
     outline: none;
     transform: translateY(-0.25rem);
@@ -513,8 +613,12 @@ body::after {
     width: min(calc(100% - 2rem), 96rem);
     margin: clamp(3rem, 7vw, 6rem) auto 0;
     padding: clamp(1.25rem, 3vw, 2.5rem);
-    border: 1px solid var(--line);
-    background: var(--panel-deep);
+    overflow: clip;
+    border: 2px solid transparent;
+    border-radius: 1.5rem;
+    background:
+        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient) border-box;
 }
 
 .pricing-heading {
@@ -543,8 +647,11 @@ body::after {
 
 .pricing-cell {
     padding: 1.25rem;
-    border: 1px solid var(--line);
-    background: var(--panel);
+    border: 1px solid transparent;
+    border-radius: 1.25rem;
+    background:
+        linear-gradient(var(--panel), var(--panel)) padding-box,
+        var(--border-gradient) border-box;
 }
 
 .pricing-cell h4 {
@@ -554,7 +661,9 @@ body::after {
 }
 
 .price-cell {
-    border-color: var(--green);
+    background:
+        linear-gradient(var(--panel), var(--panel)) padding-box,
+        var(--border-gradient-strong) border-box;
 }
 
 .price-list {
@@ -630,8 +739,12 @@ body::after {
     width: min(calc(100% - 2rem), 90rem);
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(1rem, 3vw, 2.5rem);
-    border: 1px solid var(--line);
-    background: var(--panel-deep);
+    overflow: clip;
+    border: 2px solid transparent;
+    border-radius: 2rem;
+    background:
+        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient) border-box;
 }
 
 .contact-grid {
@@ -643,8 +756,11 @@ body::after {
 .contact-card,
 .calculator-card {
     padding: clamp(1.25rem, 3vw, 2rem);
-    border: 1px solid var(--line);
-    background: var(--panel);
+    border: 1px solid transparent;
+    border-radius: 1.25rem;
+    background:
+        linear-gradient(var(--panel), var(--panel)) padding-box,
+        var(--border-gradient) border-box;
 }
 
 .contact-card h2,
@@ -655,7 +771,7 @@ body::after {
     letter-spacing: -0.04em;
 }
 
-.contact-card > p:not(.category-label),
+.contact-card > p,
 .calculator-intro,
 .calculator-note {
     color: var(--muted);
@@ -672,6 +788,7 @@ body::after {
     margin: 0;
     padding: 0.9rem 1rem;
     border: 1px solid var(--line);
+    border-radius: 0.85rem;
     color: var(--ink);
     text-decoration: none;
 }
@@ -699,7 +816,11 @@ body::after {
 .calculator-service {
     margin: 1rem 0 0;
     padding: 1rem;
-    border: 1px solid var(--line);
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    background:
+        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient) border-box;
     opacity: 0.62;
     transition:
         border-color 160ms ease,
@@ -707,12 +828,17 @@ body::after {
 }
 
 .calculator-service.is-selected {
-    border-color: var(--green);
+    background:
+        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient-strong) border-box;
     opacity: 1;
 }
 
 .calculator-service legend {
-    padding: 0 0.4rem;
+    margin-left: 0.25rem;
+    padding: 0.1rem 0.6rem;
+    border-radius: 0.5rem;
+    background: var(--panel);
     font-family: "Unbounded", Arial, sans-serif;
     font-weight: 700;
 }
@@ -741,17 +867,59 @@ body::after {
     min-width: 0;
     padding: 0.7rem 0.8rem;
     border: 1px solid var(--line);
-    border-radius: 0;
+    border-radius: 0.75rem;
     background: var(--panel-deep);
     color: var(--ink);
     font: inherit;
 }
 
 .calculator-service input[type="checkbox"] {
-    width: 1.1rem;
-    height: 1.1rem;
+    display: grid;
+    width: 1.25rem;
+    height: 1.25rem;
     padding: 0;
-    accent-color: var(--green);
+    place-content: center;
+    appearance: none;
+    border: 2px solid #626962;
+    border-radius: 0.35rem;
+    background: #090a09;
+    cursor: pointer;
+    transition:
+        background 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+}
+
+.calculator-service input[type="checkbox"]::before {
+    width: 0.58rem;
+    height: 0.32rem;
+    border-bottom: 2px solid #050605;
+    border-left: 2px solid #050605;
+    content: "";
+    transform: rotate(-45deg) scale(0);
+    transition: transform 140ms ease-out;
+}
+
+.calculator-service input[type="checkbox"]:checked {
+    border-color: var(--green);
+    background: var(--green);
+    box-shadow: 0 0 0.65rem rgba(32, 241, 53, 0.2);
+}
+
+.calculator-service input[type="checkbox"]:checked::before {
+    transform: rotate(-45deg) scale(1);
+}
+
+.calculator-service input[type="checkbox"]:active {
+    transform: scale(0.9);
+}
+
+.calculator-service input[type="checkbox"]:hover {
+    border-color: var(--orange);
+}
+
+.calculator-service input[type="checkbox"]:checked:hover {
+    border-color: var(--green);
 }
 
 .calculator-service input:focus-visible,
@@ -764,8 +932,11 @@ body::after {
     display: block;
     margin-top: 1rem;
     padding: 1.25rem;
-    border: 1px solid var(--green);
-    background: rgba(32, 241, 53, 0.04);
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    background:
+        linear-gradient(rgba(13, 24, 14, 0.98), rgba(13, 24, 14, 0.98)) padding-box,
+        var(--border-gradient-strong) border-box;
     color: var(--green);
     font-family: "Unbounded", Arial, sans-serif;
     font-size: clamp(1.35rem, 3vw, 2rem);
@@ -876,20 +1047,181 @@ body::after {
     animation: wave-hand 2.4s ease-in-out infinite;
 }
 
-@keyframes reveal-card {
+.motion-ready .motion-target {
+    opacity: 0;
+    clip-path: inset(49% 49% 49% 49% round 1.25rem);
+}
+
+.motion-sentinel {
+    display: block;
+    width: 1px;
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+}
+
+.motion-ready .motion-panel.is-revealed:not(.motion-complete) {
+    animation: assemble-motion-panel 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.motion-ready .motion-card.is-revealed:not(.motion-complete) {
+    animation: assemble-motion-card 0.72s
+        calc(var(--motion-order, 0) * 70ms)
+        cubic-bezier(0.4, 0, 0.2, 1)
+        both;
+}
+
+.motion-ready .motion-target.motion-complete {
+    opacity: 1;
+    clip-path: none;
+}
+
+.motion-ready .motion-text {
+    opacity: 0;
+}
+
+.motion-ready .motion-title-text {
+    clip-path: inset(0 100% 0 0);
+}
+
+.motion-ready .motion-title-text.is-text-revealed {
+    animation: type-motion-title 0.62s
+        var(--motion-text-delay)
+        steps(var(--motion-text-steps), end)
+        both;
+}
+
+.motion-ready .motion-copy-text.is-text-revealed {
+    animation: reveal-motion-copy 0.48s var(--motion-text-delay) ease-out both;
+}
+
+.motion-ready .portfolio-section .render-gallery {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+}
+
+.motion-ready .portfolio-section.is-revealed .render-gallery {
+    animation: reveal-motion-gallery 0.72s 1.02s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.motion-ready .portfolio-section .render-card {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.96);
+}
+
+.motion-ready .portfolio-section.is-revealed .render-card {
+    animation: reveal-motion-media 0.5s
+        calc(1.12s + var(--motion-order, 0) * 65ms)
+        ease-out
+        both;
+}
+
+@keyframes assemble-site-header {
+    0% {
+        opacity: 0;
+        clip-path: inset(46% 49% 46% 49%);
+    }
+
+    28% {
+        opacity: 1;
+        clip-path: inset(46% 34% 46% 34%);
+    }
+
+    64% {
+        opacity: 1;
+        clip-path: inset(0 34% 0 34%);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0);
+    }
+}
+
+@keyframes reveal-header-control {
     from {
         opacity: 0;
+        transform: scale(0.65);
     }
 
     to {
         opacity: 1;
+        transform: scale(1);
     }
 }
 
-@keyframes enter-header {
+@keyframes type-header-link {
     from {
         opacity: 0;
-        transform: translateY(-100%);
+        clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(0);
+    }
+}
+
+@keyframes assemble-motion-panel {
+    0% {
+        opacity: 0;
+        clip-path: inset(49% 49% 49% 49% round 1.25rem);
+    }
+
+    20% {
+        opacity: 1;
+        clip-path: inset(47% 36% 47% 36% round 1.25rem);
+    }
+
+    58% {
+        opacity: 1;
+        clip-path: inset(8% 36% 8% 36% round 1.25rem);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0 round 0);
+    }
+}
+
+@keyframes assemble-motion-card {
+    0% {
+        opacity: 0;
+        clip-path: inset(49% 49% 49% 49% round 0.75rem);
+    }
+
+    24% {
+        opacity: 1;
+        clip-path: inset(46% 34% 46% 34% round 0.75rem);
+    }
+
+    62% {
+        opacity: 1;
+        clip-path: inset(8% 34% 8% 34% round 0.75rem);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0 round 0);
+    }
+}
+
+@keyframes type-motion-title {
+    from {
+        opacity: 1;
+        clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(0);
+    }
+}
+
+@keyframes reveal-motion-copy {
+    from {
+        opacity: 0;
+        transform: translateY(0.6rem);
     }
 
     to {
@@ -898,34 +1230,91 @@ body::after {
     }
 }
 
-@keyframes enter-from-left {
+@keyframes reveal-motion-gallery {
     from {
         opacity: 0;
-        transform: translateX(-1.5rem);
+        clip-path: inset(0 100% 0 0);
     }
 
     to {
         opacity: 1;
-        transform: translateX(0);
+        clip-path: inset(0);
     }
 }
 
-@keyframes enter-from-top {
+@keyframes reveal-motion-media {
     from {
         opacity: 0;
-        transform: translateY(-1.25rem);
+        transform: translateY(1rem) scale(0.96);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
-@keyframes enter-from-bottom {
+@keyframes reveal-welcome-avatar {
+    0% {
+        top: 50%;
+        left: 50%;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    42% {
+        top: 50%;
+        left: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+
+    56% {
+        top: 50%;
+        left: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    100% {
+        top: 0;
+        left: var(--welcome-avatar-offset-x);
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes reveal-welcome-panel {
+    0% {
+        opacity: 0;
+        clip-path: inset(0 100% 82% 0 round clamp(1.25rem, 2.5vw, 2.25rem));
+    }
+
+    12% {
+        opacity: 1;
+        clip-path: inset(0 88% 82% 0 round clamp(1.25rem, 2.5vw, 2.25rem));
+    }
+
+    48% {
+        opacity: 1;
+        clip-path: inset(0 22% 82% 0 round clamp(1.25rem, 2.5vw, 2.25rem));
+    }
+
+    72% {
+        opacity: 1;
+        clip-path: inset(0 0 40% 0 round clamp(1.25rem, 2.5vw, 2.25rem));
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0 round clamp(1.25rem, 2.5vw, 2.25rem));
+    }
+}
+
+@keyframes reveal-welcome-content {
     from {
         opacity: 0;
-        transform: translateY(1.25rem);
+        transform: translateY(0.75rem);
     }
 
     to {
@@ -1033,17 +1422,22 @@ body::after {
     }
 
     .welcome-card {
-        grid-template-columns: 1fr;
+        --welcome-avatar-size: clamp(7.5rem, 26vw, 9rem);
+        --welcome-avatar-offset-x: 0rem;
+        --welcome-panel-offset-x: clamp(2.25rem, 8vw, 3rem);
+        --welcome-panel-offset-y: clamp(2.5rem, 9vw, 3.25rem);
+
         max-width: 38rem;
     }
 
-    .media-frame {
-        min-height: auto;
-        aspect-ratio: 1;
+    .intro {
+        min-height: 0;
+        padding: 1.25rem;
     }
 
     .identity {
-        min-height: 6rem;
+        min-height: 5.75rem;
+        padding-left: clamp(5.25rem, 20vw, 7rem);
     }
 
     .nickname {
@@ -1091,25 +1485,25 @@ body::after {
 
     .identity {
         min-height: 5rem;
-        padding: 0.75rem;
+        padding: 0 0 0 5.25rem;
     }
 
     .nickname {
-        font-size: clamp(1.6rem, 8vw, 2.35rem);
+        font-size: clamp(1.25rem, 5.5vw, 1.65rem);
     }
 
     .wolf {
-        font-size: clamp(2rem, 10vw, 2.75rem);
+        font-size: clamp(1.5rem, 7vw, 2rem);
     }
 
     .message {
         min-height: 14rem;
         padding: 1.25rem;
-        border-width: 3px;
     }
 
     .message h1 {
-        font-size: clamp(2.35rem, 12vw, 3.5rem);
+        font-size: clamp(2rem, 10vw, 2.8rem);
+        white-space: nowrap;
     }
 
     .render-track {
@@ -1133,8 +1527,11 @@ body::after {
     }
 
     .site-header,
+    .home-link,
+    .category-nav a,
     .welcome-card,
     .media-frame,
+    .intro,
     .identity,
     .message,
     .nickname,
@@ -1142,6 +1539,16 @@ body::after {
     .waving-hand {
         animation: none;
         opacity: 1;
+        transform: none;
+    }
+
+    .intro,
+    .motion-target,
+    .motion-text,
+    .render-gallery,
+    .render-card {
+        opacity: 1;
+        clip-path: inset(0);
         transform: none;
     }
 

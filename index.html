@@ -35,56 +35,54 @@
     <main>
         <section class="welcome" id="welcome">
             <div class="welcome-card" aria-labelledby="welcome-title">
-            <div class="media-frame">
-                <img
-                    class="media-placeholder"
-                    src="assets/images/hero/hello.webp"
-                    alt="Приветственная анимация"
-                >
-            </div>
-
-            <div class="intro">
-                <div class="identity" aria-label="Автор портфолио: BENDY659">
-                    <span class="nickname">_BENDY659_</span>
-                    <span class="wolf" aria-hidden="true">🐺︎</span>
+                <div class="media-frame">
+                    <img
+                        class="media-placeholder"
+                        src="assets/images/branding/header.png"
+                        alt="Аватар BENDY659"
+                    >
                 </div>
 
-                <div class="message">
-                    <p class="message-label">WELCOME MESSAGE</p>
-                    <h1 id="welcome-title">
-                        Привет! <span class="waving-hand" aria-hidden="true">👋</span>
-                    </h1>
+                <div class="intro">
+                    <div class="identity" aria-label="Автор портфолио: BENDY659">
+                        <span class="nickname">_BENDY659_</span>
+                        <span class="wolf" aria-hidden="true">🐺︎</span>
+                    </div>
 
-                    <div class="message-copy">
-                        <p>
-                            Я занимаюсь заказами для Minecraft по категориям:
-                            «Рендеры», «Модели» и «Анимации» — в частности,
-                            в Blockbench (GeckoLib) и Blender.
-                        </p>
-                        <p>
-                            Я продолжаю развиваться, поэтому берусь за задачи,
-                            которые соответствуют моему опыту и возможностям 😄
-                        </p>
-                        <p>
-                            По всем заказам и вопросам пишите мне в
-                            Telegram: <a href="https://t.me/bendy659">@bendy659</a>
-                            или Discord: <code>@bendy659</code>.
-                        </p>
-                        <p class="timezone">
-                            Обычно онлайн по вашему времени:
-                            <span class="local-time">
-                                <span id="visitor-availability">определяю…</span>
-                            </span>
-                        </p>
+                    <div class="message">
+                        <h1 id="welcome-title">
+                            Привет! <span class="waving-hand" aria-hidden="true">👋</span>
+                        </h1>
+
+                        <div class="message-copy">
+                            <p>
+                                Я занимаюсь заказами для Minecraft по категориям:
+                                «Рендеры», «Модели» и «Анимации» — в частности,
+                                в Blockbench (GeckoLib) и Blender.
+                            </p>
+                            <p>
+                                Я продолжаю развиваться, поэтому берусь за задачи,
+                                которые соответствуют моему опыту и возможностям 😄
+                            </p>
+                            <p>
+                                По всем заказам и вопросам пишите мне в
+                                Telegram: <a href="https://t.me/bendy659">@bendy659</a>
+                                или Discord: <code>@bendy659</code>.
+                            </p>
+                            <p class="timezone">
+                                Обычно онлайн по вашему времени:
+                                <span class="local-time">
+                                    <span id="visitor-availability">определяю…</span>
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </section>
 
         <section class="order-guide" aria-labelledby="order-guide-title">
             <header class="guide-heading">
-                <p class="category-label">BEFORE ORDERING</p>
                 <h2 id="order-guide-title">Перед заказом</h2>
                 <p>Общие условия действуют для рендеров, моделей и анимаций.</p>
             </header>
@@ -132,8 +130,10 @@
             data-gallery
             data-gallery-item-label="Рендер"
         >
+            <div class="category-sticky-heading" aria-hidden="true">
+                <span>Рендеры</span>
+            </div>
             <header class="category-heading">
-                <p class="category-label">PORTFOLIO CATEGORY</p>
                 <h2 class="category-title" id="renders-title">Рендеры</h2>
                 <p>Листайте ленту или нажмите на работу, чтобы рассмотреть её полностью.</p>
             </header>
@@ -222,7 +222,6 @@
 
             <section class="render-pricing" aria-labelledby="render-pricing-title">
                 <header class="pricing-heading">
-                    <p class="category-label">RENDER PRICING</p>
                     <h3 id="render-pricing-title">Прайс на рендеры</h3>
                     <p>Цена согласуется и фиксируется до начала работы.</p>
                 </header>
@@ -233,7 +232,7 @@
                         <dl class="price-list">
                             <div>
                                 <dt>Рендер или превью</dt>
-                                <dd><span>от</span> 850 ₽</dd>
+                                <dd data-price-key="renderBase" data-price-prefix="от ">от 850 ₽</dd>
                             </div>
                         </dl>
                     </article>
@@ -258,8 +257,10 @@
             data-gallery
             data-gallery-item-label="Модель"
         >
+            <div class="category-sticky-heading" aria-hidden="true">
+                <span>Модели</span>
+            </div>
             <header class="category-heading">
-                <p class="category-label">PORTFOLIO CATEGORY</p>
                 <h2 class="category-title" id="models-title">Модели</h2>
                 <p>
                     Модели для Minecraft, созданные в Blockbench. К модели можно отдельно
@@ -416,7 +417,6 @@
 
             <section class="render-pricing" aria-labelledby="models-order-title">
                 <header class="pricing-heading">
-                    <p class="category-label">MODEL COMMISSIONS</p>
                     <h3 id="models-order-title">Заказ моделей</h3>
                     <p>
                         Делаю модели для Minecraft в Blockbench.
@@ -430,7 +430,7 @@
                         <dl class="price-list">
                             <div>
                                 <dt>Модель в Blockbench</dt>
-                                <dd>После оценки</dd>
+                                <dd data-price-key="modelBase" data-price-prefix="от ">от 1 000 ₽</dd>
                             </div>
                         </dl>
                     </article>
@@ -455,8 +455,10 @@
             data-gallery
             data-gallery-item-label="Анимация"
         >
+            <div class="category-sticky-heading" aria-hidden="true">
+                <span>Анимации</span>
+            </div>
             <header class="category-heading">
-                <p class="category-label">PORTFOLIO CATEGORY</p>
                 <h2 class="category-title" id="animations-title">Анимации</h2>
                 <p>
                     Работаю в Blender и Blockbench, включая проекты под GeckoLib.
@@ -613,7 +615,6 @@
 
             <section class="render-pricing" aria-labelledby="animation-pricing-title">
                 <header class="pricing-heading">
-                    <p class="category-label">ANIMATION PRICING</p>
                     <h3 id="animation-pricing-title">Прайс на анимации</h3>
                     <p>
                         Итоговая цена зависит от длительности и детализации движения.
@@ -627,15 +628,15 @@
                         <dl class="price-list">
                             <div>
                                 <dt>Базовая стоимость</dt>
-                                <dd>500 ₽</dd>
+                                <dd data-price-key="animationBase">500 ₽</dd>
                             </div>
                             <div>
                                 <dt>Секунда анимации</dt>
-                                <dd>100 ₽</dd>
+                                <dd data-price-key="animationPerSecond">100 ₽</dd>
                             </div>
                             <div>
                                 <dt>Детализация</dt>
-                                <dd>0–600 ₽</dd>
+                                <dd data-price-key="animationDetailHigh" data-price-prefix="0–">0–600 ₽</dd>
                             </div>
                         </dl>
                     </article>
@@ -656,7 +657,6 @@
         <section class="contact-section" id="contact" aria-labelledby="contact-title">
             <div class="contact-grid">
                 <article class="contact-card">
-                    <p class="category-label">CONTACT</p>
                     <h2 id="contact-title">Связь</h2>
                     <p>
                         Чтобы обсудить заказ, напишите мне удобным способом.
@@ -673,7 +673,6 @@
                 </article>
 
                 <form class="calculator-card" id="price-calculator">
-                    <p class="category-label">PRICE ESTIMATE</p>
                     <h2>Примерная стоимость</h2>
                     <p class="calculator-intro">
                         Выберите нужные услуги. Расчёт ориентировочный и не учитывает правки.
@@ -715,9 +714,9 @@
                             <label>
                                 Детализация
                                 <select name="animation-detail">
-                                    <option value="0">Базовая · +0 ₽</option>
-                                    <option value="300">Средняя · +300 ₽</option>
-                                    <option value="600">Высокая · +600 ₽</option>
+                                    <option value="0" data-price-key="animationDetailBasic" data-price-label="Базовая">Базовая · +0 ₽</option>
+                                    <option value="300" data-price-key="animationDetailMedium" data-price-label="Средняя">Средняя · +300 ₽</option>
+                                    <option value="600" data-price-key="animationDetailHigh" data-price-label="Высокая">Высокая · +600 ₽</option>
                                 </select>
                             </label>
                         </div>

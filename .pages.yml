@@ -1,0 +1,72 @@
+media: assets/images
+
+content:
+  - name: prices
+    label: Прайс
+    type: file
+    path: content/prices.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: renderBase
+        label: Рендер — цена от
+        type: number
+        required: true
+        description: Базовая стоимость одного рендера или превью в рублях.
+        options:
+          min: 0
+          max: 100000
+      - name: modelBase
+        label: Модель — цена от
+        type: number
+        required: true
+        description: Ориентировочная базовая стоимость одной модели в рублях.
+        options:
+          min: 0
+          max: 100000
+      - name: animationBase
+        label: Анимация — базовая стоимость
+        type: number
+        required: true
+        description: Фиксированная часть стоимости одной анимации в рублях.
+        options:
+          min: 0
+          max: 100000
+      - name: animationPerSecond
+        label: Анимация — цена за секунду
+        type: number
+        required: true
+        description: Стоимость одной секунды готовой анимации в рублях.
+        options:
+          min: 0
+          max: 100000
+      - name: animationDetailBasic
+        label: Базовая детализация — доплата
+        type: number
+        required: true
+        options:
+          min: 0
+          max: 100000
+      - name: animationDetailMedium
+        label: Средняя детализация — доплата
+        type: number
+        required: true
+        options:
+          min: 0
+          max: 100000
+      - name: animationDetailHigh
+        label: Высокая детализация — доплата
+        type: number
+        required: true
+        options:
+          min: 0
+          max: 100000
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: user
+    templates:
+      update: "Обновить прайс"

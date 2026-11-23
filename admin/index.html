@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Локальный редактор прайса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;family=Unbounded:wght@600;700&amp;display=swap"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <main class="admin-shell">
+        <header class="admin-heading">
+            <p class="eyebrow">LOCAL PRICE EDITOR</p>
+            <h1>Редактор прайса</h1>
+            <p>
+                Здесь можно проверить поля локально и сохранить обновлённый
+                <code>content/prices.json</code>. Для публикации без ручного Git используйте Pages CMS.
+            </p>
+            <div class="heading-links">
+                <a href="../">Вернуться на сайт</a>
+                <a href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Открыть Pages CMS</a>
+            </div>
+        </header>
+
+        <div class="admin-grid">
+            <form class="editor-card" id="price-editor">
+                <section>
+                    <h2>Основные услуги</h2>
+                    <div class="field-grid">
+                        <label>
+                            Рендер — цена от
+                            <input type="number" name="renderBase" min="0" max="100000" required>
+                        </label>
+                        <label>
+                            Модель — цена от
+                            <input type="number" name="modelBase" min="0" max="100000" required>
+                        </label>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Анимации</h2>
+                    <div class="field-grid">
+                        <label>
+                            Базовая стоимость
+                            <input type="number" name="animationBase" min="0" max="100000" required>
+                        </label>
+                        <label>
+                            Цена за секунду
+                            <input type="number" name="animationPerSecond" min="0" max="100000" required>
+                        </label>
+                        <label>
+                            Базовая детализация
+                            <input type="number" name="animationDetailBasic" min="0" max="100000" required>
+                        </label>
+                        <label>
+                            Средняя детализация
+                            <input type="number" name="animationDetailMedium" min="0" max="100000" required>
+                        </label>
+                        <label>
+                            Высокая детализация
+                            <input type="number" name="animationDetailHigh" min="0" max="100000" required>
+                        </label>
+                    </div>
+                </section>
+
+                <div class="editor-actions">
+                    <button type="button" id="open-prices">Открыть prices.json</button>
+                    <button type="submit" class="primary-action">Сохранить файл</button>
+                    <button type="button" id="download-prices">Скачать копию</button>
+                </div>
+                <p class="status" id="editor-status" role="status">Загружаю текущие цены…</p>
+            </form>
+
+            <aside class="preview-card" aria-live="polite">
+                <p class="eyebrow">LIVE PREVIEW</p>
+                <h2>Предпросмотр</h2>
+                <dl class="price-preview">
+                    <div><dt>Рендер</dt><dd id="preview-render">—</dd></div>
+                    <div><dt>Модель</dt><dd id="preview-model">—</dd></div>
+                    <div><dt>Анимация, база</dt><dd id="preview-animation-base">—</dd></div>
+                    <div><dt>Секунда анимации</dt><dd id="preview-animation-second">—</dd></div>
+                    <div><dt>Средняя детализация</dt><dd id="preview-animation-medium">—</dd></div>
+                </dl>
+                <div class="example-result">
+                    <span>Пример: одна анимация, 5 секунд, средняя детализация</span>
+                    <strong id="preview-example">—</strong>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>
