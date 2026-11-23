@@ -497,9 +497,8 @@ html.motion-pending .render-pricing {
 
 .portfolio-section {
     width: min(calc(75% - 8rem), 88rem);
-    min-height: 100svh;
     margin: clamp(2rem, 5vw, 4rem) auto;
-    padding: clamp(4rem, 9vw, 8rem) 0;
+    padding: clamp(2.5rem, 5vw, 5rem) 0 clamp(1rem, 3vw, 2.5rem);
     overflow: clip;
     border: 2px solid transparent;
     border-radius: 2rem;
@@ -516,7 +515,7 @@ html.motion-pending .render-pricing {
 
 .category-heading {
     width: min(calc(100% - 2rem), 96rem);
-    margin: 0 auto clamp(2rem, 5vw, 4rem);
+    margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
     text-align: center;
 }
 
@@ -680,14 +679,10 @@ html.motion-pending .render-pricing {
 
 .render-pricing {
     width: min(calc(100% - 2rem), 96rem);
-    margin: clamp(3rem, 7vw, 6rem) auto 0;
+    margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
     padding: clamp(1.25rem, 3vw, 2.5rem);
     overflow: clip;
-    border: 2px solid transparent;
-    border-radius: 1.5rem;
-    background:
-        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
-        var(--border-gradient) border-box;
+    border-top: 1px solid var(--line);
 }
 
 .pricing-heading {
@@ -716,11 +711,9 @@ html.motion-pending .render-pricing {
 
 .pricing-cell {
     padding: 1.25rem;
-    border: 1px solid transparent;
+    border: 1px solid var(--line);
     border-radius: 1.25rem;
-    background:
-        linear-gradient(var(--panel), var(--panel)) padding-box,
-        var(--border-gradient) border-box;
+    background: var(--panel);
 }
 
 .pricing-cell h4 {
@@ -730,9 +723,7 @@ html.motion-pending .render-pricing {
 }
 
 .price-cell {
-    background:
-        linear-gradient(var(--panel), var(--panel)) padding-box,
-        var(--border-gradient-strong) border-box;
+    border-inline-start: 3px solid var(--green);
 }
 
 .price-list {
