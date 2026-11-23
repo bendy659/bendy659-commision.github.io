@@ -13,11 +13,12 @@ const portfolioLightboxVideo = portfolioLightbox.querySelector("video");
 const gallerySections = Array.from(document.querySelectorAll("[data-gallery]"));
 const portfolioSections = Array.from(document.querySelectorAll(".portfolio-section"));
 const siteHeader = document.querySelector(".site-header");
+const homeLink = siteHeader.querySelector(".home-link");
 const motionPanels = Array.from(document.querySelectorAll(
     ".order-guide, .portfolio-section, .contact-section, .render-pricing"
 ));
 const motionCards = Array.from(document.querySelectorAll(
-    ".guide-card, .pricing-cell, .contact-card, .calculator-card, .calculator-service"
+    ".guide-card, .pricing-cell, .contact-card, .calculator-card"
 ));
 const motionTargets = [...motionPanels, ...motionCards];
 const motionTextElements = new WeakMap();
@@ -55,6 +56,9 @@ function addMotionText(element, type, delay) {
 }
 
 function getMotionTextTargets(target) {
+    if (target.matches(".contact-card, .calculator-card"))
+        return [addMotionText(target.querySelector(":scope > h2"), "title", 0)];
+
     const textElements = [];
     const isPanel = target.classList.contains("motion-panel");
     const titleDelay = isPanel ? 840 : 650;
@@ -71,17 +75,12 @@ function getMotionTextTargets(target) {
     } else if (target.matches(".render-pricing")) {
         title = target.querySelector(":scope > .pricing-heading h3");
         copy = target.querySelector(":scope > .pricing-heading > p");
-    } else if (target.matches(".contact-card, .calculator-card")) {
-        title = target.querySelector(":scope > h2");
-        copy = target.querySelector(":scope > p");
     } else if (target.matches(".guide-card")) {
         title = target.querySelector(":scope > h3");
         copy = target.querySelector(":scope > p");
     } else if (target.matches(".pricing-cell")) {
         title = target.querySelector(":scope > h4");
         copy = target.querySelector(":scope > .price-list, :scope > .requirements-list");
-    } else if (target.matches(".calculator-service")) {
-        title = target.querySelector(":scope > legend");
     }
 
     const titleElement = addMotionText(title, "title", titleDelay);
@@ -93,12 +92,17 @@ function getMotionTextTargets(target) {
 }
 
 function revealMotionTarget(target) {
+    const contactCard = target.matches(".contact-card, .calculator-card");
+    if (!reduceMotion && contactCard && !target.closest(".contact-section").classList.contains("motion-complete"))
+        return false;
+
     target.classList.add("is-revealed");
     pendingCentralMotionTargets.delete(target);
     pendingNestedMotionTargets.delete(target);
-    motionTextElements.get(target)?.forEach((element) => {
-        element.classList.add("is-text-revealed");
-    });
+    if (!contactCard) {
+        motionTextElements.get(target)?.forEach((element) => element.classList.add("is-text-revealed"));
+    }
+    return true;
 }
 
 function updateMotionTriggers() {
@@ -132,7 +136,8 @@ function prepareMotionSystem() {
     motionPanels.forEach((panel) => panel.classList.add("motion-target", "motion-panel"));
     motionCards.forEach((card, index) => {
         card.classList.add("motion-target", "motion-card");
-        card.style.setProperty("--motion-order", index % 4);
+        const order = card.matches(".contact-card, .calculator-card") ? 0 : index % 4;
+        card.style.setProperty("--motion-order", order);
     });
     motionTargets.forEach((target) => {
         motionTextElements.set(target, getMotionTextTargets(target));
@@ -141,7 +146,17 @@ function prepareMotionSystem() {
                 && (event.animationName === "assemble-motion-panel"
                     || event.animationName === "assemble-motion-card");
 
-            if (isOwnAnimation) target.classList.add("motion-complete");
+            if (isOwnAnimation) {
+                target.classList.add("motion-complete");
+                if (target.matches(".contact-section")) requestBackgroundUpdate();
+                if (target.matches(".contact-card, .calculator-card"))
+                    motionTextElements.get(target).forEach((element) => element.classList.add("is-text-revealed"));
+            }
+
+            if (event.animationName === "type-motion-title"
+                && target.matches(".contact-card, .calculator-card")
+                && event.target.parentElement === target)
+                target.classList.add("contact-content-ready");
         });
 
         if (target.parentElement === main) {
@@ -174,8 +189,7 @@ function prepareMotionSystem() {
 
             const target = motionSentinelTargets.get(entry.target) || entry.target;
 
-            revealMotionTarget(target);
-            observer.unobserve(entry.target);
+            if (revealMotionTarget(target)) observer.unobserve(entry.target);
         });
     };
     const centralMotionObserver = new IntersectionObserver(revealIntersectingTargets, {
@@ -201,23 +215,7 @@ function updateBackgroundPosition() {
 
     root.style.setProperty("--background-parallax", `${offset}px`);
     updateMotionTriggers();
-    updateStickyCategoryHeadings();
     frameRequested = false;
-}
-
-function updateStickyCategoryHeadings() {
-    const headerHeight = siteHeader.getBoundingClientRect().bottom;
-
-    root.style.setProperty("--site-header-height", `${headerHeight}px`);
-
-    portfolioSections.forEach((section) => {
-        const sectionBounds = section.getBoundingClientRect();
-        const headingBounds = section.querySelector(".category-heading").getBoundingClientRect();
-        const headingIsStuck = headingBounds.top <= headerHeight
-            && sectionBounds.bottom > headerHeight + 80;
-
-        section.classList.toggle("is-heading-stuck", headingIsStuck);
-    });
 }
 
 function requestBackgroundUpdate() {
@@ -331,25 +329,38 @@ function updatePriceCalculator() {
         : "Выберите услуги";
 }
 
-function alignInitialSection() {
-    if (!window.location.hash) return;
-
+function findSectionTarget(hash) {
     let targetId;
     try {
-        targetId = decodeURIComponent(window.location.hash.slice(1));
+        targetId = decodeURIComponent(hash.slice(1));
     } catch {
-        return;
+        return null;
     }
-    const target = document.getElementById(targetId);
+    return document.getElementById(targetId);
+}
+
+function scrollToSection(target, behavior) {
+    const bounds = target.getBoundingClientRect();
+    const headerBottom = siteHeader.getBoundingClientRect().bottom;
+    const heading = target.querySelector(".category-heading");
+    const headingInset = heading ? heading.getBoundingClientRect().top - bounds.top : 0;
+    const centeredTop = (window.innerHeight - bounds.height) / 2;
+    const minimumTop = headerBottom + 8;
+    const viewportTop = centeredTop >= 0
+        ? Math.max(centeredTop, minimumTop - headingInset)
+        : minimumTop;
+
+    window.scrollTo({
+        top: target.id === "welcome" ? 0 : window.scrollY + bounds.top - viewportTop,
+        behavior
+    });
+}
+
+function alignInitialSection() {
+    const target = findSectionTarget(window.location.hash);
     if (!target) return;
 
-    const targetTop = window.scrollY + target.getBoundingClientRect().top - siteHeader.getBoundingClientRect().bottom;
-    const previousScrollBehavior = root.style.scrollBehavior;
-
-    root.style.scrollBehavior = "auto";
-    window.scrollTo(0, targetTop);
-    root.style.scrollBehavior = previousScrollBehavior;
-
+    scrollToSection(target, "instant");
     if (target.classList.contains("motion-target")) revealMotionTarget(target);
 }
 
@@ -544,6 +555,31 @@ updatePriceCalculator();
 loadPrices();
 portfolioSections.forEach((section) => sectionObserver.observe(section));
 window.addEventListener("scroll", requestBackgroundUpdate, { passive: true });
+homeLink.addEventListener("click", (event) => {
+    if (event.pointerType !== "touch" && event.pointerType !== "pen") return;
+
+    const isOpen = siteHeader.classList.toggle("is-touch-open");
+    if (isOpen) event.preventDefault();
+});
+siteHeader.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || event.defaultPrevented || event.button !== 0
+        || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+
+    const target = findSectionTarget(link.hash);
+    if (!target) return;
+
+    event.preventDefault();
+    if (window.location.hash !== link.hash) history.pushState(null, "", link.hash);
+    if (event.detail === 0) {
+        target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+    }
+    scrollToSection(target, reduceMotion ? "instant" : "smooth");
+});
+document.addEventListener("click", (event) => {
+    if (!homeLink.contains(event.target)) siteHeader.classList.remove("is-touch-open");
+});
 reducedMotion.addEventListener("change", (event) => {
     reduceMotion = event.matches;
     updateVisiblePreviews();

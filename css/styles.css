@@ -22,7 +22,8 @@
     );
     --border-gradient-strong: linear-gradient(135deg, var(--red), var(--orange), var(--green));
     --background-parallax: 0px;
-    --site-header-height: 8rem;
+    --island-avatar: 7.5rem;
+    --site-header-height: calc(var(--island-avatar) * 1.25 + 0.5rem);
 }
 
 * {
@@ -33,7 +34,7 @@ html {
     min-width: 20rem;
     background: var(--background);
     scroll-behavior: smooth;
-    scroll-padding-top: 8.5rem;
+    scroll-padding-top: calc(var(--site-header-height) + 0.25rem);
     scrollbar-color: var(--green) #050605;
     scrollbar-width: thin;
 }
@@ -105,148 +106,151 @@ html.motion-pending .render-pricing {
 }
 
 .site-header {
+    --island-width: min(calc(100vw - 1.25rem), 62rem);
+    --island-frame: linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
+        var(--border-gradient-strong) border-box;
+    --island-current-width: calc(var(--island-avatar) * 1.45);
+    --island-avatar-drop: calc(var(--island-avatar) / 8);
+    --island-links-opacity: 0;
+    --island-links-visibility: hidden;
+
     position: sticky;
-    top: 0;
+    top: 0.5rem;
     z-index: 20;
-    width: min(75%, 96rem);
-    margin-inline: auto;
-    overflow: clip;
-    border: solid transparent;
-    border-width: 0 4px 4px;
-    border-radius: 0 0 4rem 4rem;
-    background:
-        linear-gradient(#111311, #111311) padding-box,
-        linear-gradient(
-            90deg,
-            var(--focus-red),
-            var(--focus-orange) 50%,
-            var(--focus-green)
-        ) border-box;
-    animation: assemble-site-header 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+    display: grid;
+    place-items: start center;
+    width: var(--island-current-width);
+    height: calc(var(--island-avatar) * 1.25);
+    margin: 0.5rem auto 0;
+    transition: width 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.header-inner {
-    display: flex;
-    align-items: center;
-    gap: clamp(1.25rem, 3vw, 3rem);
-    width: 100%;
-    min-height: 8rem;
-    margin: 0 auto;
-    padding: 0 clamp(1.25rem, 2.75vw, 2.75rem);
+.site-header:is(.is-touch-open, :has(:focus-visible)) {
+    --island-current-width: var(--island-width);
+    --island-avatar-drop: calc(var(--island-avatar) / 4);
+    --island-links-opacity: 1;
+    --island-links-visibility: visible;
+}
+
+@media (hover: hover) {
+    .site-header:hover {
+        --island-current-width: var(--island-width);
+        --island-avatar-drop: calc(var(--island-avatar) / 4);
+        --island-links-opacity: 1;
+        --island-links-visibility: visible;
+    }
+}
+
+.site-header::before {
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--island-avatar);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: var(--island-frame);
+    content: "";
+    pointer-events: none;
 }
 
 .home-link {
+    position: relative;
+    z-index: 1;
     display: grid;
-    flex: 0 0 auto;
-    place-items: center;
-    width: 6rem;
-    height: 6rem;
-    border: 1px solid transparent;
+    width: var(--island-avatar);
+    height: var(--island-avatar);
+    padding: calc(var(--island-avatar) * 0.06);
     border-radius: 50%;
-    overflow: hidden;
-    transition:
-        border-color 160ms ease,
-        background-color 160ms ease;
-    animation: reveal-header-control 0.35s 0.62s ease-out both;
+    background: var(--panel-deep);
+    transform: translateY(var(--island-avatar-drop));
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.home-link:hover,
-.home-link:focus-visible {
-    border-color: var(--red);
-    background: var(--panel);
-    outline: none;
+.home-link::after {
+    position: absolute;
+    inset: 0;
+    border: 3px solid transparent;
+    border-radius: inherit;
+    background: var(--island-frame);
+    mask-image: linear-gradient(transparent 50%, #000 94%);
+    content: "";
+    pointer-events: none;
 }
 
 .home-link img {
-    display: block;
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
     border-radius: 50%;
-    padding: 0.2rem;
     object-fit: contain;
 }
 
 .category-nav {
-    display: flex;
-    flex: 1;
-    justify-content: space-around;
-    gap: clamp(1rem, 3vw, 3rem);
-    margin-left: auto;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.category-nav::-webkit-scrollbar {
-    display: none;
-}
-
-.category-nav a {
-    padding: 1rem 0.25rem 0.75rem;
-    border-bottom: 3px solid transparent;
-    color: var(--ink);
-    font-family: "Unbounded", Arial, sans-serif;
-    font-size: clamp(0.9rem, 1.45vw, 1.35rem);
-    font-weight: 700;
-    line-height: 1;
-    text-decoration: none;
-    white-space: nowrap;
-    transition:
-        border-color 160ms ease,
-        color 160ms ease;
-    animation: type-header-link 0.42s steps(12, end) both;
-}
-
-.category-nav a:nth-child(1) {
-    animation-delay: 0.72s;
-}
-
-.category-nav a:nth-child(2) {
-    animation-delay: 0.84s;
+    position: absolute;
+    top: 0;
+    height: var(--island-avatar);
+    left: 50%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) var(--island-avatar) repeat(2, minmax(0, 1fr));
+    align-items: center;
+    width: 100%;
+    padding-inline: clamp(0.2rem, 1vw, 0.875rem);
+    opacity: var(--island-links-opacity);
+    visibility: var(--island-links-visibility);
+    transform: translateX(-50%);
+    transition: opacity 180ms ease 100ms;
 }
 
 .category-nav a:nth-child(3) {
-    animation-delay: 0.96s;
+    grid-column: 4;
 }
 
-.category-nav a:nth-child(4) {
-    animation-delay: 1.08s;
+.category-nav a {
+    display: grid;
+    min-height: 2.75rem;
+    padding-inline: 0.15rem;
+    place-items: center;
+    border-radius: 1rem;
+    color: var(--ink);
+    font-family: "Unbounded", Arial, sans-serif;
+    font-size: clamp(0.6rem, 2.2vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition: color 160ms ease;
 }
 
-.category-nav a:hover,
-.category-nav a:focus-visible {
-    border-bottom-color: var(--green);
-    color: var(--green);
-    outline: none;
-}
-
-@media (max-width: 1100px) {
-    .site-header {
-        width: calc(100% - 1rem);
-    }
+.category-nav a:is(:hover, :focus-visible) {
+    color: var(--focus-green);
 }
 
 .welcome {
+    --welcome-gutter: clamp(1rem, 4vw, 4rem);
+    --welcome-vertical-gutter: 0.25rem;
+
     position: relative;
     z-index: 1;
     overflow: hidden;
     display: grid;
     place-items: center;
-    min-height: calc(100svh - 7rem);
-    padding: clamp(1rem, 4vw, 4rem);
+    min-height: calc(100svh - var(--site-header-height));
+    padding: var(--welcome-vertical-gutter) var(--welcome-gutter);
+    padding-bottom: calc(var(--welcome-vertical-gutter) + var(--site-header-height));
     background: transparent;
 }
 
 .welcome-card {
-    --welcome-avatar-size: clamp(11rem, 18vw, 17rem);
-    --welcome-avatar-offset-x: clamp(2.5rem, 4vw, 4rem);
-    --welcome-panel-offset-x: clamp(2.5rem, 4.5vw, 4.25rem);
-    --welcome-panel-offset-y: clamp(3.5rem, 6vw, 5.5rem);
+    --welcome-avatar-size: clamp(8rem, 14vw, 12rem);
+    --welcome-avatar-offset-x: clamp(0.625rem, 2vw, 1.5rem);
+    --welcome-panel-offset-y: calc(var(--welcome-avatar-size) / 2);
+    --welcome-border-gradient: linear-gradient(100deg, var(--green), var(--orange), var(--red));
 
     position: relative;
     min-width: 0;
-    width: min(100%, 110rem);
+    width: min(100%, 76rem);
     padding-top: var(--welcome-panel-offset-y);
-    padding-left: var(--welcome-panel-offset-x);
 }
 
 .media-frame {
@@ -258,16 +262,29 @@ html.motion-pending .render-pricing {
     aspect-ratio: 1;
     padding: 0.35rem;
     overflow: hidden;
-    border: 4px solid var(--red);
     border-radius: 50%;
-    background: #050605;
     opacity: 0;
     transform: scale(0);
     transform-origin: center;
     animation: reveal-welcome-avatar 1.35s 0.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.media-frame::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--welcome-border-gradient);
+    mask-image:
+        radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)),
+        linear-gradient(#000, transparent 85%);
+    mask-composite: intersect;
+    content: "";
+    pointer-events: none;
+}
+
 .media-placeholder {
+    position: relative;
+    z-index: 1;
     display: block;
     width: 100%;
     height: 100%;
@@ -278,29 +295,33 @@ html.motion-pending .render-pricing {
 }
 
 .intro {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: clamp(1rem, 2vw, 1.5rem);
+    --glass-border: var(--welcome-border-gradient);
+
     min-width: 0;
-    min-height: clamp(28rem, 38vw, 34rem);
-    padding: clamp(1.5rem, 3vw, 3rem);
+    padding: calc(var(--welcome-panel-offset-y) + 0.75rem) clamp(1rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2.5rem);
     overflow: hidden;
-    border: 4px solid var(--green);
     border-radius: clamp(1.25rem, 2.5vw, 2.25rem);
-    background: var(--panel-deep);
     opacity: 0;
     clip-path: inset(0 100% 82% 0 round clamp(1.25rem, 2.5vw, 2.25rem));
     animation: reveal-welcome-panel 1.25s 1.05s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .identity {
+    position: absolute;
+    z-index: 2;
+    top: calc(var(--welcome-panel-offset-y) - 1.85rem);
+    left: calc(var(--welcome-avatar-size) / 2 + var(--welcome-avatar-offset-x));
+    max-width: calc(100% - var(--welcome-avatar-size) / 2 - var(--welcome-avatar-offset-x));
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: clamp(0.5rem, 1.6vw, 1rem);
     min-width: 0;
-    min-height: clamp(5rem, 8vw, 7rem);
-    padding-left: clamp(8rem, 15vw, 14rem);
+    min-height: 3.5rem;
+    padding: 0.45rem clamp(0.625rem, 3vw, 2rem) 0.45rem calc(var(--welcome-avatar-size) / 2 + 0.75rem);
+    border: 2px solid var(--red);
+    border-bottom: 0;
+    border-radius: 1.25rem 1.25rem 0 0;
     opacity: 0;
     animation: reveal-welcome-content 0.35s 2.36s ease-out forwards;
 }
@@ -324,7 +345,7 @@ html.motion-pending .render-pricing {
 
 .nickname {
     font-family: "Unbounded", Arial, sans-serif;
-    font-size: clamp(1.75rem, 3.8vw, 4rem);
+    font-size: clamp(1.4rem, 3.6vw, 3.5rem);
     font-weight: 800;
     letter-spacing: -0.06em;
     line-height: 1.15;
@@ -335,7 +356,7 @@ html.motion-pending .render-pricing {
     position: relative;
     flex: 0 0 auto;
     font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif;
-    font-size: clamp(2.35rem, 5vw, 5rem);
+    font-size: clamp(1.65rem, 4vw, 3.75rem);
     line-height: 1;
     animation:
         shine-wolf 4s ease-in-out infinite,
@@ -346,8 +367,6 @@ html.motion-pending .render-pricing {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-height: 18rem;
-    padding: clamp(0.25rem, 1vw, 1rem);
     opacity: 0;
     animation: reveal-welcome-content 0.35s 2.46s ease-out forwards;
 }
@@ -355,7 +374,9 @@ html.motion-pending .render-pricing {
 .message h1 {
     margin: 0;
     font-family: "Unbounded", Arial, sans-serif;
-    font-size: clamp(2.5rem, 5vw, 5.5rem);
+    color: #dfaa68;
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    text-transform: uppercase;
     font-weight: 700;
     letter-spacing: -0.055em;
     line-height: 1;
@@ -377,43 +398,29 @@ html.motion-pending .render-pricing {
     margin-top: 0.85rem;
 }
 
-.message-copy a {
-    color: var(--green);
-    font-weight: 700;
-    text-underline-offset: 0.18em;
-}
-
-.message-copy a:hover,
-.message-copy a:focus-visible {
-    color: var(--orange);
-}
-
-.message-copy code {
-    color: var(--ink);
-    font-family: "Courier New", Courier, monospace;
-    font-size: 0.92em;
-}
-
 .welcome-contact-links {
     display: flex;
     flex-wrap: wrap;
     gap: 0.65rem;
-    margin-top: 0.85rem;
+    margin-top: clamp(1rem, 2.5vw, 1.75rem);
 }
 
 .welcome-contact-links + .timezone {
     margin-top: 1rem;
 }
 
-.welcome-contact-links a,
-.welcome-contact-links span {
-    padding: 0.65rem 0.9rem;
-    border: 1px solid #485148;
-    border-radius: 0.75rem;
-    background: #171a17;
+.service-contact {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    min-height: 3.4rem;
+    padding: 0.65rem 3.85rem 0.65rem 1rem;
+    border: 2px solid var(--service-color);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--service-color) 21%, var(--panel-deep));
     color: var(--ink);
-    font-weight: 600;
-    line-height: 1.25;
+    font: 800 clamp(1rem, 2vw, 1.25rem) / 1.25 "Unbounded", Arial, sans-serif;
     text-decoration: none;
     transition:
         border-color 160ms ease,
@@ -421,12 +428,31 @@ html.motion-pending .render-pricing {
         color 160ms ease;
 }
 
-.welcome-contact-links a:hover,
-.welcome-contact-links a:focus-visible {
-    border-color: var(--green);
-    background: #1b211c;
-    color: #b8d6bd;
-    outline: none;
+.service-contact svg {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 3.4rem;
+    height: 3.4rem;
+    padding: 0.4rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--service-color) 38%, var(--panel-deep));
+    fill: currentColor;
+    color: #b5c0cd;
+    transform: translateY(-50%);
+}
+
+.service-contact:hover,
+.service-contact:focus-visible {
+    background: color-mix(in srgb, var(--service-color) 35%, var(--panel-deep));
+}
+
+.service-telegram {
+    --service-color: var(--telegram);
+}
+
+.service-discord {
+    --service-color: var(--discord);
 }
 
 .order-guide {
@@ -434,11 +460,7 @@ html.motion-pending .render-pricing {
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(4rem, 8vw, 7rem) 1rem;
     overflow: clip;
-    border: 2px solid transparent;
     border-radius: 2rem;
-    background:
-        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
-        var(--border-gradient) border-box;
 }
 
 .guide-heading {
@@ -497,14 +519,10 @@ html.motion-pending .render-pricing {
 
 .portfolio-section {
     width: min(calc(75% - 8rem), 88rem);
-    margin: clamp(2rem, 5vw, 4rem) auto;
-    padding: clamp(2.5rem, 5vw, 5rem) 0 clamp(1rem, 3vw, 2.5rem);
+    margin: clamp(1.75rem, 3.5vw, 3rem) auto 0;
+    padding: clamp(2rem, 4vw, 4rem) 0 clamp(1.375rem, 2.5vw, 2.75rem);
     overflow: clip;
-    border: 2px solid transparent;
     border-radius: 2rem;
-    background:
-        linear-gradient(#090a09, #090a09) padding-box,
-        var(--border-gradient) border-box;
 }
 
 @media (max-width: 1100px) {
@@ -515,41 +533,8 @@ html.motion-pending .render-pricing {
 
 .category-heading {
     width: min(calc(100% - 2rem), 96rem);
-    margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0 auto clamp(1.25rem, 2.5vw, 2rem);
     text-align: center;
-}
-
-.category-sticky-heading {
-    position: sticky;
-    top: var(--site-header-height);
-    z-index: 10;
-    height: 0;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-0.5rem);
-    transition:
-        opacity 160ms ease,
-        transform 160ms ease;
-}
-
-.category-sticky-heading span {
-    display: block;
-    width: 100%;
-    padding: 0.85rem 1rem;
-    border-bottom: 1px solid var(--line);
-    background: rgba(9, 10, 9, 0.96);
-    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.24);
-    font-family: "Unbounded", Arial, sans-serif;
-    font-size: clamp(1.6rem, 3vw, 2.5rem);
-    font-weight: 800;
-    line-height: 1;
-    text-align: center;
-    backdrop-filter: blur(0.5rem);
-}
-
-.portfolio-section.is-heading-stuck .category-sticky-heading {
-    opacity: 1;
-    transform: none;
 }
 
 .category-title {
@@ -603,7 +588,7 @@ html.motion-pending .render-pricing {
 
 .render-strip {
     width: 100%;
-    height: clamp(16rem, 30vw, 25rem);
+    height: clamp(15rem, min(30vw, 36svh), 25rem);
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-mask-image: linear-gradient(
@@ -679,8 +664,8 @@ html.motion-pending .render-pricing {
 
 .render-pricing {
     width: min(calc(100% - 2rem), 96rem);
-    margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
-    padding: clamp(1.25rem, 3vw, 2.5rem);
+    margin: clamp(1rem, 2vw, 2rem) auto 0;
+    padding: clamp(1rem, 2.5vw, 2rem);
     overflow: clip;
     border-top: 1px solid var(--line);
 }
@@ -797,15 +782,35 @@ html.motion-pending .render-pricing {
 
 .contact-section {
     width: min(calc(100% - 2rem), 90rem);
-    min-height: calc(100svh - var(--site-header-height) - 2rem);
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(1rem, 3vw, 2.5rem);
     overflow: clip;
-    border: 2px solid transparent;
     border-radius: 2rem;
-    background:
-        linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
-        var(--border-gradient) border-box;
+}
+
+:is(.intro, .order-guide, .portfolio-section, .contact-section) {
+    position: relative;
+}
+
+:is(.intro, .media-frame, .identity, .order-guide, .portfolio-section, .contact-section) {
+    background: var(--glass-fill, rgb(9 11 10 / 84%));
+    backdrop-filter: blur(0.8rem);
+}
+
+:is(.media-frame, .identity) {
+    --glass-fill: linear-gradient(rgb(9 11 10 / 44%), rgb(9 11 10 / 12%));
+}
+
+:is(.intro, .order-guide, .portfolio-section, .contact-section)::before {
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: var(--glass-border, var(--border-gradient));
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    content: "";
+    pointer-events: none;
 }
 
 .contact-grid {
@@ -842,99 +847,6 @@ html.motion-pending .render-pricing {
     display: grid;
     gap: 0.75rem;
     margin: 2rem 0;
-}
-
-.contact-links a,
-.contact-links p {
-    margin: 0;
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--line);
-    border-radius: 0.85rem;
-    color: var(--ink);
-    text-decoration: none;
-}
-
-.contact-links a:hover,
-.contact-links a:focus-visible {
-    border-color: var(--green);
-    color: var(--green);
-    outline: none;
-}
-
-.contact-links code {
-    font-family: "Courier New", Courier, monospace;
-}
-
-.welcome-contact-links .service-contact,
-.contact-links .service-contact {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding-right: 4rem;
-}
-
-.welcome-contact-links .service-contact svg,
-.contact-links .service-contact svg {
-    position: absolute;
-    top: 50%;
-    right: 0.65rem;
-    z-index: 0;
-    width: 3rem;
-    height: 3rem;
-    fill: currentColor;
-    opacity: 0.2;
-    transform: translateY(-50%);
-    transition:
-        opacity 160ms ease,
-        transform 160ms ease;
-}
-
-.welcome-contact-links .service-telegram svg,
-.contact-links .service-telegram svg {
-    width: 2.75rem;
-    height: 2.75rem;
-}
-
-.welcome-contact-links .service-discord svg,
-.contact-links .service-discord svg {
-    width: 3.1rem;
-    height: 3.1rem;
-}
-
-.welcome-contact-links .service-telegram,
-.contact-links .service-telegram {
-    border-color: rgba(42, 171, 238, 0.62);
-    background: rgba(42, 171, 238, 0.08);
-    color: #67c8f5;
-}
-
-.welcome-contact-links .service-discord,
-.contact-links .service-discord {
-    border-color: rgba(116, 128, 255, 0.62);
-    background: rgba(116, 128, 255, 0.08);
-    color: #9da5ff;
-}
-
-.welcome-contact-links .service-contact code,
-.contact-links .service-contact code {
-    color: inherit;
-}
-
-.welcome-contact-links .service-telegram:hover,
-.welcome-contact-links .service-telegram:focus-visible,
-.contact-links .service-telegram:hover,
-.contact-links .service-telegram:focus-visible {
-    border-color: var(--telegram);
-    background: rgba(42, 171, 238, 0.16);
-    color: #8bd8fa;
-}
-
-.welcome-contact-links .service-contact:hover svg,
-.welcome-contact-links .service-contact:focus-visible svg,
-.contact-links .service-contact:hover svg,
-.contact-links .service-contact:focus-visible svg {
-    opacity: 0.34;
-    transform: translateY(-50%) scale(1.06);
 }
 
 .contact-availability {
@@ -1229,7 +1141,16 @@ html.motion-pending .render-pricing {
 
 .motion-ready .motion-target.motion-complete {
     opacity: 1;
-    clip-path: none;
+    clip-path: inset(0);
+}
+
+.motion-ready :is(.order-guide, .portfolio-section, .contact-section)::before {
+    opacity: 0;
+    transition: opacity 160ms ease-out;
+}
+
+.motion-ready :is(.order-guide, .portfolio-section, .contact-section).motion-complete::before {
+    opacity: 1;
 }
 
 .motion-ready .motion-text {
@@ -1249,6 +1170,16 @@ html.motion-pending .render-pricing {
 
 .motion-ready .motion-copy-text.is-text-revealed {
     animation: reveal-motion-copy 0.42s var(--motion-text-delay) ease-out both;
+}
+
+.motion-ready :is(.contact-card, .calculator-card) > :not(h2) {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.motion-ready :is(.contact-card, .calculator-card).contact-content-ready > :not(h2) {
+    visibility: visible;
+    animation: reveal-motion-copy 0.42s ease-out both;
 }
 
 .motion-ready .portfolio-section .render-gallery {
@@ -1272,52 +1203,6 @@ html.motion-pending .render-pricing {
         both;
 }
 
-@keyframes assemble-site-header {
-    0% {
-        opacity: 0;
-        clip-path: inset(46% 49% 46% 49%);
-    }
-
-    28% {
-        opacity: 1;
-        clip-path: inset(46% 34% 46% 34%);
-    }
-
-    64% {
-        opacity: 1;
-        clip-path: inset(0 34% 0 34%);
-    }
-
-    100% {
-        opacity: 1;
-        clip-path: inset(0);
-    }
-}
-
-@keyframes reveal-header-control {
-    from {
-        opacity: 0;
-        transform: scale(0.65);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes type-header-link {
-    from {
-        opacity: 0;
-        clip-path: inset(0 100% 0 0);
-    }
-
-    to {
-        opacity: 1;
-        clip-path: inset(0);
-    }
-}
-
 @keyframes assemble-motion-panel {
     0% {
         opacity: 0;
@@ -1329,14 +1214,15 @@ html.motion-pending .render-pricing {
         clip-path: inset(47% 28% 47% 28% round 1.25rem);
     }
 
-    66% {
+    56% {
         opacity: 1;
-        clip-path: inset(0 28% 0 28% round 1.25rem);
+        clip-path: inset(1% 21% 1% 21% round 1.25rem);
+        animation-timing-function: cubic-bezier(0.3, 0.25, 0.3, 1);
     }
 
     100% {
         opacity: 1;
-        clip-path: inset(0 round 0);
+        clip-path: inset(0);
     }
 }
 
@@ -1351,14 +1237,15 @@ html.motion-pending .render-pricing {
         clip-path: inset(46% 27% 46% 27% round 0.75rem);
     }
 
-    66% {
+    56% {
         opacity: 1;
-        clip-path: inset(0 27% 0 27% round 0.75rem);
+        clip-path: inset(1% 20% 1% 20% round 0.75rem);
+        animation-timing-function: cubic-bezier(0.3, 0.25, 0.3, 1);
     }
 
     100% {
         opacity: 1;
-        clip-path: inset(0 round 0);
+        clip-path: inset(0);
     }
 }
 
@@ -1510,11 +1397,11 @@ html.motion-pending .render-pricing {
 @keyframes float-wolf {
     0%,
     100% {
-        transform: translateY(-0.3rem) rotate(-3deg);
+        transform: translateY(-0.3rem);
     }
 
     50% {
-        transform: translateY(0.3rem) rotate(3deg);
+        transform: translateY(0.3rem);
     }
 }
 
@@ -1546,73 +1433,75 @@ html.motion-pending .render-pricing {
     }
 }
 
+@media (min-width: 801px) {
+    .category-heading {
+        margin-bottom: 1.125rem;
+    }
+
+    .category-title {
+        font-size: clamp(3rem, 7vw, 5.5rem);
+    }
+
+    .category-heading > p:last-child {
+        margin-top: 0.75rem;
+    }
+
+    .render-strip {
+        height: clamp(13rem, 24svh, 21rem);
+    }
+
+    .render-pricing {
+        margin-top: 1.25rem;
+        padding-block: 0.75rem;
+    }
+
+    .pricing-heading {
+        margin-bottom: 0.875rem;
+    }
+
+    .pricing-heading h3 {
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+    }
+
+    .pricing-heading > p:last-child {
+        margin-top: 0.5rem;
+    }
+
+    .pricing-cell {
+        padding: 1rem 1.25rem;
+    }
+
+    .price-list,
+    .requirements-list {
+        margin-top: 0.75rem;
+    }
+
+    .requirements-list {
+        gap: 0.5rem;
+    }
+}
+
 @media (max-width: 800px) {
-    html {
-        scroll-padding-top: 5.5rem;
-    }
-
-    .site-header {
-        width: 100%;
-        border-width: 0 2px 2px;
-        border-radius: 0 0 2rem 2rem;
-    }
-
-    .header-inner {
-        gap: 0.75rem;
-        width: 100%;
-        min-height: 5rem;
-        padding: 0 0.75rem;
-    }
-
-    .home-link {
-        width: 3.5rem;
-        height: 3.5rem;
-    }
-
-    .category-nav {
-        justify-content: flex-start;
-        gap: 0.35rem;
-        padding-right: 0.25rem;
-    }
-
-    .category-nav a {
-        padding: 0.85rem 0.75rem 0.65rem;
-        font-size: 0.875rem;
-    }
-
-    .welcome {
-        min-height: calc(100svh - 5rem);
+    :root {
+        --island-avatar: clamp(4.25rem, 12vw, 6rem);
     }
 
     .welcome-card {
-        --welcome-avatar-size: clamp(7.5rem, 26vw, 9rem);
-        --welcome-avatar-offset-x: 0rem;
-        --welcome-panel-offset-x: clamp(2.25rem, 8vw, 3rem);
-        --welcome-panel-offset-y: clamp(2.5rem, 9vw, 3.25rem);
+        --welcome-avatar-size: clamp(5.5rem, 18vw, 9rem);
 
         max-width: 38rem;
     }
 
-    .intro {
-        min-height: 0;
-        padding: 1.25rem;
-    }
-
     .identity {
-        min-height: 5.75rem;
-        padding-left: clamp(5.25rem, 20vw, 7rem);
+        gap: 0.35rem;
     }
 
     .nickname {
-        font-size: clamp(1.8rem, 8.5vw, 3.4rem);
+        font-size: clamp(1.125rem, 4vw, 2rem);
     }
 
     .wolf {
-        font-size: clamp(2.25rem, 11vw, 4.25rem);
-    }
-
-    .message {
-        min-height: 16rem;
+        font-size: clamp(1.3rem, 4.5vw, 2.5rem);
     }
 
     .pricing-grid {
@@ -1632,36 +1521,14 @@ html.motion-pending .render-pricing {
 
 @media (max-width: 430px) {
     .welcome {
-        padding: 0.75rem;
-    }
-
-    .welcome-card {
-        gap: 0.75rem;
-        padding: 0.75rem;
+        --welcome-gutter: 0.75rem;
+        --welcome-vertical-gutter: 0.75rem;
     }
 
     .order-guide,
     .portfolio-section,
     .contact-section {
         width: calc(100% - 1rem);
-    }
-
-    .identity {
-        min-height: 5rem;
-        padding: 0 0 0 5.25rem;
-    }
-
-    .nickname {
-        font-size: clamp(1.25rem, 5.5vw, 1.65rem);
-    }
-
-    .wolf {
-        font-size: clamp(1.5rem, 7vw, 2rem);
-    }
-
-    .message {
-        min-height: 14rem;
-        padding: 1.25rem;
     }
 
     .message h1 {
@@ -1691,7 +1558,10 @@ html.motion-pending .render-pricing {
 
     .site-header,
     .home-link,
-    .category-nav a,
+    .category-nav {
+        transition: none;
+    }
+
     .welcome-card,
     .media-frame,
     .intro,

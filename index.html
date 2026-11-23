@@ -18,18 +18,16 @@
 </head>
 <body>
     <header class="site-header">
-        <div class="header-inner">
-            <a class="home-link" href="#welcome" aria-label="Вернуться к приветствию">
-                <img src="assets/images/branding/header.png" alt="">
-            </a>
+        <a class="home-link" href="#welcome" aria-label="Вернуться к приветствию">
+            <img src="assets/images/branding/header.png" alt="">
+        </a>
 
-            <nav class="category-nav" aria-label="Основная навигация">
-                <a href="#renders">Рендеры</a>
-                <a href="#models">Модели</a>
-                <a href="#animations">Анимации</a>
-                <a href="#contact">Связь <span aria-hidden="true">•</span> Калькулятор</a>
-            </nav>
-        </div>
+        <nav class="category-nav" aria-label="Основная навигация">
+            <a href="#renders">Рендеры</a>
+            <a href="#models">Модели</a>
+            <a href="#animations">Анимации</a>
+            <a href="#contact" aria-label="Связь и калькулятор">Связь</a>
+        </nav>
     </header>
 
     <main>
@@ -43,12 +41,12 @@
                     >
                 </div>
 
-                <div class="intro">
-                    <div class="identity" aria-label="Автор портфолио: BENDY659">
-                        <span class="nickname">_BENDY659_</span>
-                        <span class="wolf" aria-hidden="true">🐺︎</span>
-                    </div>
+                <div class="identity" aria-label="Автор портфолио: BENDY659">
+                    <span class="nickname">_BENDY659_</span>
+                    <span class="wolf" aria-hidden="true">🐺︎</span>
+                </div>
 
+                <div class="intro">
                     <div class="message">
                         <h1 id="welcome-title">
                             Привет! <span class="waving-hand" aria-hidden="true">👋</span>
@@ -66,20 +64,18 @@
                             </p>
                             <p>По всем заказам и вопросам пишите мне удобным способом:</p>
                             <div class="welcome-contact-links" aria-label="Способы связи">
-                                <a class="service-contact service-telegram" href="https://t.me/bendy659">
-                                    Telegram · @bendy659
+                                <a class="service-contact service-telegram" href="https://t.me/bendy659" aria-label="Telegram: @bendy659">
+                                    Telegram
                                     <svg viewBox="0 0 24 24" aria-hidden="true">
                                         <path d="M21.6 3.3 3.1 10.4c-1.3.5-1.3 1.2-.2 1.6l4.7 1.5 1.8 5.5c.2.7.1 1 .7 1 .5 0 .8-.2 1.1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.8-.9l3.1-14.8c.3-1.3-.5-1.9-1.8-1.3ZM9 13l9.4-6c.5-.3.9-.1.5.3l-7.8 7.1-.3 3.4L9 13Z"/>
                                     </svg>
                                 </a>
-                                <span class="service-contact service-discord">
-                                    Discord · <code>@bendy659</code>
+                                <a class="service-contact service-discord" href="https://discord.com/users/696644816649584681" aria-label="Discord: @bendy659">
+                                    Discord
                                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M7.2 6.3A16 16 0 0 1 12 5.5c1.7 0 3.3.3 4.8.8 1.5 2.2 2.5 4.8 2.8 7.6-1.4 1.1-2.9 1.8-4.4 2.3l-1.1-1.4c.8-.2 1.5-.6 2.2-1-4.1 1.9-8.5 1.9-12.6 0 .7.4 1.4.8 2.2 1l-1.1 1.4c-1.6-.5-3.1-1.2-4.4-2.3.3-2.8 1.3-5.4 2.8-7.6Z"/>
-                                        <circle cx="9.3" cy="12.4" r="1.15"/>
-                                        <circle cx="14.7" cy="12.4" r="1.15"/>
+                                        <path fill-rule="evenodd" d="M5.5 6.2a17 17 0 0 1 4-1.3l.5 1a14 14 0 0 1 4 0l.5-1a17 17 0 0 1 4 1.3 17 17 0 0 1 3 10 16 16 0 0 1-4.9 2.5l-1-1.5a11 11 0 0 0 2-1.1 14 14 0 0 1-11.2 0 11 11 0 0 0 2 1.1l-1 1.5a16 16 0 0 1-4.9-2.5 17 17 0 0 1 3-10ZM7.5 12.1a1.5 1.7 0 1 0 3 0 1.5 1.7 0 1 0-3 0Zm6 0a1.5 1.7 0 1 0 3 0 1.5 1.7 0 1 0-3 0Z"/>
                                     </svg>
-                                </span>
+                                </a>
                             </div>
                             <p class="timezone">
                                 Обычно онлайн по вашему времени:
@@ -142,9 +138,6 @@
             data-gallery
             data-gallery-item-label="Рендер"
         >
-            <div class="category-sticky-heading" aria-hidden="true">
-                <span>Рендеры</span>
-            </div>
             <header class="category-heading">
                 <h2 class="category-title" id="renders-title">Рендеры</h2>
                 <p>Листайте ленту или нажмите на работу, чтобы рассмотреть её полностью.</p>
@@ -269,9 +262,6 @@
             data-gallery
             data-gallery-item-label="Модель"
         >
-            <div class="category-sticky-heading" aria-hidden="true">
-                <span>Модели</span>
-            </div>
             <header class="category-heading">
                 <h2 class="category-title" id="models-title">Модели</h2>
                 <p>
@@ -467,9 +457,6 @@
             data-gallery
             data-gallery-item-label="Анимация"
         >
-            <div class="category-sticky-heading" aria-hidden="true">
-                <span>Анимации</span>
-            </div>
             <header class="category-heading">
                 <h2 class="category-title" id="animations-title">Анимации</h2>
                 <p>
@@ -675,20 +662,18 @@
                         В сообщении можно сразу приложить описание и референсы.
                     </p>
                     <div class="contact-links">
-                        <a class="service-contact service-telegram" href="https://t.me/bendy659">
-                            Telegram · @bendy659
+                        <a class="service-contact service-telegram" href="https://t.me/bendy659" aria-label="Telegram: @bendy659">
+                            Telegram
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M21.6 3.3 3.1 10.4c-1.3.5-1.3 1.2-.2 1.6l4.7 1.5 1.8 5.5c.2.7.1 1 .7 1 .5 0 .8-.2 1.1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.8-.9l3.1-14.8c.3-1.3-.5-1.9-1.8-1.3ZM9 13l9.4-6c.5-.3.9-.1.5.3l-7.8 7.1-.3 3.4L9 13Z"/>
                             </svg>
                         </a>
-                        <p class="service-contact service-discord">
-                            Discord · <code>@bendy659</code>
+                        <a class="service-contact service-discord" href="https://discord.com/users/696644816649584681" aria-label="Discord: @bendy659">
+                            Discord
                             <svg viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M7.2 6.3A16 16 0 0 1 12 5.5c1.7 0 3.3.3 4.8.8 1.5 2.2 2.5 4.8 2.8 7.6-1.4 1.1-2.9 1.8-4.4 2.3l-1.1-1.4c.8-.2 1.5-.6 2.2-1-4.1 1.9-8.5 1.9-12.6 0 .7.4 1.4.8 2.2 1l-1.1 1.4c-1.6-.5-3.1-1.2-4.4-2.3.3-2.8 1.3-5.4 2.8-7.6Z"/>
-                                <circle cx="9.3" cy="12.4" r="1.15"/>
-                                <circle cx="14.7" cy="12.4" r="1.15"/>
+                                <path fill-rule="evenodd" d="M5.5 6.2a17 17 0 0 1 4-1.3l.5 1a14 14 0 0 1 4 0l.5-1a17 17 0 0 1 4 1.3 17 17 0 0 1 3 10 16 16 0 0 1-4.9 2.5l-1-1.5a11 11 0 0 0 2-1.1 14 14 0 0 1-11.2 0 11 11 0 0 0 2 1.1l-1 1.5a16 16 0 0 1-4.9-2.5 17 17 0 0 1 3-10ZM7.5 12.1a1.5 1.7 0 1 0 3 0 1.5 1.7 0 1 0-3 0Zm6 0a1.5 1.7 0 1 0 3 0 1.5 1.7 0 1 0-3 0Z"/>
                             </svg>
-                        </p>
+                        </a>
                     </div>
                     <p class="contact-availability">
                         Обычно онлайн по вашему времени:
