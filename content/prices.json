@@ -2,7 +2,7 @@
   "renderBase": 850,
   "modelBase": 500,
   "animationBase": 300,
-  "animationPerSecond": 50,
+  "animationPerSecond": 25,
   "animationDetailBasic": 0,
   "animationDetailMedium": 252,
   "animationDetailHigh": 500
