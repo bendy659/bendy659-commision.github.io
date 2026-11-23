@@ -45,6 +45,9 @@ async function evaluate(expression) {
 }
 
 await cdp("Runtime.enable");
+await cdp("Network.enable");
+await cdp("Network.setBlockedURLs", { urls: ["*://fonts.googleapis.com/*", "*://fonts.gstatic.com/*"] });
+await cdp("Page.navigate", { url: "http://127.0.0.1:4173/" });
 await cdp("Emulation.setDeviceMetricsOverride", {
     width: 1920,
     height: 1080,
@@ -58,7 +61,7 @@ const wide = await evaluate(`(async () => {
     calculator.elements.namedItem("animation-enabled").checked = true;
     calculator.elements.namedItem("animation-count").value = 2;
     calculator.elements.namedItem("animation-duration").value = 5;
-    calculator.elements.namedItem("animation-detail").value = 300;
+    calculator.elements.namedItem("animation-detail").selectedIndex = 1;
     calculator.dispatchEvent(new Event("input", { bubbles: true }));
 
     const animationCard = document.querySelector("#animations .render-card:not([data-gallery-clone])");
@@ -83,6 +86,12 @@ const wide = await evaluate(`(async () => {
     };
 
     dialog.close();
+    const animationCount = calculator.elements.namedItem("animation-count");
+    animationCount.value = "1.5";
+    animationCount.dispatchEvent(new Event("input", { bubbles: true }));
+    result.rejectsFraction = !animationCount.validity.valid &&
+        !document.querySelector("#calculator-result").textContent.includes("₽");
+    result.offscreenPreviewsPaused = [...document.querySelectorAll(".render-card video")].every(video => video.paused);
     return result;
 })()`);
 
@@ -100,5 +109,44 @@ const mobile = await evaluate(`({
     pageOverflow: document.documentElement.scrollWidth > innerWidth
 })`);
 
-console.log(JSON.stringify({ wide, mobile, browserErrors }, null, 2));
+const gallery = await evaluate(`(async () => {
+    document.querySelector('nav a[href="#models"]').click();
+    await new Promise(resolve => setTimeout(resolve, 3800));
+    const strip = document.querySelector("#models .render-strip");
+    const first = strip.scrollLeft;
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return {
+        navigated: location.hash === "#models" && strip.getBoundingClientRect().top < innerHeight,
+        playing: [...strip.querySelectorAll("video")].some(video => !video.paused),
+        scrolling: strip.scrollLeft !== first
+    };
+})()`);
+await cdp("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+const reduced = await evaluate(`(async () => {
+    const strip = document.querySelector("#models .render-strip");
+    await new Promise(resolve => setTimeout(resolve, 800));
+    const first = strip.scrollLeft;
+    await new Promise(resolve => setTimeout(resolve, 160));
+    return { first, last: strip.scrollLeft, matches: matchMedia("(prefers-reduced-motion: reduce)").matches,
+        paused: [...strip.querySelectorAll("video")].every(video => video.paused),
+        active: [...strip.querySelectorAll("video")].filter(video => !video.paused).map(video => [video.autoplay, visiblePreviews.has(video), reducedMotion.matches, root.className]) };
+})()`);
+await cdp("Emulation.setEmulatedMedia", { features: [] });
+await cdp("Page.navigate", { url: "http://127.0.0.1:4173/admin/" });
+await new Promise(resolve => setTimeout(resolve, 450));
+const admin = await evaluate(`(async () => {
+    const before = readEditorPrices();
+    window.showOpenFilePicker = async () => [{ getFile: async () => new File(['{"modelBase":1}'], "prices.json") }];
+    await openPriceFile();
+    return before.renderBase > 0 && priceFileHandle === null &&
+        JSON.stringify(before) === JSON.stringify(readEditorPrices()) && editorStatus.classList.contains("is-error");
+})()`);
+await cdp("Page.navigate", { url: "http://127.0.0.1:4173/" });
+console.log(JSON.stringify({ wide, mobile, gallery, reduced, admin, browserErrors }, null, 2));
 socket.close();
+const prices = await fetch("http://127.0.0.1:4173/content/prices.json").then(response => response.json());
+const expected = 2 * (prices.animationBase + 5 * prices.animationPerSecond + prices.animationDetailMedium);
+if (Number(wide.calculatorResult.replace(/\D/g, "")) !== expected ||
+    !wide.rejectsFraction || !wide.offscreenPreviewsPaused || !wide.lightboxOpen || !wide.lightboxReady ||
+    wide.pageOverflow || mobile.pageOverflow || !gallery.navigated || !gallery.playing || !gallery.scrolling ||
+    !reduced.matches || !reduced.paused || reduced.first !== reduced.last || !admin || browserErrors.length) process.exitCode = 1;

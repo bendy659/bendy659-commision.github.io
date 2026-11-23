@@ -1,5 +1,6 @@
 const root = document.documentElement;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let reduceMotion = reducedMotion.matches;
 const visitorAvailability = document.querySelector("#visitor-availability");
 const contactAvailability = document.querySelector("#contact-availability");
 const priceCalculator = document.querySelector("#price-calculator");
@@ -56,8 +57,8 @@ function addMotionText(element, type, delay) {
 function getMotionTextTargets(target) {
     const textElements = [];
     const isPanel = target.classList.contains("motion-panel");
-    const titleDelay = isPanel ? 680 : 360;
-    const copyDelay = isPanel ? 980 : 620;
+    const titleDelay = isPanel ? 840 : 650;
+    const copyDelay = isPanel ? 1500 : 1280;
     let title = null;
     let copy = null;
 
@@ -81,7 +82,6 @@ function getMotionTextTargets(target) {
         copy = target.querySelector(":scope > .price-list, :scope > .requirements-list");
     } else if (target.matches(".calculator-service")) {
         title = target.querySelector(":scope > legend");
-        copy = target.querySelector(":scope > label, :scope > .calculator-fields");
     }
 
     const titleElement = addMotionText(title, "title", titleDelay);
@@ -102,7 +102,7 @@ function revealMotionTarget(target) {
 }
 
 function updateMotionTriggers() {
-    if (reducedMotion.matches) return;
+    if (reduceMotion) return;
 
     const centralTriggerLine = window.innerHeight * 0.65;
     const nestedTriggerLine = window.innerHeight * 0.88;
@@ -159,13 +159,15 @@ function prepareMotionSystem() {
         }
     });
 
-    if (reducedMotion.matches) {
+    if (reduceMotion) {
+        root.classList.remove("motion-pending");
         motionTargets.forEach(revealMotionTarget);
         portfolioSections.forEach((section) => section.classList.add("is-gallery-ready"));
         return;
     }
 
     root.classList.add("motion-ready");
+    root.classList.remove("motion-pending");
     const revealIntersectingTargets = (entries, observer) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
@@ -195,7 +197,7 @@ function updateBackgroundPosition() {
         ? Math.min(Math.max(window.scrollY / scrollRange, 0), 1)
         : 0;
     const parallaxRange = window.innerHeight * 0.18;
-    const offset = reducedMotion.matches ? 0 : -(parallaxRange * scrollProgress);
+    const offset = reduceMotion ? 0 : -(parallaxRange * scrollProgress);
 
     root.style.setProperty("--background-parallax", `${offset}px`);
     updateMotionTriggers();
@@ -281,9 +283,12 @@ function updatePriceCalculator() {
 
     services.forEach((service) => {
         const checkbox = service.querySelector('input[type="checkbox"]');
+        const state = service.querySelector(".calculator-service-state");
         const enabled = checkbox.checked;
 
         service.classList.toggle("is-selected", enabled);
+        checkbox.setAttribute("aria-expanded", String(enabled));
+        state.textContent = enabled ? "Добавлено" : "Выбрать";
         service.querySelectorAll('input:not([type="checkbox"]), select').forEach((control) => {
             control.disabled = !enabled;
         });
@@ -291,6 +296,12 @@ function updatePriceCalculator() {
 
     let total = 0;
     let selectedServices = 0;
+
+    const invalidField = priceCalculator.querySelector('input[type="number"]:enabled:invalid');
+    if (invalidField) {
+        calculatorResult.textContent = `Введите целое число от ${invalidField.min} до ${invalidField.max}`;
+        return;
+    }
 
     if (renderEnabled) {
         const count = Math.max(Number(priceCalculator.elements.namedItem("render-count").value), 1);
@@ -323,11 +334,16 @@ function updatePriceCalculator() {
 function alignInitialSection() {
     if (!window.location.hash) return;
 
-    const targetId = decodeURIComponent(window.location.hash.slice(1));
+    let targetId;
+    try {
+        targetId = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+        return;
+    }
     const target = document.getElementById(targetId);
     if (!target) return;
 
-    const targetTop = target.offsetTop - siteHeader.getBoundingClientRect().bottom;
+    const targetTop = window.scrollY + target.getBoundingClientRect().top - siteHeader.getBoundingClientRect().bottom;
     const previousScrollBehavior = root.style.scrollBehavior;
 
     root.style.scrollBehavior = "auto";
@@ -401,11 +417,11 @@ function createPortfolioGallery(section) {
 
     function updateScroll(timestamp) {
         const elapsed = Math.min(timestamp - lastGalleryFrame, 50);
-        const isPaused = isGalleryPointerActive
+        const isPaused = reduceMotion || isGalleryPointerActive
             || timestamp < galleryPausedUntil
             || portfolioLightbox.open
             || document.hidden
-            || (!reducedMotion.matches && !section.classList.contains("is-gallery-ready"));
+            || (!reduceMotion && !section.classList.contains("is-gallery-ready"));
 
         if (!galleryInitialized) {
             lastGalleryFrame = timestamp;
@@ -444,6 +460,7 @@ function createPortfolioGallery(section) {
 
         portfolioLightboxCaption.textContent = `${itemLabel} ${index + 1} из ${cards.length}`;
         portfolioLightbox.showModal();
+        updateVisiblePreviews();
     }
 
     function createClone(card, index, side) {
@@ -493,6 +510,27 @@ function resetPortfolioLightbox() {
 
 prepareMotionSystem();
 const galleryControllers = gallerySections.map(createPortfolioGallery);
+const visiblePreviews = new Set();
+function updatePreviewPlayback(video) {
+    if (visiblePreviews.has(video) && !document.hidden && !portfolioLightbox.open && !reduceMotion) {
+        video.play().catch(() => {});
+    } else {
+        video.pause();
+    }
+}
+function updateVisiblePreviews() {
+    visiblePreviews.forEach(updatePreviewPlayback);
+}
+const previewObserver = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+        if (isIntersecting) visiblePreviews.add(target);
+        else visiblePreviews.delete(target);
+        updatePreviewPlayback(target);
+    });
+});
+document.querySelectorAll(".render-card video").forEach((video) => previewObserver.observe(video));
+document.addEventListener("visibilitychange", updateVisiblePreviews);
+portfolioLightbox.addEventListener("close", updateVisiblePreviews);
 const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         entry.target.classList.toggle("is-in-focus", entry.intersectionRatio >= 0.45);
@@ -506,9 +544,11 @@ updatePriceCalculator();
 loadPrices();
 portfolioSections.forEach((section) => sectionObserver.observe(section));
 window.addEventListener("scroll", requestBackgroundUpdate, { passive: true });
-reducedMotion.addEventListener("change", () => {
+reducedMotion.addEventListener("change", (event) => {
+    reduceMotion = event.matches;
+    updateVisiblePreviews();
     requestBackgroundUpdate();
-    if (!reducedMotion.matches) return;
+    if (!reduceMotion) return;
 
     root.classList.remove("motion-ready");
     motionTargets.forEach(revealMotionTarget);

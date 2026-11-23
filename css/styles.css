@@ -1,23 +1,28 @@
 :root {
     color-scheme: dark;
     --background: #090a09;
-    --ink: #f1f3ef;
+    --ink: #e8ebe7;
     --panel: #121412;
     --panel-deep: #0d0f0d;
-    --muted: #8b918b;
-    --red: #ff2929;
-    --orange: #ff8a00;
-    --green: #20f135;
-    --line: #303530;
+    --muted: #9aa19a;
+    --red: #b84f4f;
+    --orange: #b77b3b;
+    --green: #609a69;
+    --focus-red: #ff3f4a;
+    --focus-orange: #ff9f1c;
+    --focus-green: #39e65c;
+    --telegram: #2aabee;
+    --discord: #7480ff;
+    --line: #343934;
     --border-gradient: linear-gradient(
         135deg,
-        rgba(255, 41, 41, 0.7),
-        rgba(255, 138, 0, 0.45) 48%,
-        rgba(32, 241, 53, 0.7)
+        #3c403c,
+        #49463e 48%,
+        #3b463d
     );
     --border-gradient-strong: linear-gradient(135deg, var(--red), var(--orange), var(--green));
     --background-parallax: 0px;
-    --site-header-height: 7rem;
+    --site-header-height: 8rem;
 }
 
 * {
@@ -28,7 +33,7 @@ html {
     min-width: 20rem;
     background: var(--background);
     scroll-behavior: smooth;
-    scroll-padding-top: 7.5rem;
+    scroll-padding-top: 8.5rem;
     scrollbar-color: var(--green) #050605;
     scrollbar-width: thin;
 }
@@ -44,11 +49,11 @@ html::-webkit-scrollbar-track {
 html::-webkit-scrollbar-thumb {
     border: 3px solid #050605;
     border-radius: 999px;
-    background: linear-gradient(180deg, var(--red), var(--orange), var(--green));
+    background: linear-gradient(180deg, #765050, #756143, #4f7156);
 }
 
 html::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #ff4d4d, #ff9f2f, #52ff63);
+    background: linear-gradient(180deg, var(--red), var(--orange), var(--green));
 }
 
 body {
@@ -88,40 +93,54 @@ body::after {
     inset-block: 0;
     z-index: -1;
     height: 100svh;
-    background: rgba(5, 6, 5, 0.52);
+    background: rgba(5, 6, 5, 0.58);
+}
+
+html.motion-pending .order-guide,
+html.motion-pending .portfolio-section,
+html.motion-pending .contact-section,
+html.motion-pending .render-pricing {
+    visibility: hidden;
+    opacity: 0;
 }
 
 .site-header {
     position: sticky;
-    top: 0.5rem;
+    top: 0;
     z-index: 20;
-    width: calc(100% - 1rem);
+    width: min(75%, 96rem);
     margin-inline: auto;
     overflow: clip;
-    border: 2px solid transparent;
-    border-radius: 1.5rem;
+    border: solid transparent;
+    border-width: 0 4px 4px;
+    border-radius: 0 0 4rem 4rem;
     background:
-        linear-gradient(#050605, #050605) padding-box,
-        var(--border-gradient-strong) border-box;
-    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.36);
+        linear-gradient(#111311, #111311) padding-box,
+        linear-gradient(
+            90deg,
+            var(--focus-red),
+            var(--focus-orange) 50%,
+            var(--focus-green)
+        ) border-box;
     animation: assemble-site-header 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .header-inner {
     display: flex;
     align-items: center;
-    gap: clamp(1.5rem, 4vw, 4rem);
-    width: min(calc(100% - 2rem), 86rem);
-    min-height: 7rem;
+    gap: clamp(1.25rem, 3vw, 3rem);
+    width: 100%;
+    min-height: 8rem;
     margin: 0 auto;
+    padding: 0 clamp(1.25rem, 2.75vw, 2.75rem);
 }
 
 .home-link {
     display: grid;
     flex: 0 0 auto;
     place-items: center;
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
     border: 1px solid transparent;
     border-radius: 50%;
     overflow: hidden;
@@ -193,15 +212,17 @@ body::after {
     animation-delay: 1.08s;
 }
 
-.category-nav a:nth-child(5) {
-    animation-delay: 1.2s;
-}
-
 .category-nav a:hover,
 .category-nav a:focus-visible {
     border-bottom-color: var(--green);
     color: var(--green);
     outline: none;
+}
+
+@media (max-width: 1100px) {
+    .site-header {
+        width: calc(100% - 1rem);
+    }
 }
 
 .welcome {
@@ -281,12 +302,19 @@ body::after {
     min-height: clamp(5rem, 8vw, 7rem);
     padding-left: clamp(8rem, 15vw, 14rem);
     opacity: 0;
-    animation: reveal-welcome-content 0.35s 2.16s ease-out forwards;
+    animation: reveal-welcome-content 0.35s 2.36s ease-out forwards;
 }
 
 .nickname,
 .wolf {
-    background: linear-gradient(135deg, var(--red), var(--orange), var(--green), var(--orange), var(--red));
+    background: linear-gradient(
+        135deg,
+        var(--focus-red),
+        var(--focus-orange),
+        var(--focus-green),
+        var(--focus-orange),
+        var(--focus-red)
+    );
     background-size: 400% 400%;
     background-clip: text;
     color: transparent;
@@ -321,7 +349,7 @@ body::after {
     min-height: 18rem;
     padding: clamp(0.25rem, 1vw, 1rem);
     opacity: 0;
-    animation: reveal-welcome-content 0.35s 2.26s ease-out forwards;
+    animation: reveal-welcome-content 0.35s 2.46s ease-out forwards;
 }
 
 .message h1 {
@@ -364,6 +392,41 @@ body::after {
     color: var(--ink);
     font-family: "Courier New", Courier, monospace;
     font-size: 0.92em;
+}
+
+.welcome-contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.85rem;
+}
+
+.welcome-contact-links + .timezone {
+    margin-top: 1rem;
+}
+
+.welcome-contact-links a,
+.welcome-contact-links span {
+    padding: 0.65rem 0.9rem;
+    border: 1px solid #485148;
+    border-radius: 0.75rem;
+    background: #171a17;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1.25;
+    text-decoration: none;
+    transition:
+        border-color 160ms ease,
+        background-color 160ms ease,
+        color 160ms ease;
+}
+
+.welcome-contact-links a:hover,
+.welcome-contact-links a:focus-visible {
+    border-color: var(--green);
+    background: #1b211c;
+    color: #b8d6bd;
+    outline: none;
 }
 
 .order-guide {
@@ -433,7 +496,7 @@ body::after {
 }
 
 .portfolio-section {
-    width: min(calc(100% - 2rem), 110rem);
+    width: min(calc(75% - 8rem), 88rem);
     min-height: 100svh;
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(4rem, 9vw, 8rem) 0;
@@ -443,6 +506,12 @@ body::after {
     background:
         linear-gradient(#090a09, #090a09) padding-box,
         var(--border-gradient) border-box;
+}
+
+@media (max-width: 1100px) {
+    .portfolio-section {
+        width: calc(100% - 1rem);
+    }
 }
 
 .category-heading {
@@ -501,8 +570,8 @@ body::after {
 .portfolio-section.is-in-focus .category-title {
     color: #ffffff;
     text-shadow:
-        0 0 1rem rgba(32, 241, 53, 0.5),
-        0 0 3rem rgba(32, 241, 53, 0.24);
+        0 0 1rem rgba(96, 154, 105, 0.38),
+        0 0 3rem rgba(96, 154, 105, 0.18);
     transform: scale(1.025);
 }
 
@@ -695,7 +764,7 @@ body::after {
 
 .price-list dd {
     margin: 0;
-    color: var(--green);
+    color: var(--focus-green);
     font-family: "Unbounded", Arial, sans-serif;
     font-weight: 700;
     text-align: right;
@@ -737,6 +806,7 @@ body::after {
 
 .contact-section {
     width: min(calc(100% - 2rem), 90rem);
+    min-height: calc(100svh - var(--site-header-height) - 2rem);
     margin: clamp(2rem, 5vw, 4rem) auto;
     padding: clamp(1rem, 3vw, 2.5rem);
     overflow: clip;
@@ -804,6 +874,78 @@ body::after {
     font-family: "Courier New", Courier, monospace;
 }
 
+.welcome-contact-links .service-contact,
+.contact-links .service-contact {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-right: 4rem;
+}
+
+.welcome-contact-links .service-contact svg,
+.contact-links .service-contact svg {
+    position: absolute;
+    top: 50%;
+    right: 0.65rem;
+    z-index: 0;
+    width: 3rem;
+    height: 3rem;
+    fill: currentColor;
+    opacity: 0.2;
+    transform: translateY(-50%);
+    transition:
+        opacity 160ms ease,
+        transform 160ms ease;
+}
+
+.welcome-contact-links .service-telegram svg,
+.contact-links .service-telegram svg {
+    width: 2.75rem;
+    height: 2.75rem;
+}
+
+.welcome-contact-links .service-discord svg,
+.contact-links .service-discord svg {
+    width: 3.1rem;
+    height: 3.1rem;
+}
+
+.welcome-contact-links .service-telegram,
+.contact-links .service-telegram {
+    border-color: rgba(42, 171, 238, 0.62);
+    background: rgba(42, 171, 238, 0.08);
+    color: #67c8f5;
+}
+
+.welcome-contact-links .service-discord,
+.contact-links .service-discord {
+    border-color: rgba(116, 128, 255, 0.62);
+    background: rgba(116, 128, 255, 0.08);
+    color: #9da5ff;
+}
+
+.welcome-contact-links .service-contact code,
+.contact-links .service-contact code {
+    color: inherit;
+}
+
+.welcome-contact-links .service-telegram:hover,
+.welcome-contact-links .service-telegram:focus-visible,
+.contact-links .service-telegram:hover,
+.contact-links .service-telegram:focus-visible {
+    border-color: var(--telegram);
+    background: rgba(42, 171, 238, 0.16);
+    color: #8bd8fa;
+}
+
+.welcome-contact-links .service-contact:hover svg,
+.welcome-contact-links .service-contact:focus-visible svg,
+.contact-links .service-contact:hover svg,
+.contact-links .service-contact:focus-visible svg {
+    opacity: 0.34;
+    transform: translateY(-50%) scale(1.06);
+}
+
 .contact-availability {
     margin-bottom: 0;
     line-height: 1.8;
@@ -815,16 +957,16 @@ body::after {
 
 .calculator-service {
     margin: 1rem 0 0;
-    padding: 1rem;
+    padding: 0.35rem;
     border: 1px solid transparent;
     border-radius: 1rem;
     background:
         linear-gradient(var(--panel-deep), var(--panel-deep)) padding-box,
         var(--border-gradient) border-box;
-    opacity: 0.62;
+    opacity: 0.82;
     transition:
-        border-color 160ms ease,
-        opacity 160ms ease;
+        opacity 180ms ease,
+        transform 180ms ease;
 }
 
 .calculator-service.is-selected {
@@ -835,10 +977,9 @@ body::after {
 }
 
 .calculator-service legend {
+    width: calc(100% - 0.5rem);
     margin-left: 0.25rem;
-    padding: 0.1rem 0.6rem;
-    border-radius: 0.5rem;
-    background: var(--panel);
+    padding: 0;
     font-family: "Unbounded", Arial, sans-serif;
     font-weight: 700;
 }
@@ -852,12 +993,65 @@ body::after {
 .calculator-service legend label {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 0;
+    border-radius: 0.75rem;
+    background: #171a17;
     color: var(--ink);
+    cursor: pointer;
+    transition:
+        border-color 160ms ease,
+        background-color 160ms ease,
+        color 160ms ease;
+}
+
+.calculator-service legend label:hover {
+    background: #1b1f1b;
+}
+
+.calculator-service.is-selected legend label {
+    background: #1a211b;
+    color: #c7ddca;
+}
+
+.calculator-service-state {
+    color: var(--muted);
+    font-family: "Onest", Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.calculator-service.is-selected .calculator-service-state {
+    color: #9fc6a5;
+}
+
+.calculator-service-content {
+    display: grid;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.35rem);
+    transition:
+        max-height 240ms ease,
+        margin-top 240ms ease,
+        opacity 180ms ease,
+        transform 240ms ease;
+}
+
+.calculator-service.is-selected > .calculator-service-content {
+    max-height: 30rem;
+    margin: 0.4rem 0.35rem 0.35rem;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 .calculator-fields {
-    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.75rem;
 }
@@ -874,52 +1068,21 @@ body::after {
 }
 
 .calculator-service input[type="checkbox"] {
-    display: grid;
-    width: 1.25rem;
-    height: 1.25rem;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
     padding: 0;
-    place-content: center;
-    appearance: none;
-    border: 2px solid #626962;
-    border-radius: 0.35rem;
-    background: #090a09;
-    cursor: pointer;
-    transition:
-        background 160ms ease,
-        box-shadow 160ms ease,
-        transform 160ms ease;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
 
-.calculator-service input[type="checkbox"]::before {
-    width: 0.58rem;
-    height: 0.32rem;
-    border-bottom: 2px solid #050605;
-    border-left: 2px solid #050605;
-    content: "";
-    transform: rotate(-45deg) scale(0);
-    transition: transform 140ms ease-out;
-}
-
-.calculator-service input[type="checkbox"]:checked {
+.calculator-service legend label:focus-within {
     border-color: var(--green);
-    background: var(--green);
-    box-shadow: 0 0 0.65rem rgba(32, 241, 53, 0.2);
-}
-
-.calculator-service input[type="checkbox"]:checked::before {
-    transform: rotate(-45deg) scale(1);
-}
-
-.calculator-service input[type="checkbox"]:active {
-    transform: scale(0.9);
-}
-
-.calculator-service input[type="checkbox"]:hover {
-    border-color: var(--orange);
-}
-
-.calculator-service input[type="checkbox"]:checked:hover {
-    border-color: var(--green);
+    outline: 2px solid rgba(96, 154, 105, 0.38);
+    outline-offset: 3px;
 }
 
 .calculator-service input:focus-visible,
@@ -937,7 +1100,7 @@ body::after {
     background:
         linear-gradient(rgba(13, 24, 14, 0.98), rgba(13, 24, 14, 0.98)) padding-box,
         var(--border-gradient-strong) border-box;
-    color: var(--green);
+    color: var(--focus-green);
     font-family: "Unbounded", Arial, sans-serif;
     font-size: clamp(1.35rem, 3vw, 2rem);
     font-weight: 700;
@@ -1028,7 +1191,8 @@ body::after {
     gap: 0.35rem;
     margin-left: 0.25rem;
     padding: 0.15rem 0.5rem;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(57, 230, 92, 0.48);
+    background: rgba(57, 230, 92, 0.06);
     color: var(--ink);
     font-size: 0.88em;
     white-space: nowrap;
@@ -1036,9 +1200,10 @@ body::after {
 
 #visitor-availability,
 #contact-availability {
-    color: var(--green);
+    color: var(--focus-green);
     font-family: "Courier New", Courier, monospace;
     font-weight: 700;
+    text-shadow: 0 0 0.75rem rgba(57, 230, 92, 0.22);
 }
 
 .waving-hand {
@@ -1061,11 +1226,11 @@ body::after {
 }
 
 .motion-ready .motion-panel.is-revealed:not(.motion-complete) {
-    animation: assemble-motion-panel 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: assemble-motion-panel 0.78s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .motion-ready .motion-card.is-revealed:not(.motion-complete) {
-    animation: assemble-motion-card 0.72s
+    animation: assemble-motion-card 0.58s
         calc(var(--motion-order, 0) * 70ms)
         cubic-bezier(0.4, 0, 0.2, 1)
         both;
@@ -1085,14 +1250,14 @@ body::after {
 }
 
 .motion-ready .motion-title-text.is-text-revealed {
-    animation: type-motion-title 0.62s
+    animation: type-motion-title 0.56s
         var(--motion-text-delay)
         steps(var(--motion-text-steps), end)
         both;
 }
 
 .motion-ready .motion-copy-text.is-text-revealed {
-    animation: reveal-motion-copy 0.48s var(--motion-text-delay) ease-out both;
+    animation: reveal-motion-copy 0.42s var(--motion-text-delay) ease-out both;
 }
 
 .motion-ready .portfolio-section .render-gallery {
@@ -1101,7 +1266,7 @@ body::after {
 }
 
 .motion-ready .portfolio-section.is-revealed .render-gallery {
-    animation: reveal-motion-gallery 0.72s 1.02s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: reveal-motion-gallery 0.64s 2.02s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .motion-ready .portfolio-section .render-card {
@@ -1110,8 +1275,8 @@ body::after {
 }
 
 .motion-ready .portfolio-section.is-revealed .render-card {
-    animation: reveal-motion-media 0.5s
-        calc(1.12s + var(--motion-order, 0) * 65ms)
+    animation: reveal-motion-media 0.46s
+        calc(2.12s + var(--motion-order, 0) * 65ms)
         ease-out
         both;
 }
@@ -1168,14 +1333,14 @@ body::after {
         clip-path: inset(49% 49% 49% 49% round 1.25rem);
     }
 
-    20% {
+    30% {
         opacity: 1;
-        clip-path: inset(47% 36% 47% 36% round 1.25rem);
+        clip-path: inset(47% 28% 47% 28% round 1.25rem);
     }
 
-    58% {
+    66% {
         opacity: 1;
-        clip-path: inset(8% 36% 8% 36% round 1.25rem);
+        clip-path: inset(0 28% 0 28% round 1.25rem);
     }
 
     100% {
@@ -1190,14 +1355,14 @@ body::after {
         clip-path: inset(49% 49% 49% 49% round 0.75rem);
     }
 
-    24% {
+    30% {
         opacity: 1;
-        clip-path: inset(46% 34% 46% 34% round 0.75rem);
+        clip-path: inset(46% 27% 46% 27% round 0.75rem);
     }
 
-    62% {
+    66% {
         opacity: 1;
-        clip-path: inset(8% 34% 8% 34% round 0.75rem);
+        clip-path: inset(0 27% 0 27% round 0.75rem);
     }
 
     100% {
@@ -1392,18 +1557,25 @@ body::after {
 
 @media (max-width: 800px) {
     html {
-        scroll-padding-top: 5rem;
+        scroll-padding-top: 5.5rem;
+    }
+
+    .site-header {
+        width: 100%;
+        border-width: 0 2px 2px;
+        border-radius: 0 0 2rem 2rem;
     }
 
     .header-inner {
         gap: 0.75rem;
-        width: calc(100% - 1rem);
-        min-height: 4.5rem;
+        width: 100%;
+        min-height: 5rem;
+        padding: 0 0.75rem;
     }
 
     .home-link {
-        width: 3.25rem;
-        height: 3.25rem;
+        width: 3.5rem;
+        height: 3.5rem;
     }
 
     .category-nav {
@@ -1418,7 +1590,7 @@ body::after {
     }
 
     .welcome {
-        min-height: calc(100svh - 4.5rem);
+        min-height: calc(100svh - 5rem);
     }
 
     .welcome-card {

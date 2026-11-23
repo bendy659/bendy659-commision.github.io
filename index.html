@@ -12,6 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;family=Unbounded:wght@600;700;800&amp;display=swap"
         rel="stylesheet"
     >
+    <script>document.documentElement.classList.add("motion-pending");</script>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js" defer></script>
 </head>
@@ -26,8 +27,7 @@
                 <a href="#renders">Рендеры</a>
                 <a href="#models">Модели</a>
                 <a href="#animations">Анимации</a>
-                <a href="#contact">Связь</a>
-                <a href="#price-calculator">Калькулятор</a>
+                <a href="#contact">Связь <span aria-hidden="true">•</span> Калькулятор</a>
             </nav>
         </div>
     </header>
@@ -64,11 +64,23 @@
                                 Я продолжаю развиваться, поэтому берусь за задачи,
                                 которые соответствуют моему опыту и возможностям 😄
                             </p>
-                            <p>
-                                По всем заказам и вопросам пишите мне в
-                                Telegram: <a href="https://t.me/bendy659">@bendy659</a>
-                                или Discord: <code>@bendy659</code>.
-                            </p>
+                            <p>По всем заказам и вопросам пишите мне удобным способом:</p>
+                            <div class="welcome-contact-links" aria-label="Способы связи">
+                                <a class="service-contact service-telegram" href="https://t.me/bendy659">
+                                    Telegram · @bendy659
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M21.6 3.3 3.1 10.4c-1.3.5-1.3 1.2-.2 1.6l4.7 1.5 1.8 5.5c.2.7.1 1 .7 1 .5 0 .8-.2 1.1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.8-.9l3.1-14.8c.3-1.3-.5-1.9-1.8-1.3ZM9 13l9.4-6c.5-.3.9-.1.5.3l-7.8 7.1-.3 3.4L9 13Z"/>
+                                    </svg>
+                                </a>
+                                <span class="service-contact service-discord">
+                                    Discord · <code>@bendy659</code>
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M7.2 6.3A16 16 0 0 1 12 5.5c1.7 0 3.3.3 4.8.8 1.5 2.2 2.5 4.8 2.8 7.6-1.4 1.1-2.9 1.8-4.4 2.3l-1.1-1.4c.8-.2 1.5-.6 2.2-1-4.1 1.9-8.5 1.9-12.6 0 .7.4 1.4.8 2.2 1l-1.1 1.4c-1.6-.5-3.1-1.2-4.4-2.3.3-2.8 1.3-5.4 2.8-7.6Z"/>
+                                        <circle cx="9.3" cy="12.4" r="1.15"/>
+                                        <circle cx="14.7" cy="12.4" r="1.15"/>
+                                    </svg>
+                                </span>
+                            </div>
                             <p class="timezone">
                                 Обычно онлайн по вашему времени:
                                 <span class="local-time">
@@ -287,8 +299,8 @@
                             poster="assets/images/portfolio/models/posters/image_0.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -304,8 +316,8 @@
                             poster="assets/images/portfolio/models/posters/image_1.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -321,8 +333,8 @@
                             poster="assets/images/portfolio/models/posters/image_2.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -338,8 +350,8 @@
                             poster="assets/images/portfolio/models/posters/image_3.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -355,8 +367,8 @@
                             poster="assets/images/portfolio/models/posters/image_4.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -372,8 +384,8 @@
                             poster="assets/images/portfolio/models/posters/image_5.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -389,8 +401,8 @@
                             poster="assets/images/portfolio/models/posters/image_6.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -406,8 +418,8 @@
                             poster="assets/images/portfolio/models/posters/image_7.webp"
                             width="510"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -485,8 +497,8 @@
                             poster="assets/images/portfolio/animations/blender/posters/image_0.webp"
                             width="960"
                             height="540"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -502,8 +514,8 @@
                             poster="assets/images/portfolio/animations/blender/posters/image_1.webp"
                             width="960"
                             height="540"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -519,8 +531,8 @@
                             poster="assets/images/portfolio/animations/blender/posters/image_2.webp"
                             width="960"
                             height="540"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -536,8 +548,8 @@
                             poster="assets/images/portfolio/animations/blender/posters/image_3.webp"
                             width="960"
                             height="540"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -553,8 +565,8 @@
                             poster="assets/images/portfolio/animations/blender/posters/image_4.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -570,8 +582,8 @@
                             poster="assets/images/portfolio/animations/blender/posters/image_5.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -587,8 +599,8 @@
                             poster="assets/images/portfolio/animations/blender/posters/image_6.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -604,8 +616,8 @@
                             poster="assets/images/portfolio/animations/blockbench/posters/image_0.webp"
                             width="512"
                             height="512"
-                            autoplay muted loop playsinline
-                            preload="metadata"
+                            muted loop playsinline
+                            preload="none"
                             aria-hidden="true"
                         ></video>
                     </button>
@@ -663,8 +675,20 @@
                         В сообщении можно сразу приложить описание и референсы.
                     </p>
                     <div class="contact-links">
-                        <a href="https://t.me/bendy659">Telegram · @bendy659</a>
-                        <p>Discord · <code>@bendy659</code></p>
+                        <a class="service-contact service-telegram" href="https://t.me/bendy659">
+                            Telegram · @bendy659
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M21.6 3.3 3.1 10.4c-1.3.5-1.3 1.2-.2 1.6l4.7 1.5 1.8 5.5c.2.7.1 1 .7 1 .5 0 .8-.2 1.1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.8-.9l3.1-14.8c.3-1.3-.5-1.9-1.8-1.3ZM9 13l9.4-6c.5-.3.9-.1.5.3l-7.8 7.1-.3 3.4L9 13Z"/>
+                            </svg>
+                        </a>
+                        <p class="service-contact service-discord">
+                            Discord · <code>@bendy659</code>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7.2 6.3A16 16 0 0 1 12 5.5c1.7 0 3.3.3 4.8.8 1.5 2.2 2.5 4.8 2.8 7.6-1.4 1.1-2.9 1.8-4.4 2.3l-1.1-1.4c.8-.2 1.5-.6 2.2-1-4.1 1.9-8.5 1.9-12.6 0 .7.4 1.4.8 2.2 1l-1.1 1.4c-1.6-.5-3.1-1.2-4.4-2.3.3-2.8 1.3-5.4 2.8-7.6Z"/>
+                                <circle cx="9.3" cy="12.4" r="1.15"/>
+                                <circle cx="14.7" cy="12.4" r="1.15"/>
+                            </svg>
+                        </p>
                     </div>
                     <p class="contact-availability">
                         Обычно онлайн по вашему времени:
@@ -673,43 +697,77 @@
                 </article>
 
                 <form class="calculator-card" id="price-calculator">
-                    <h2>Примерная стоимость</h2>
+                    <h2>Калькулятор</h2>
                     <p class="calculator-intro">
                         Выберите нужные услуги. Расчёт ориентировочный и не учитывает правки.
                     </p>
 
                     <fieldset class="calculator-service">
                         <legend>
-                            <label><input type="checkbox" name="render-enabled"> Рендеры</label>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="render-enabled"
+                                    aria-controls="render-calculator-fields"
+                                    aria-expanded="false"
+                                >
+                                <span class="calculator-service-name">Рендеры</span>
+                                <span class="calculator-service-state" aria-hidden="true">Выбрать</span>
+                            </label>
                         </legend>
-                        <label>
-                            Количество
-                            <input type="number" name="render-count" min="1" max="20" value="1">
-                        </label>
-                    </fieldset>
-
-                    <fieldset class="calculator-service">
-                        <legend>
-                            <label><input type="checkbox" name="model-enabled"> Модели</label>
-                        </legend>
-                        <label>
-                            Количество
-                            <input type="number" name="model-count" min="1" max="20" value="1">
-                        </label>
-                    </fieldset>
-
-                    <fieldset class="calculator-service">
-                        <legend>
-                            <label><input type="checkbox" name="animation-enabled"> Анимация</label>
-                        </legend>
-                        <div class="calculator-fields">
+                        <div class="calculator-service-content" id="render-calculator-fields">
                             <label>
                                 Количество
-                                <input type="number" name="animation-count" min="1" max="20" value="1">
+                                <input type="number" name="render-count" min="1" max="20" required value="1">
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="calculator-service">
+                        <legend>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="model-enabled"
+                                    aria-controls="model-calculator-fields"
+                                    aria-expanded="false"
+                                >
+                                <span class="calculator-service-name">Модели</span>
+                                <span class="calculator-service-state" aria-hidden="true">Выбрать</span>
+                            </label>
+                        </legend>
+                        <div class="calculator-service-content" id="model-calculator-fields">
+                            <label>
+                                Количество
+                                <input type="number" name="model-count" min="1" max="20" required value="1">
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="calculator-service">
+                        <legend>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="animation-enabled"
+                                    aria-controls="animation-calculator-fields"
+                                    aria-expanded="false"
+                                >
+                                <span class="calculator-service-name">Анимация</span>
+                                <span class="calculator-service-state" aria-hidden="true">Выбрать</span>
+                            </label>
+                        </legend>
+                        <div
+                            class="calculator-service-content calculator-fields"
+                            id="animation-calculator-fields"
+                        >
+                            <label>
+                                Количество
+                                <input type="number" name="animation-count" min="1" max="20" required value="1">
                             </label>
                             <label>
                                 Длительность, секунд
-                                <input type="number" name="animation-duration" min="1" max="300" value="5">
+                                <input type="number" name="animation-duration" min="1" max="300" required value="5">
                             </label>
                             <label>
                                 Детализация

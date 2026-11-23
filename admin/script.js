@@ -23,10 +23,11 @@ function readEditorPrices() {
 }
 
 function populateEditor(prices) {
+    if (priceKeys.some((key) => !Number.isInteger(prices?.[key]) || prices[key] < 0 || prices[key] > 100000))
+        throw new Error("Проверьте цены: нужны все семь полей с целыми значениями от 0 до 100000.");
+
     priceKeys.forEach((key) => {
-        const value = Number(prices[key]);
-        if (Number.isFinite(value) && value >= 0)
-            editor.elements.namedItem(key).value = value;
+        editor.elements.namedItem(key).value = prices[key];
     });
 
     updatePreview();
@@ -57,7 +58,9 @@ async function loadCurrentPrices() {
         const response = await fetch("../content/prices.json", { cache: "no-store" });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-        populateEditor(await response.json());
+        const prices = await response.json();
+        if (priceFileHandle) return;
+        populateEditor(prices);
         setStatus("Текущие цены загружены. Для записи в проект сначала выберите prices.json.");
     } catch (error) {
         setStatus(`Не удалось загрузить текущие цены: ${error.message}`, true);
@@ -71,7 +74,7 @@ async function openPriceFile() {
     }
 
     try {
-        [priceFileHandle] = await window.showOpenFilePicker({
+        const [selectedHandle] = await window.showOpenFilePicker({
             types: [{
                 description: "JSON с ценами",
                 accept: { "application/json": [".json"] }
@@ -79,8 +82,9 @@ async function openPriceFile() {
             multiple: false
         });
 
-        const file = await priceFileHandle.getFile();
+        const file = await selectedHandle.getFile();
         populateEditor(JSON.parse(await file.text()));
+        priceFileHandle = selectedHandle;
         setStatus(`Открыт ${file.name}. Изменения можно сохранить напрямую.`);
     } catch (error) {
         if (error.name !== "AbortError") setStatus(`Не удалось открыть файл: ${error.message}`, true);
@@ -107,6 +111,7 @@ async function savePrices(event) {
 }
 
 function downloadPrices() {
+    if (!editor.reportValidity()) return;
     const content = `${JSON.stringify(readEditorPrices(), null, 2)}\n`;
     const url = URL.createObjectURL(new Blob([content], { type: "application/json" }));
     const link = document.createElement("a");
