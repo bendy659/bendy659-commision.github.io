@@ -11,28 +11,20 @@ const portfolioLightboxClose = portfolioLightbox.querySelector(".lightbox-close"
 const portfolioLightboxImage = portfolioLightbox.querySelector("img");
 const portfolioLightboxVideo = portfolioLightbox.querySelector("video");
 const gallerySections = Array.from(document.querySelectorAll("[data-gallery]"));
+const galleryPixelsPerSecond = 52;
 const portfolioSections = Array.from(document.querySelectorAll(".portfolio-section"));
 const siteHeader = document.querySelector(".site-header");
 const homeLink = siteHeader.querySelector(".home-link");
-const motionPanels = Array.from(document.querySelectorAll(
-    ".order-guide, .portfolio-section, .contact-section, .render-pricing"
-));
-const motionCards = Array.from(document.querySelectorAll(
-    ".guide-card, .pricing-cell, .contact-card, .calculator-card"
-));
-const motionTargets = [...motionPanels, ...motionCards];
-const motionTextElements = new WeakMap();
-const motionSentinelTargets = new WeakMap();
-const pendingCentralMotionTargets = new Set();
-const pendingNestedMotionTargets = new Set();
+const motionSections = Array.from(document.querySelectorAll(".tabbed-section"));
+const pendingMotionSections = new Set(motionSections);
 const defaultPrices = Object.freeze({
     renderBase: 850,
-    modelBase: 1000,
-    animationBase: 500,
-    animationPerSecond: 100,
+    modelBase: 500,
+    animationBase: 285,
+    animationPerSecond: 15,
     animationDetailBasic: 0,
-    animationDetailMedium: 300,
-    animationDetailHigh: 600
+    animationDetailMedium: 250,
+    animationDetailHigh: 500
 });
 const visitorTimeFormatter = new Intl.DateTimeFormat("ru-RU", {
     hour: "2-digit",
@@ -43,166 +35,49 @@ const priceFormatter = new Intl.NumberFormat("ru-RU");
 let frameRequested = false;
 let prices = { ...defaultPrices };
 
-function addMotionText(element, type, delay) {
-    if (!element) return null;
-
-    const textLength = element.textContent.trim().length;
-    const stepCount = Math.min(Math.max(textLength, 8), 36);
-
-    element.classList.add("motion-text", `motion-${type}-text`);
-    element.style.setProperty("--motion-text-delay", `${delay}ms`);
-    element.style.setProperty("--motion-text-steps", stepCount);
-    return element;
-}
-
-function getMotionTextTargets(target) {
-    if (target.matches(".contact-card, .calculator-card"))
-        return [addMotionText(target.querySelector(":scope > h2"), "title", 0)];
-
-    const textElements = [];
-    const isPanel = target.classList.contains("motion-panel");
-    const titleDelay = isPanel ? 840 : 650;
-    const copyDelay = isPanel ? 1500 : 1280;
-    let title = null;
-    let copy = null;
-
-    if (target.matches(".order-guide")) {
-        title = target.querySelector(":scope > .guide-heading h2");
-        copy = target.querySelector(":scope > .guide-heading > p");
-    } else if (target.matches(".portfolio-section")) {
-        title = target.querySelector(":scope > .category-heading .category-title");
-        copy = target.querySelector(":scope > .category-heading > p");
-    } else if (target.matches(".render-pricing")) {
-        title = target.querySelector(":scope > .pricing-heading h3");
-        copy = target.querySelector(":scope > .pricing-heading > p");
-    } else if (target.matches(".guide-card")) {
-        title = target.querySelector(":scope > h3");
-        copy = target.querySelector(":scope > p");
-    } else if (target.matches(".pricing-cell")) {
-        title = target.querySelector(":scope > h4");
-        copy = target.querySelector(":scope > .price-list, :scope > .requirements-list");
-    }
-
-    const titleElement = addMotionText(title, "title", titleDelay);
-    const copyElement = addMotionText(copy, "copy", copyDelay);
-
-    if (titleElement) textElements.push(titleElement);
-    if (copyElement) textElements.push(copyElement);
-    return textElements;
-}
-
 function revealMotionTarget(target) {
-    const contactCard = target.matches(".contact-card, .calculator-card");
-    if (!reduceMotion && contactCard && !target.closest(".contact-section").classList.contains("motion-complete"))
-        return false;
+    if (target.classList.contains("is-revealed")) return;
 
     target.classList.add("is-revealed");
-    pendingCentralMotionTargets.delete(target);
-    pendingNestedMotionTargets.delete(target);
-    if (!contactCard) {
-        motionTextElements.get(target)?.forEach((element) => element.classList.add("is-text-revealed"));
-    }
-    return true;
+    pendingMotionSections.delete(target);
+
+    if (!target.matches("[data-gallery]")) return;
+
+    const strip = target.querySelector(".render-strip");
+    const bounds = strip.getBoundingClientRect();
+    const preloadMargin = bounds.width * 0.35;
+    strip.querySelectorAll("img").forEach((image) => {
+        const imageBounds = image.getBoundingClientRect();
+        if (imageBounds.right <= bounds.left || imageBounds.left >= bounds.right + preloadMargin) return;
+
+        image.loading = "eager";
+        image.decode().catch(() => {});
+    });
 }
 
 function updateMotionTriggers() {
     if (reduceMotion) return;
 
-    const centralTriggerLine = window.innerHeight * 0.65;
-    const nestedTriggerLine = window.innerHeight * 0.88;
-    const pageBottomReached = window.scrollY + window.innerHeight
-        >= document.documentElement.scrollHeight - 2;
+    const viewportHeight = window.innerHeight;
+    const triggerLine = viewportHeight * 0.65;
+    const pageBottomReached = window.scrollY + viewportHeight >= root.scrollHeight - 2;
 
-    pendingCentralMotionTargets.forEach((target) => {
-        const sentinel = target.previousElementSibling;
-        if (sentinel?.classList.contains("motion-sentinel")
-            && sentinel.getBoundingClientRect().top <= centralTriggerLine)
+    pendingMotionSections.forEach((target) => {
+        const targetTop = target.getBoundingClientRect().top;
+        if (targetTop <= triggerLine || (pageBottomReached && targetTop < viewportHeight))
             revealMotionTarget(target);
-    });
-    pendingNestedMotionTargets.forEach((target) => {
-        const bounds = target.getBoundingClientRect();
-        const reachedTriggerLine = bounds.top <= nestedTriggerLine && bounds.bottom >= 0;
-        const visibleAtPageBottom = pageBottomReached && bounds.top < window.innerHeight;
-
-        if (reachedTriggerLine || visibleAtPageBottom) revealMotionTarget(target);
     });
 }
 
 function prepareMotionSystem() {
-    const main = document.querySelector("main");
-    const centralMotionElements = [];
-    const nestedMotionElements = [];
-
-    motionPanels.forEach((panel) => panel.classList.add("motion-target", "motion-panel"));
-    motionCards.forEach((card, index) => {
-        card.classList.add("motion-target", "motion-card");
-        const order = card.matches(".contact-card, .calculator-card") ? 0 : index % 4;
-        card.style.setProperty("--motion-order", order);
-    });
-    motionTargets.forEach((target) => {
-        motionTextElements.set(target, getMotionTextTargets(target));
-        target.addEventListener("animationend", (event) => {
-            const isOwnAnimation = event.target === target
-                && (event.animationName === "assemble-motion-panel"
-                    || event.animationName === "assemble-motion-card");
-
-            if (isOwnAnimation) {
-                target.classList.add("motion-complete");
-                if (target.matches(".contact-section")) requestBackgroundUpdate();
-                if (target.matches(".contact-card, .calculator-card"))
-                    motionTextElements.get(target).forEach((element) => element.classList.add("is-text-revealed"));
-            }
-
-            if (event.animationName === "type-motion-title"
-                && target.matches(".contact-card, .calculator-card")
-                && event.target.parentElement === target)
-                target.classList.add("contact-content-ready");
-        });
-
-        if (target.parentElement === main) {
-            const sentinel = document.createElement("span");
-
-            sentinel.className = "motion-sentinel";
-            sentinel.setAttribute("aria-hidden", "true");
-            target.before(sentinel);
-            motionSentinelTargets.set(sentinel, target);
-            pendingCentralMotionTargets.add(target);
-            centralMotionElements.push(sentinel);
-        } else {
-            pendingNestedMotionTargets.add(target);
-            nestedMotionElements.push(target);
-        }
-    });
-
-    if (reduceMotion) {
-        root.classList.remove("motion-pending");
-        motionTargets.forEach(revealMotionTarget);
-        portfolioSections.forEach((section) => section.classList.add("is-gallery-ready"));
-        return;
-    }
-
-    root.classList.add("motion-ready");
+    root.classList.toggle("motion-ready", !reduceMotion);
     root.classList.remove("motion-pending");
-    const revealIntersectingTargets = (entries, observer) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
+    if (reduceMotion) finishSectionAnimations();
+}
 
-            const target = motionSentinelTargets.get(entry.target) || entry.target;
-
-            if (revealMotionTarget(target)) observer.unobserve(entry.target);
-        });
-    };
-    const centralMotionObserver = new IntersectionObserver(revealIntersectingTargets, {
-        rootMargin: "-35% 0px -35%",
-        threshold: 0
-    });
-    const nestedMotionObserver = new IntersectionObserver(revealIntersectingTargets, {
-        rootMargin: "0px 0px -12%",
-        threshold: 0
-    });
-
-    centralMotionElements.forEach((element) => centralMotionObserver.observe(element));
-    nestedMotionElements.forEach((element) => nestedMotionObserver.observe(element));
+function finishSectionAnimations() {
+    motionSections.forEach(revealMotionTarget);
+    gallerySections.forEach((section) => section.classList.add("is-gallery-ready"));
 }
 
 function updateBackgroundPosition() {
@@ -342,7 +217,7 @@ function findSectionTarget(hash) {
 function scrollToSection(target, behavior) {
     const bounds = target.getBoundingClientRect();
     const headerBottom = siteHeader.getBoundingClientRect().bottom;
-    const heading = target.querySelector(".category-heading");
+    const heading = target.querySelector(".category-heading, .contact-heading");
     const headingInset = heading ? heading.getBoundingClientRect().top - bounds.top : 0;
     const centeredTop = (window.innerHeight - bounds.height) / 2;
     const minimumTop = headerBottom + 8;
@@ -361,7 +236,7 @@ function alignInitialSection() {
     if (!target) return;
 
     scrollToSection(target, "instant");
-    if (target.classList.contains("motion-target")) revealMotionTarget(target);
+    if (target.classList.contains("tabbed-section")) revealMotionTarget(target);
 }
 
 function createPortfolioGallery(section) {
@@ -376,10 +251,6 @@ function createPortfolioGallery(section) {
     let lastGalleryFrame = 0;
     let galleryPausedUntil = 0;
     let isGalleryPointerActive = false;
-
-    cards.forEach((card, index) => {
-        card.style.setProperty("--motion-order", index % 6);
-    });
 
     function pauseBriefly() {
         galleryPausedUntil = performance.now() + 120;
@@ -419,7 +290,7 @@ function createPortfolioGallery(section) {
             ? galleryScrollPosition / previousLoopWidth
             : 1;
 
-        galleryLoopWidth = firstAfterClone.offsetLeft - cards[0].offsetLeft;
+        galleryLoopWidth = firstAfterClone.getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
         galleryScrollPosition = galleryLoopWidth * previousRatio;
         galleryScrollPosition = normalizePosition(galleryScrollPosition);
         strip.scrollLeft = galleryScrollPosition;
@@ -444,7 +315,7 @@ function createPortfolioGallery(section) {
             galleryScrollPosition = normalizePosition(strip.scrollLeft);
             strip.scrollLeft = galleryScrollPosition;
         } else {
-            galleryScrollPosition += elapsed * 0.045;
+            galleryScrollPosition += elapsed * galleryPixelsPerSecond / 1000;
             galleryScrollPosition = normalizePosition(galleryScrollPosition);
             strip.scrollLeft = galleryScrollPosition;
         }
@@ -496,8 +367,10 @@ function createPortfolioGallery(section) {
     strip.addEventListener("wheel", pauseBriefly, { passive: true });
     strip.addEventListener("keydown", pauseBriefly);
     section.querySelector(".render-gallery").addEventListener("animationend", (event) => {
-        if (event.animationName === "reveal-motion-gallery")
-            section.classList.add("is-gallery-ready");
+        if (event.animationName !== "reveal-motion-gallery") return;
+
+        section.classList.add("is-gallery-ready");
+        updateVisiblePreviews();
     });
     updateLoopWidth();
     window.requestAnimationFrame(updateScroll);
@@ -523,7 +396,8 @@ prepareMotionSystem();
 const galleryControllers = gallerySections.map(createPortfolioGallery);
 const visiblePreviews = new Set();
 function updatePreviewPlayback(video) {
-    if (visiblePreviews.has(video) && !document.hidden && !portfolioLightbox.open && !reduceMotion) {
+    const galleryReady = video.closest("[data-gallery]").classList.contains("is-gallery-ready");
+    if (galleryReady && visiblePreviews.has(video) && !document.hidden && !portfolioLightbox.open && !reduceMotion) {
         video.play().catch(() => {});
     } else {
         video.pause();
@@ -587,8 +461,7 @@ reducedMotion.addEventListener("change", (event) => {
     if (!reduceMotion) return;
 
     root.classList.remove("motion-ready");
-    motionTargets.forEach(revealMotionTarget);
-    portfolioSections.forEach((section) => section.classList.add("is-gallery-ready"));
+    finishSectionAnimations();
 });
 priceCalculator.addEventListener("input", updatePriceCalculator);
 priceCalculator.addEventListener("change", updatePriceCalculator);

@@ -89,14 +89,17 @@
             </div>
         </section>
 
-        <section class="order-guide" aria-labelledby="order-guide-title">
-            <header class="guide-heading">
-                <h2 id="order-guide-title">Перед заказом</h2>
+        <section class="order-guide tabbed-section" aria-labelledby="order-guide-title">
+            <div class="category-shell" aria-hidden="true"></div>
+            <header class="category-heading">
+                <div class="category-tab">
+                    <h2 class="category-title" id="order-guide-title">Перед заказом</h2>
+                </div>
                 <p>Общие условия действуют для рендеров, моделей и анимаций.</p>
             </header>
 
             <div class="guide-grid">
-                <article class="guide-card">
+                <article class="guide-card section-cell">
                     <h3>Что требуется от вас</h3>
                     <p>
                         Как можно точнее опишите задачу, приложите референсы
@@ -104,7 +107,7 @@
                     </p>
                 </article>
 
-                <article class="guide-card">
+                <article class="guide-card section-cell">
                     <h3>Как проходит работа</h3>
                     <p>
                         Я могу задать дополнительные вопросы для лучшего понимания задачи.
@@ -112,7 +115,7 @@
                     </p>
                 </article>
 
-                <article class="guide-card">
+                <article class="guide-card section-cell">
                     <h3>Правки</h3>
                     <p>
                         Небольшие корректировки в рамках согласованной задачи бесплатны.
@@ -120,7 +123,7 @@
                     </p>
                 </article>
 
-                <article class="guide-card guide-card-accent">
+                <article class="guide-card section-cell">
                     <h3>Сроки и гарантия</h3>
                     <p>
                         Я работаю в спокойном темпе и иногда могу затянуть выполнение,
@@ -132,14 +135,17 @@
         </section>
 
         <section
-            class="portfolio-section renders-section"
+            class="portfolio-section tabbed-section renders-section"
             id="renders"
             aria-labelledby="renders-title"
             data-gallery
             data-gallery-item-label="Рендер"
         >
+            <div class="category-shell" aria-hidden="true"></div>
             <header class="category-heading">
-                <h2 class="category-title" id="renders-title">Рендеры</h2>
+                <div class="category-tab">
+                    <h2 class="category-title" id="renders-title">Рендеры</h2>
+                </div>
                 <p>Листайте ленту или нажмите на работу, чтобы рассмотреть её полностью.</p>
             </header>
 
@@ -225,15 +231,10 @@
                 </div>
             </div>
 
-            <section class="render-pricing" aria-labelledby="render-pricing-title">
-                <header class="pricing-heading">
-                    <h3 id="render-pricing-title">Прайс на рендеры</h3>
-                    <p>Цена согласуется и фиксируется до начала работы.</p>
-                </header>
-
+            <section class="render-pricing" aria-label="Прайс на рендеры">
                 <div class="pricing-grid">
-                    <article class="pricing-cell price-cell">
-                        <h4>Стоимость</h4>
+                    <article class="pricing-cell section-cell price-cell">
+                        <h3>Стоимость</h3>
                         <dl class="price-list">
                             <div>
                                 <dt>Рендер или превью</dt>
@@ -242,8 +243,8 @@
                         </dl>
                     </article>
 
-                    <article class="pricing-cell requirements-cell">
-                        <h4>Что входит</h4>
+                    <article class="pricing-cell section-cell requirements-cell">
+                        <h3>Что входит</h3>
                         <ul class="requirements-list">
                             <li>Один готовый рендер по согласованной идее.</li>
                             <li>Подбор композиции, освещения и положения объектов.</li>
@@ -251,19 +252,24 @@
                         </ul>
                     </article>
                 </div>
+
+                <p class="pricing-description">Цена согласуется и фиксируется до начала работы.</p>
             </section>
 
         </section>
 
         <section
-            class="portfolio-section models-section"
+            class="portfolio-section tabbed-section models-section"
             id="models"
             aria-labelledby="models-title"
             data-gallery
             data-gallery-item-label="Модель"
         >
+            <div class="category-shell" aria-hidden="true"></div>
             <header class="category-heading">
-                <h2 class="category-title" id="models-title">Модели</h2>
+                <div class="category-tab">
+                    <h2 class="category-title" id="models-title">Модели</h2>
+                </div>
                 <p>
                     Модели для Minecraft, созданные в Blockbench. К модели можно отдельно
                     заказать анимации, в том числе под GeckoLib.
@@ -417,28 +423,20 @@
                 </div>
             </div>
 
-            <section class="render-pricing" aria-labelledby="models-order-title">
-                <header class="pricing-heading">
-                    <h3 id="models-order-title">Заказ моделей</h3>
-                    <p>
-                        Делаю модели для Minecraft в Blockbench.
-                        Точная стоимость определяется после оценки задачи.
-                    </p>
-                </header>
-
+            <section class="render-pricing" aria-label="Заказ моделей">
                 <div class="pricing-grid">
-                    <article class="pricing-cell price-cell">
-                        <h4>Стоимость</h4>
+                    <article class="pricing-cell section-cell price-cell">
+                        <h3>Стоимость</h3>
                         <dl class="price-list">
                             <div>
                                 <dt>Модель в Blockbench</dt>
-                                <dd data-price-key="modelBase" data-price-prefix="от ">от 1 000 ₽</dd>
+                                <dd data-price-key="modelBase" data-price-prefix="от ">от 500 ₽</dd>
                             </div>
                         </dl>
                     </article>
 
-                    <article class="pricing-cell requirements-cell">
-                        <h4>Можно заказать</h4>
+                    <article class="pricing-cell section-cell requirements-cell">
+                        <h3>Можно заказать</h3>
                         <ul class="requirements-list">
                             <li>Предмет, декор или модель существа.</li>
                             <li>Текстуру в стилистике Minecraft.</li>
@@ -447,18 +445,26 @@
                         </ul>
                     </article>
                 </div>
+
+                <p class="pricing-description">
+                    Делаю модели для Minecraft в Blockbench.
+                    Точная стоимость определяется после оценки задачи.
+                </p>
             </section>
         </section>
 
         <section
-            class="portfolio-section animations-section"
+            class="portfolio-section tabbed-section animations-section"
             id="animations"
             aria-labelledby="animations-title"
             data-gallery
             data-gallery-item-label="Анимация"
         >
+            <div class="category-shell" aria-hidden="true"></div>
             <header class="category-heading">
-                <h2 class="category-title" id="animations-title">Анимации</h2>
+                <div class="category-tab">
+                    <h2 class="category-title" id="animations-title">Анимации</h2>
+                </div>
                 <p>
                     Работаю в Blender и Blockbench, включая проекты под GeckoLib.
                     Конкретная задача и уровень детализации обсуждаются перед заказом.
@@ -612,36 +618,28 @@
                 </div>
             </div>
 
-            <section class="render-pricing" aria-labelledby="animation-pricing-title">
-                <header class="pricing-heading">
-                    <h3 id="animation-pricing-title">Прайс на анимации</h3>
-                    <p>
-                        Итоговая цена зависит от длительности и детализации движения.
-                        Blender и Blockbench рассчитываются по одной формуле.
-                    </p>
-                </header>
-
+            <section class="render-pricing" aria-label="Прайс на анимации">
                 <div class="pricing-grid">
-                    <article class="pricing-cell price-cell">
-                        <h4>Стоимость</h4>
+                    <article class="pricing-cell section-cell price-cell">
+                        <h3>Стоимость</h3>
                         <dl class="price-list">
                             <div>
                                 <dt>Базовая стоимость</dt>
-                                <dd data-price-key="animationBase">500 ₽</dd>
+                                <dd data-price-key="animationBase">285 ₽</dd>
                             </div>
                             <div>
                                 <dt>Секунда анимации</dt>
-                                <dd data-price-key="animationPerSecond">100 ₽</dd>
+                                <dd data-price-key="animationPerSecond">15 ₽</dd>
                             </div>
                             <div>
                                 <dt>Детализация</dt>
-                                <dd data-price-key="animationDetailHigh" data-price-prefix="0–">0–600 ₽</dd>
+                                <dd data-price-key="animationDetailHigh" data-price-prefix="0–">0–500 ₽</dd>
                             </div>
                         </dl>
                     </article>
 
-                    <article class="pricing-cell requirements-cell">
-                        <h4>Варианты заказа</h4>
+                    <article class="pricing-cell section-cell requirements-cell">
+                        <h3>Варианты заказа</h3>
                         <ul class="requirements-list">
                             <li>Анимационный ролик или отдельная сцена.</li>
                             <li>Анимация для игры или Minecraft-проекта.</li>
@@ -650,13 +648,26 @@
                         </ul>
                     </article>
                 </div>
+
+                <p class="pricing-description">
+                    Итоговая цена зависит от длительности и детализации движения.
+                    Blender и Blockbench рассчитываются по одной формуле.
+                </p>
             </section>
         </section>
 
-        <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <section class="contact-section tabbed-section" id="contact" aria-labelledby="contact-title calculator-title">
+            <div class="category-shell" aria-hidden="true"></div>
+            <header class="contact-heading">
+                <div class="category-tab">
+                    <h2 class="category-title" id="contact-title">Связь</h2>
+                </div>
+                <div class="category-tab">
+                    <h2 class="category-title" id="calculator-title">Калькулятор</h2>
+                </div>
+            </header>
             <div class="contact-grid">
-                <article class="contact-card">
-                    <h2 id="contact-title">Связь</h2>
+                <article class="contact-card section-cell" aria-labelledby="contact-title">
                     <p>
                         Чтобы обсудить заказ, напишите мне удобным способом.
                         В сообщении можно сразу приложить описание и референсы.
@@ -681,8 +692,7 @@
                     </p>
                 </article>
 
-                <form class="calculator-card" id="price-calculator">
-                    <h2>Калькулятор</h2>
+                <form class="calculator-card section-cell" id="price-calculator" aria-labelledby="calculator-title">
                     <p class="calculator-intro">
                         Выберите нужные услуги. Расчёт ориентировочный и не учитывает правки.
                     </p>
@@ -758,8 +768,8 @@
                                 Детализация
                                 <select name="animation-detail">
                                     <option value="0" data-price-key="animationDetailBasic" data-price-label="Базовая">Базовая · +0 ₽</option>
-                                    <option value="300" data-price-key="animationDetailMedium" data-price-label="Средняя">Средняя · +300 ₽</option>
-                                    <option value="600" data-price-key="animationDetailHigh" data-price-label="Высокая">Высокая · +600 ₽</option>
+                                    <option value="250" data-price-key="animationDetailMedium" data-price-label="Средняя">Средняя · +250 ₽</option>
+                                    <option value="500" data-price-key="animationDetailHigh" data-price-label="Высокая">Высокая · +500 ₽</option>
                                 </select>
                             </label>
                         </div>
